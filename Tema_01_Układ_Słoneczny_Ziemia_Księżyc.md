@@ -85,6 +85,7 @@ graph TD
 * **Географическая долгота (*długość geograficzna*, $\lambda$)**: Угловое расстояние от начального (Гринвичского) меридиана к востоку ($\text{E}$, $+0^\circ\text{--}180^\circ$) или к западу ($\text{W}$, $-0^\circ\text{--}180^\circ$).
 
 #### 3.1. Характерные параллели и регионы Земли
+https://geografia24.pl/szerokosc-i-dlugosc-geograficzna/
 
 | Географический объект | Польский термин | Широта $\varphi$ | Астрономический и климатический смысл |
 | :--- | :--- | :---: | :--- |
@@ -108,8 +109,9 @@ graph TD
 ---
 
 ### 4. Эклиптика Земли — *Ekliptyka Ziemi*
-
+https://starwalk.space/ru/news/what-is-the-ecliptic
 ![Эклиптика и Небесный экватор](images/ecliptic_celestial_sphere.jpg)
+
 
 **Эклиптика (*ekliptyka*)** — ключевое понятие в сферической астрономии:
 
