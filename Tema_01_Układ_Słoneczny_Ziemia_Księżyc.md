@@ -98,6 +98,7 @@ graph TD
 ---
 
 ### 4. Эклиптика Земли (*Ekliptyka Ziemi*)
+https://starwalk.space/ru/news/what-is-the-ecliptic
 
 ![Эклиптика и Небесный экватор](images/ecliptic_celestial_sphere.jpg)
 
