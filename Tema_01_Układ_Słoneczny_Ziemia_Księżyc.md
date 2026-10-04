@@ -8,27 +8,6 @@
 
 ---
 
-> ### 📋 Соответствие программе Olimpiada Astronomiczna Juniorów (Zawody I stopnia)
-> Настоящий раздел 1 полностью охватывает все темы **I этапа (Zawody I stopnia)** официальной программы Польской Юниорской Астрономической Олимпиады (*Program merytoryczny Olimpiady Astronomicznej Juniorów*):
->
-> 1. **Budowa układu Słonecznego (O)** — *Раздел 2*
-> 2. **Rozpoznawanie gwiazdozbiorów** — *Раздел 5*
-> 3. **Prędkość względna** — *Раздел 7*
-> 4. **Podstawy geografii: noc i dzień polarna, długość i szerokość geograficzna, wysokość obiektu (O)** — *Раздел 3 & Раздел 4*
-> 5. **Ruch obiegowy i obrotowy Ziemi, pory roku (O)** — *Раздел 10, 11, 12*
-> 6. **Ruch jednostajny po okręgu** — *Раздел 6*
-> 7. **Orbity kołowe (O)** — *Раздел 8*
-> 8. **Prawo powszechnego ciążenia, spadek swobodny ciał** — *Раздел 16.1 & 16.2*
-> 9. **Astronomiczna skala odległości i wielkości, astronomiczne jednostki pomiaru odległości** — *Раздел 15*
-> 10. **Zaćmienie Słońca i Księżyca (O)** — *Раздел 14.3*
-> 11. **Fazy Księżyca (O)** — *Раздел 14.2*
-> 12. **Notacja wykładnicza i jednostki układu SI** — *Раздел 16.7*
-> 13. **Obliczanie długości okręgu i pola koła** — *Раздел 16.8*
->
-> *(Символ **(O)** означает тему, требуемую на олимпиаде в описательной форме).*
-
----
-
 ### 1. Что нужно понять после изучения темы
 
 После освоения материала вы будете уверенно:
