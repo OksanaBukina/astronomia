@@ -466,8 +466,6 @@ $$\frac{1}{S} = \left| \frac{1}{T_1} - \frac{1}{T_2} \right|$$
 
 ### 18. Контрольные вопросы для самопроверки (*Pytania kontrolne*)
 
-> *(Примечание: Ответы на все вопросы приведены в **Разделе 20** в конце учебника.)*
-
 #### Базовый уровень
 1. Что такое планета (*planeta*) и чем она фундаментально отличается от естественного спутника (*naturalny satelita*)?
 2. Какова масса Солнца в килограммах точным числом без использования степеней 10?
@@ -482,20 +480,6 @@ $$\frac{1}{S} = \left| \frac{1}{T_1} - \frac{1}{T_2} \right|$$
 9. В чём состоит отличие между термином «перигелий» (*peryhelium*) как точкой орбиты и «перигелийным расстоянием» ($r_{\text{min}} = q = a(1-e)$)?
 10. Что такое элонгация (*elongacja*) и почему максимальная элонгация Венеры не может превышать $48^\circ$?
 11. Каковы типы солнечных и лунных затмений и при каких условиях они возникают?
-
----
-
-### 19. Список литературы и источников (*Zalecana literatura*)
-
-Настоящий учебный материал составлен в полном соответствии с рекомендациями **Olimpiada Astronomiczna Juniorów**:
-
-1. **J.M. Kreiner**, *Ziemia i Wszechświat – astronomia nie tylko dla geografów*.
-2. **K. Rudnicki**, *Astronomia*.
-3. **H. Chrupała, J. Kreiner, M. Szczepański**, *Zadania z astronomii z rozwiązaniami*.
-4. **T. Jarzębowski**, *Elementy Astronomii*.
-5. **W. Mizerski**, *Tablice fizyczno-astronomiczne*.
-6. **A. Branicki**, *W stronę nieba – Interaktywna szkoła astronomii*.
-7. Порталы: *Astronarium*, *AstroNET*, *Urania — Postępy Astronomii*.
 
 ---
 
