@@ -137,6 +137,10 @@ https://starwalk.space/ru/news/what-is-the-ecliptic
 
 **światło zodiakalne Зодиакальный свет ** — это слабое свечение, которое видно на небе перед рассветом или после заката в виде вытянутого конуса. Оно возникает из-за солнечного света, рассеивающегося на частицах космической пыли в плоскости эклиптики
 https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Submillimeter_Array_Night.jpg/500px-Submillimeter_Array_Night.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail
+
+**Węzły księżycowe**  - węzły orbity Księżyca, czyli punkty w których orbita ta przecina płaszczyznę ekliptyki
+**Узлы**  – это точки, в которых орбита Луны пересекает эклиптику. Полнолуние в этих точках приводит к лунному затмению, а новолуние – к солнечному затмению. Если полнолуние или новолуние происходит в других точках орбиты Луны, затмения не будет.
+https://starwalk.space/gallery/images/ecliptic-moon/ru/1360x765.jpg
 ---
 
 ### 5. Rozpoznawanie gwiazdozbiorów — Поиск созвездий и Полярной звезды
