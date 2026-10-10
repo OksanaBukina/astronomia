@@ -135,6 +135,8 @@ https://starwalk.space/ru/news/what-is-the-ecliptic
 1. **Летнее солнцестояние (*przesilenie letnie*)**: Точка эклиптики с наибольшим склонением ($+23{,}44^\circ$, около 20–21 июня). В Северном полушарии — самый длинный день и самая короткая ночь.
 2. **Зимнее солнцестояние (*przesilenie zimowe*)**: Точка эклиптики с наименьшим склонением ($-23{,}44^\circ$, около 21–22 декабря). В Северном полушарии — самый короткий день.
 
+**światło zodiakalne Зодиакальный свет ** — это слабое свечение, которое видно на небе перед рассветом или после заката в виде вытянутого конуса. Оно возникает из-за солнечного света, рассеивающегося на частицах космической пыли в плоскости эклиптики
+https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Submillimeter_Array_Night.jpg/500px-Submillimeter_Array_Night.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail
 ---
 
 ### 5. Rozpoznawanie gwiazdozbiorów — Поиск созвездий и Полярной звезды
