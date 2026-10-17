@@ -195,7 +195,27 @@ flowchart LR
    * Найти созвездие **Большой Медведицы (*Wielka Niedźwiedzica / Ursa Major*)**, в частности её яркую часть — Большой Ковш (*Wielki Wóz*).
    * Найти две крайние звезды стенки ковша: **Мерак (*Merak*)** и **Дубхе (*Dubhe*)**.
    * Мысленно провести луч от Мерака через Дубхе и отложить вдоль него расстояние, равное **5 отрезкам Merak–Dubhe**.
-   * Луч точно укажет на **Полярную звезду (Polaris)** — ярчайшую звезду на конце хвоста **Малой Медведицы (*Mała Niedźwiedzica / Ursa Minor*)**.
+   * Луч точно укажет на **Полярную звезду (*Gwiazda Polarna / Polaris*)** — ярчайшую звезду на конце хвоста **Малой Медведицы (*Mała Niedźwiedzica / Ursa Minor*)**.
+
+#### 5.1. Как использовать Полярную звезду для ориентации (*Jak wykorzystać Gwiazdę Polarną do orientacji w terenie / wyznaczania kierunków świata*)
+
+* **Определение сторон света (*wyznaczanie kierunków świata / stron horyzontu*)**:
+  Если вы встанете лицом к **Полярной звезде (*twarzą do Gwiazdy Polarnej*)**, то:
+  * строго **впереди (*przed sobą / na wprost*)** будет **север (*północ*, $\text{N}$)**;
+  * **сзади (*za sobą / z tyłu*)** — **юг (*południe*, $\text{S}$)**;
+  * **слева (*po lewej stronie*)** — **запад (*zachód*, $\text{W}$)**;
+  * **справа (*po prawej stronie*)** — **восток (*wschód*, $\text{E}$)**.
+* **Определение географической широты (*wyznaczanie szerokości geograficznej*)**:
+  **Высота Полярной звезды над горизонтом (*wysokość Gwiazdy Polarnej nad horyzontem*, $h_P$)** примерно равна **географической широте места наблюдения (*szerokość geograficzna miejsca obserwacji*, $\varphi$)**:
+  $$\mathbf{h_P \approx \varphi}$$
+  Например, для **средней полосы / умеренных широт (*umiarkowane szerokości geograficzne*)** это около $50^\circ\text{--}60^\circ$ градусов (*stopni*, для Польши — около $49^\circ\text{--}55^\circ\text{ N}$).
+
+| Положение относительно наблюдателя (*Położenie względem obserwatora*) | Сторона света по-русски | Сторона света по-польски (*Kierunek świata*) | Обозначение (*Symbol*) |
+| :--- | :---: | :---: | :---: |
+| **Впереди** (лицом к Полярной звезде) — *Przed sobą (na wprost)* | **Север** | ***Północ*** | $\mathbf{N}$ |
+| **Сзади** (за спиной) — *Za sobą (z tyłu)* | **Юг** | ***Południe*** | $\mathbf{S}$ |
+| **Слева** (по левую руку) — *Po lewej stronie* | **Запад** | ***Zachód*** | $\mathbf{W}$ |
+| **Справа** (по правую руку) — *Po prawej stronie* | **Восток** | ***Wschód*** | $\mathbf{E}$ |
 
 2. **Главные незаходящие созвездия Северного полушария (*gwiazdozbiory okołobiegunowe*)**:
    * **Большая Медведица (*Ursa Major / Wielka Niedźwiedzica*)**;
