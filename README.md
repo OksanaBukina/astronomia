@@ -28,6 +28,9 @@
 8. **Механика смены времён года** (`images/seasons_earth_orbit.jpg`): Наклон оси $\varepsilon \approx 23{,}44^\circ$, орбитальное обращение, высоты Солнца над горизонтом, перигелий и афелий.
 9. **Фазы Луны и Затмения** (`images/moon_phases_eclipses.jpg`): Элонгация Луны, геометрические схемы солнечных и лунных затмений, приливной захват.
 10. **Магнитосфера Земли и Геодинамо** (`images/earth_magnetosphere_aurora.jpg`): Защитный дипольный щит от солнечного ветра, пояса Ван Аллена, эффект геодинамо и полярные сияния.
+11. **Созвездия эклиптики** (`images/ecliptic_constellations.jpg`): 13 эклиптических созвездий (12 зодиакальных + Змееносец — *Wężownik*), через которые проходит Солнце в течение года.
+12. **Зодиакальный свет (*Światło zodiakalne*)** (`images/zodiacal_light.jpg`): Конусообразное свечение ночного неба вдоль плоскости эклиптики, вызванное рассеянием солнечного света на межпланетной пыли.
+13. **Лунные узлы и Затмения (*Węzły księżycowe*)** (`images/ecliptic_moon_nodes.jpg`): Точки пересечения орбиты Луны с плоскостью эклиптики и условия наступления солнечных и лунных затмений.
 
 ---
 
@@ -57,16 +60,19 @@ astronomia/
     ├── solar_system_structure.jpg
     ├── geographic_coordinates_grid.jpg
     ├── ecliptic_celestial_sphere.jpg
+    ├── ecliptic_constellations.jpg
+    ├── zodiacal_light.jpg
     ├── earth_radii_ellipsoid.jpg
     ├── orbital_parameters_apsides.jpg
     ├── elongation_configurations.jpg
     ├── earth_interior_layers.jpg
     ├── seasons_earth_orbit.jpg
     ├── moon_phases_eclipses.jpg
+    ├── ecliptic_moon_nodes.jpg
     └── earth_magnetosphere_aurora.jpg
 ```
 
 ---
 
 *Автор проекта: Oksana Bukina*  
-
+*Материалы соответствуют требованиям учебной программы и подготовке к Астрономическим олимпиадам.*

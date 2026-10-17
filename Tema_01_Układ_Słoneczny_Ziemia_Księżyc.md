@@ -56,7 +56,7 @@ graph TD
 
 ---
 
-#### 2.1. Сводная физическая таблица планет Солнечной системы
+#### 1.1. Сводная физическая таблица планет Солнечной системы
 
 Точные значения масс (в точных числах и научной нотации), радиусов, плотностей и ускорений свободного падения:
 
@@ -75,6 +75,30 @@ graph TD
 
 ---
 
+### 2. Метеороид, метеор и метеорит — *Meteoroid, meteor a meteoryt*
+
+Главное отличие между ними заключается в том, **где находится космическое тело** и **чем оно является в данный момент**:
+
+* **Метеороид (*meteoroid*)** — это небольшой твёрдый камень или осколок (от песчинки до нескольких метров), который летит в космическом пространстве (*w przestrzeni kosmicznej*).
+* **Метеор (*meteor*)** — это не сам объект, а световое явление в атмосфере Земли («падающая звезда» / *«spadająca gwiazda»*), которое возникает, когда метеороид влетает в воздух на большой скорости и сгорает. Самые яркие метеоры называют **болидами (*bolidy*)**.
+* **Метеорит (*meteoryt*)** — это то, что упало на поверхность Земли, если кусок космического камня не сгорел полностью в атмосфере и достиг земли. [[1](https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D1%82), [2](https://newslab.ru/article/501129), [3](https://100points.ru/blog/science-and-nature/meteorit-kometa-i-asteroid-v-chem-raznica-info/), [4](https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D1%82%D0%B5%D0%BE%D1%80%D0%BE%D0%B8%D0%B4), [5](https://24tv.ua/tech/ru/chem-otlichajutsja-meteority-ot-meteorov-i-meteoroidov_n2298358), [6](https://museum-21.su/interesting/solnechnaya-sistema/meteory-i-meteority-v-chyem-raznitsa/)]
+
+```mermaid
+flowchart LR
+    A["Meteoroid (Метеороид)<br/>В открытом космосе"] -->|"Вход в атмосферу Земли"| B["Meteor / Bolid (Метеор / Болид)<br/>Вспышка света в атмосфере"]
+    B -->|"Не сгорел полностью"| C["Meteoryt (Метеорит)<br/>Осколок камня на Земле"]
+```
+
+#### 2.1. Краткая шпаргалка (*Krótka ściągawka*)
+
+| Термин (*Termin*) | Где находится / происходит | Что это такое |
+| :--- | :--- | :--- |
+| **Метеороид** (*Meteoroid*) | В открытом космосе (*W otwartej przestrzeni kosmicznej*) | Твёрдое небесное тело |
+| **Метеор** (*Meteor*) | В атмосфере Земли (*W atmosferze Ziemi*) | Вспышка света или след от сгорания (самые яркие — **болиды** / *bolidy*) |
+| **Метеорит** (*Meteoryt*) | На поверхности Земли (*Na powierzchni Ziemi*) | Осколок камня, который долетел до земли |
+
+---
+
 ### 3. Основные географические понятия и Высота объекта над горизонтом — *Podstawy geografii* (O)
 
 ![Географические координаты и параллели Земли](images/geographic_coordinates_grid.jpg)
@@ -85,7 +109,8 @@ graph TD
 * **Географическая долгота (*długość geograficzna*, $\lambda$)**: Угловое расстояние от начального (Гринвичского) меридиана к востоку ($\text{E}$, $+0^\circ\text{--}180^\circ$) или к западу ($\text{W}$, $-0^\circ\text{--}180^\circ$).
 
 #### 3.1. Характерные параллели и регионы Земли
-https://geografia24.pl/szerokosc-i-dlugosc-geograficzna/
+
+> 🔗 *Дополнительный материал: [Szerokość i długość geograficzna (Geografia24.pl)](https://geografia24.pl/szerokosc-i-dlugosc-geograficzna/)*
 
 | Географический объект | Польский термин | Широта $\varphi$ | Астрономический и климатический смысл |
 | :--- | :--- | :---: | :--- |
@@ -109,9 +134,10 @@ https://geografia24.pl/szerokosc-i-dlugosc-geograficzna/
 ---
 
 ### 4. Эклиптика Земли — *Ekliptyka Ziemi*
-https://starwalk.space/ru/news/what-is-the-ecliptic
-![Эклиптика и Небесный экватор](images/ecliptic_celestial_sphere.jpg)
 
+> 🔗 *Дополнительный материал: [Что такое эклиптика и почему она так важна? (Star Walk)](https://starwalk.space/ru/news/what-is-the-ecliptic)*
+
+![Эклиптика и Небесный экватор](images/ecliptic_celestial_sphere.jpg)
 
 **Эклиптика (*ekliptyka*)** — ключевое понятие в сферической астрономии:
 
@@ -135,14 +161,28 @@ https://starwalk.space/ru/news/what-is-the-ecliptic
 1. **Летнее солнцестояние (*przesilenie letnie*)**: Точка эклиптики с наибольшим склонением ($+23{,}44^\circ$, около 20–21 июня). В Северном полушарии — самый длинный день и самая короткая ночь.
 2. **Зимнее солнцестояние (*przesilenie zimowe*)**: Точка эклиптики с наименьшим склонением ($-23{,}44^\circ$, около 21–22 декабря). В Северном полушарии — самый короткий день.
 
-https://starwalk.space/gallery/images/ecliptic-constellations/ru/1360x765.jpg
+#### 4.3. Созвездия эклиптики (Зодиакальный пояс — *Gwiazdozbiory ekliptyczne / Zodiak*)
 
-**światło zodiakalne Зодиакальный свет ** — это слабое свечение, которое видно на небе перед рассветом или после заката в виде вытянутого конуса. Оно возникает из-за солнечного света, рассеивающегося на частицах космической пыли в плоскости эклиптики
-https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Submillimeter_Array_Night.jpg/500px-Submillimeter_Array_Night.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail
+![Созвездия эклиптики](images/ecliptic_constellations.jpg)
+*Источник иллюстрации: [Star Walk — Созвездия эклиптики](https://starwalk.space/gallery/images/ecliptic-constellations/ru/1360x765.jpg)*
 
-**Węzły księżycowe**  - węzły orbity Księżyca, czyli punkty w których orbita ta przecina płaszczyznę ekliptyki
-**Узлы**  – это точки, в которых орбита Луны пересекает эклиптику. Полнолуние в этих точках приводит к лунному затмению, а новолуние – к солнечному затмению. Если полнолуние или новолуние происходит в других точках орбиты Луны, затмения не будет.
-https://starwalk.space/gallery/images/ecliptic-moon/ru/1360x765.jpg
+В течение года Солнце, двигаясь по эклиптике, проходит через **13 эклиптических созвездий**: 12 традиционных зодиакальных созвездий (*gwiazdozbiory zodiakalne*: Овен — *Baran*, Телец — *Byk*, Близнецы — *Bliźnięta*, Рак — *Rak*, Лев — *Lew*, Дева — *Panna*, Весы — *Waga*, Скорпион — *Skorpion*, Стрелец — *Strzelec*, Козерог — *Koziorożec*, Водолей — *Wodnik*, Рыбы — *Ryby*) и 13-е астрономическое созвездие — **Змееносец (*Wężownik / Ophiuchus*)**.
+
+#### 4.4. Зодиакальный свет — *Światło zodiakalne*
+
+![Зодиакальный свет (Światło zodiakalne)](images/zodiacal_light.jpg)
+*Источник иллюстрации: [Wikimedia Commons — Zodiacal Light at Mauna Kea](https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Submillimeter_Array_Night.jpg/500px-Submillimeter_Array_Night.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)*
+
+* **Światło zodiakalne (Зодиакальный свет)** — это слабое свечение, которое видно на небе перед рассветом или после заката в виде вытянутого конуса. Оно возникает из-за солнечного света, рассеивающегося на частицах космической пыли (*pył kosmiczny*) в плоскости эклиптики (*płaszczyzna ekliptyki*).
+
+#### 4.5. Лунные узлы — *Węzły księżycowe*
+
+![Эклиптика, узлы орбиты Луны и затмения](images/ecliptic_moon_nodes.jpg)
+*Источник иллюстрации: [Star Walk — Эклиптика, орбита Луны и затмения](https://starwalk.space/gallery/images/ecliptic-moon/ru/1360x765.jpg)*
+
+* **Węzły księżycowe** — *węzły orbity Księżyca, czyli punkty, w których orbita ta przecina płaszczyznę ekliptyki*.
+* **Узлы** — это точки, в которых орбита Луны пересекает эклиптику. Полнолуние (*pełnia*) в этих точках приводит к **лунному затмению** (*zaćmienie Księżyca*), а новолуние (*nów*) — к **солнечному затмению** (*zaćmienie Słońca*). Если полнолуние или новолуние происходит в других точках орбиты Луны, затмения не будет.
+
 ---
 
 ### 5. Rozpoznawanie gwiazdozbiorów — Поиск созвездий и Полярной звезды
