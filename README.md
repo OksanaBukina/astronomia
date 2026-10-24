@@ -11,6 +11,7 @@
 | Раздел / Тема | Описание и темы | Статус | Ссылка |
 | :--- | :--- | :---: | :---: |
 | **Тема 1** | **Единство мира. Природа Солнечной системы (*Układ Słoneczny*). Земля (*Ziemia*) — планета. Луна (*Księżyc*) — естественный спутник (*naturalny satelita*)** | ✅ Обновлено | [Перейти к Теме 1](Tema_01_Układ_Słoneczny_Ziemia_Księżyc.md) |
+| **Проверочные вопросы (OAJ I этап)** | **Характерные параллели Земли, движение Земли и высота светила над горизонтом (*Podstawy geografii, wysokość obiektu, wysokość bieguna świata*)** | ✅ Добавлено | [Перейти к вопросам](Pytania_OAJ_1_stopien_Podstawy_geografii.md) |
 
 ---
 
@@ -54,9 +55,10 @@
 
 ```text
 astronomia/
-├── README.md                                    # Главный индекс и описание курса
-├── Tema_01_Układ_Słoneczny_Ziemia_Księżyc.md    # Подробный конспект Тема 1
-└── images/                                      # Научные иллюстрации и схемы
+├── README.md                                          # Главный индекс и описание курса
+├── Tema_01_Układ_Słoneczny_Ziemia_Księżyc.md          # Подробный конспект Тема 1
+├── Pytania_OAJ_1_stopien_Podstawy_geografii.md        # Проверочные вопросы к I туру OAJ
+└── images/                                            # Научные иллюстрации и схемы
     ├── solar_system_structure.jpg
     ├── geographic_coordinates_grid.jpg
     ├── ecliptic_celestial_sphere.jpg
