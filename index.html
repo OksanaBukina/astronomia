@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 53. Энергия. Потенциальная и кинетическая энергия</title>
+<style>
+  :root {
+    --primary: #1a237e;
+    --accent:  #f57c00;
+    --green:   #2e7d32;
+    --red:     #c62828;
+    --bg:      #f0f4f8;
+    --card:    #ffffff;
+    --text:    #212121;
+    --muted:   #546e7a;
+    --Ep:      #1565c0;
+    --Ek:      #e65100;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+
+  /* ── TABS ── */
+  .tab-bar {
+    background: var(--primary);
+    display: flex; gap: 4px; padding: 10px 20px 0;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.35);
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: rgba(255,255,255,.15); color: #fff; border: none;
+    padding: 10px 18px; border-radius: 8px 8px 0 0;
+    cursor: pointer; font-size: 14px; font-weight: 600; transition: .2s;
+  }
+  .tab-btn.active { background: var(--bg); color: var(--primary); }
+  .tab-btn:hover:not(.active) { background: rgba(255,255,255,.28); }
+  .tab-panel { display: none; padding: 24px 16px; max-width: 920px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card); border-radius: 14px;
+    padding: 26px 28px; margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .card h2 {
+    font-size: 21px; color: var(--primary); margin-bottom: 16px;
+    border-left: 5px solid var(--accent); padding-left: 14px; line-height: 1.3;
+  }
+  .card h3 { font-size: 17px; color: #37474f; margin: 20px 0 10px; }
+  .card p  { line-height: 1.82; margin-bottom: 12px; color: #37474f; font-size: 15.5px; }
+  .card ul, .card ol { padding-left: 22px; margin-bottom: 12px; }
+  .card li { line-height: 1.8; margin-bottom: 6px; color: #37474f; font-size: 15.5px; }
+
+  /* ── BOXES ── */
+  .def-box {
+    background: #e3f2fd; border-left: 5px solid #1976d2;
+    border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 16px 0; font-size: 15.5px; line-height: 1.75;
+  }
+  .def-box strong { color: var(--primary); }
+  .formula-box {
+    background: linear-gradient(135deg,#e8eaf6,#c5cae9);
+    border: 2px solid #5c6bc0; border-radius: 12px;
+    padding: 16px 24px; margin: 16px 0; text-align: center;
+    font-size: 24px; font-weight: 800; color: var(--primary); letter-spacing: .5px;
+  }
+  .formula-box .label { font-size: 13px; font-weight: 400; color: var(--muted); margin-top: 6px; }
+  .formula-box.orange {
+    background: linear-gradient(135deg,#fff3e0,#ffe0b2);
+    border-color: #ef6c00; color: #bf360c;
+  }
+  .formula-box.green-f {
+    background: linear-gradient(135deg,#e8f5e9,#c8e6c9);
+    border-color: #388e3c; color: #1b5e20;
+  }
+  .warn-box {
+    background: #fff3e0; border-left: 5px solid var(--accent);
+    border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 14px 0; font-size: 15px; line-height: 1.72;
+  }
+  .tip-box {
+    background: #e8f5e9; border-left: 5px solid var(--green);
+    border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 14px 0; font-size: 15px; line-height: 1.72;
+  }
+  .step-box {
+    background: #f3e5f5; border: 1.5px solid #ce93d8;
+    border-radius: 10px; padding: 14px 18px; margin: 10px 0;
+    font-size: 15px; line-height: 1.75;
+  }
+  .step-box .num {
+    display: inline-block; background: #9c27b0; color: #fff;
+    font-weight: 800; border-radius: 50%; width: 26px; height: 26px;
+    text-align: center; line-height: 26px; margin-right: 10px; font-size: 14px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg,#1a237e,#0d47a1 50%,#1565c0);
+    color: #fff; padding: 36px 28px; border-radius: 14px; margin-bottom: 24px;
+  }
+  .hero .klass { font-size: 12px; opacity: .75; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; }
+  .hero h1 { font-size: 26px; font-weight: 800; line-height: 1.3; margin-bottom: 10px; }
+  .hero .meta { font-size: 14px; opacity: .8; display: flex; gap: 20px; flex-wrap: wrap; }
+
+  /* ── SVG ILLUSTRATIONS ── */
+  .illus { display: flex; justify-content: center; margin: 20px 0; }
+  .illus svg { max-width: 100%; border-radius: 12px; }
+
+  /* ── COLUMNS ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  @media(max-width:640px){ .two-col { grid-template-columns: 1fr; } }
+
+  /* ── DERIVATION STEPS ── */
+  .derive-steps { counter-reset: step; }
+  .derive-step {
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 14px; padding: 14px 16px;
+    background: #fafafa; border-radius: 10px; border: 1px solid #e0e0e0;
+  }
+  .derive-step .n {
+    min-width: 32px; height: 32px; background: var(--primary); color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 15px; flex-shrink: 0;
+  }
+  .derive-step .body { font-size: 15px; line-height: 1.75; color: #37474f; }
+  .derive-step .body strong { color: var(--primary); }
+
+  /* ── TABLE ── */
+  .tbl { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  .tbl th { background: var(--primary); color: #fff; padding: 10px 14px; text-align: left; }
+  .tbl td { padding: 9px 14px; border-bottom: 1px solid #e0e0e0; }
+  .tbl tr:nth-child(even) td { background: #f5f7fa; }
+  .ep { color: var(--Ep); font-weight: 700; }
+  .ek { color: var(--Ek); font-weight: 700; }
+
+  /* ── CANVAS / ANIM ── */
+  canvas { border-radius: 10px; background: #0d1b2a; display: block; }
+  .anim-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 16px 0; }
+  .anim-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    background: var(--primary); color: #fff; border: none;
+    padding: 9px 20px; border-radius: 8px; cursor: pointer;
+    font-size: 14px; font-weight: 600; transition: .15s;
+  }
+  .btn:hover { background: #283593; transform: translateY(-1px); }
+  .btn.accent { background: var(--accent); }
+  .btn.accent:hover { background: #ef6c00; }
+
+  /* energy bar widget */
+  .ebar-wrap { display: flex; gap: 16px; align-items: flex-end; justify-content: center; padding: 10px; background: #1a1a2e; border-radius: 10px; }
+  .ebar-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .ebar-track { width: 46px; height: 80px; background: #2d2d44; border-radius: 6px; display: flex; align-items: flex-end; overflow: hidden; }
+  .ebar-fill { width: 100%; border-radius: 6px; transition: height .05s; }
+  .ebar-label { color: #ccc; font-size: 12px; font-weight: 600; }
+  .ebar-val   { color: #fff; font-size: 11px; font-family: monospace; }
+
+  .slider-row { display: flex; align-items: center; gap: 14px; margin: 10px 0; flex-wrap: wrap; }
+  .slider-row label { font-size: 14px; color: var(--muted); min-width: 70px; }
+  input[type=range] { flex: 1; min-width: 120px; accent-color: var(--primary); }
+  .slider-val { font-size: 15px; font-weight: 700; color: var(--primary); min-width: 80px; text-align: right; }
+
+  /* quiz */
+  .quiz-card { background: #f3e5f5; border-radius: 12px; padding: 18px 22px; margin: 14px 0; }
+  .quiz-card .q { font-weight: 700; font-size: 15px; margin-bottom: 10px; color: #4a148c; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt { background: #fff; border: 2px solid #ce93d8; border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 14px; transition: .15s; }
+  .quiz-opt:hover { background: #f3e5f5; border-color: #9c27b0; }
+  .quiz-opt.correct { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; }
+  .quiz-opt.wrong   { background: #ffebee; border-color: #c62828; color: #b71c1c; }
+
+  /* teacher */
+  .teacher-section h2 { font-size: 19px; color: var(--green); border-left: 4px solid var(--green); padding-left: 12px; margin-bottom: 12px; }
+  .teacher-section h3 { font-size: 16px; color: #37474f; margin: 12px 0 6px; }
+  .teacher-section p, .teacher-section li { line-height: 1.75; color: #37474f; font-size: 15px; }
+  .teacher-section ul, .teacher-section ol { padding-left: 20px; margin: 8px 0; }
+  .teacher-section li { margin-bottom: 6px; }
+  .timeline { display: flex; flex-direction: column; }
+  .tl-item  { display: flex; gap: 14px; align-items: flex-start; }
+  .tl-dot-col { display: flex; flex-direction: column; align-items: center; min-width: 32px; }
+  .tl-dot { width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .tl-line { width: 2px; flex: 1; min-height: 24px; background: #c5cae9; margin: 2px auto; }
+  .tl-content { padding: 4px 0 20px; }
+  .tl-content strong { font-size: 15px; color: var(--primary); display: block; margin-bottom: 4px; }
+  .tl-content span   { font-size: 14px; color: #546e7a; }
+  .badge { display: inline-block; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-right: 6px; }
+  .badge.green { background: var(--green); }
+  .badge.blue  { background: var(--primary); }
+
+  @media(max-width:600px){ .tab-btn{padding:8px 10px;font-size:12px;} .card{padding:16px;} .hero h1{font-size:19px;} }
+</style>
+</head>
+<body>
+
+<!-- ══ TAB BAR ══ -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('lesson',this)">📚 Урок</button>
+  <button class="tab-btn" onclick="showTab('animations',this)">🎬 Анимации</button>
+  <button class="tab-btn" onclick="showTab('calculator',this)">🔢 Калькулятор</button>
+  <button class="tab-btn" onclick="showTab('quiz',this)">✅ Проверь себя</button>
+  <button class="tab-btn" onclick="showTab('teacher',this)">👨‍🏫 Конспект учителя</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: УРОК
+══════════════════════════════════════════════════════ -->
+<div id="tab-lesson" class="tab-panel active">
+
+  <div class="hero">
+    <div class="klass">7 класс · Физика · Тема 5: Работа, мощность, энергия</div>
+    <h1>Урок 53. Энергия.<br>Потенциальная и кинетическая.</h1>
+    <div class="meta">
+      <span>⏱ 45 минут</span>
+      <span>📐 Ep = mgh &nbsp;·&nbsp; Ek = mv²/2</span>
+      <span>🔬 Закон сохранения энергии</span>
+    </div>
+  </div>
+
+  <!-- ─────────────── РАЗДЕЛ 1: ЭНЕРГИЯ ─────────────── -->
+  <div class="card">
+    <h2>§1. Что такое энергия?</h2>
+
+    <p>Различные механизмы, тела и люди совершают механическую работу. Посмотрите на эти примеры:</p>
+
+    <!-- SVG: примеры работы -->
+    <div class="illus">
+      <svg width="680" height="180" viewBox="0 0 680 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#1e3a5f;border-radius:12px;">
+        <!-- Кран -->
+        <text x="30" y="22" fill="#90caf9" font-size="13" font-weight="bold">Подъёмный кран</text>
+        <!-- стрела крана -->
+        <line x1="80" y1="160" x2="80" y2="40" stroke="#78909c" stroke-width="6"/>
+        <line x1="80" y1="40" x2="140" y2="40" stroke="#78909c" stroke-width="4"/>
+        <line x1="140" y1="40" x2="140" y2="80" stroke="#b0bec5" stroke-width="2" stroke-dasharray="4,4"/>
+        <!-- груз -->
+        <rect x="118" y="80" width="44" height="32" rx="4" fill="#e53935" stroke="#b71c1c" stroke-width="1.5"/>
+        <text x="130" y="101" fill="#fff" font-size="12" font-weight="bold">груз</text>
+        <!-- стрелка вверх -->
+        <line x1="140" y1="78" x2="140" y2="58" stroke="#ffcc02" stroke-width="2.5"/>
+        <polygon points="140,52 136,62 144,62" fill="#ffcc02"/>
+        <text x="143" y="68" fill="#ffcc02" font-size="11">A</text>
+        <!-- основание -->
+        <rect x="58" y="158" width="44" height="16" rx="3" fill="#546e7a"/>
+
+        <!-- Парашют -->
+        <text x="230" y="22" fill="#90caf9" font-size="13" font-weight="bold">Парашют</text>
+        <ellipse cx="310" cy="50" rx="38" ry="20" fill="#7986cb" stroke="#5c6bc0" stroke-width="1.5"/>
+        <line x1="285" y1="65" x2="300" y2="100" stroke="#b0bec5" stroke-width="1.5"/>
+        <line x1="310" y1="68" x2="300" y2="100" stroke="#b0bec5" stroke-width="1.5"/>
+        <line x1="335" y1="65" x2="300" y2="100" stroke="#b0bec5" stroke-width="1.5"/>
+        <rect x="285" y="100" width="30" height="22" rx="4" fill="#ff8f00" stroke="#e65100" stroke-width="1.5"/>
+        <!-- стрелка вниз (медленно) -->
+        <line x1="300" y1="125" x2="300" y2="145" stroke="#ffcc02" stroke-width="2.5"/>
+        <polygon points="300,152 296,142 304,142" fill="#ffcc02"/>
+        <text x="305" y="142" fill="#ffcc02" font-size="11">A</text>
+
+        <!-- Человек с тележкой -->
+        <text x="440" y="22" fill="#90caf9" font-size="13" font-weight="bold">Тележка с грузом</text>
+        <!-- человек -->
+        <circle cx="490" cy="68" r="12" fill="#ffb74d"/>
+        <line x1="490" y1="80" x2="490" y2="120" stroke="#78909c" stroke-width="4"/>
+        <line x1="490" y1="92" x2="510" y2="105" stroke="#78909c" stroke-width="3"/>
+        <line x1="490" y1="120" x2="478" y2="150" stroke="#78909c" stroke-width="3"/>
+        <line x1="490" y1="120" x2="502" y2="150" stroke="#78909c" stroke-width="3"/>
+        <!-- тележка -->
+        <rect x="508" y="104" width="80" height="40" rx="5" fill="#5c6bc0" stroke="#3949ab" stroke-width="1.5"/>
+        <circle cx="522" cy="148" r="10" fill="#37474f" stroke="#546e7a" stroke-width="2"/>
+        <circle cx="574" cy="148" r="10" fill="#37474f" stroke="#546e7a" stroke-width="2"/>
+        <!-- коробки на тележке -->
+        <rect x="515" y="88" width="28" height="20" rx="3" fill="#ff7043" stroke="#e64a19" stroke-width="1"/>
+        <rect x="547" y="88" width="28" height="20" rx="3" fill="#ff7043" stroke="#e64a19" stroke-width="1"/>
+        <!-- стрелка -->
+        <line x1="596" y1="122" x2="635" y2="122" stroke="#ffcc02" stroke-width="2.5"/>
+        <polygon points="641,122 631,118 631,126" fill="#ffcc02"/>
+        <text x="612" y="115" fill="#ffcc02" font-size="11">A</text>
+      </svg>
+    </div>
+
+    <p>Во всех этих случаях совершается механическая работа. Но чтобы она могла совершаться, нужна <strong>способность к совершению работы</strong>. Именно эту способность характеризует понятие <em>энергия</em>.</p>
+
+    <div class="def-box">
+      <strong>Если тело или система тел способны совершить работу — говорят, что они обладают энергией.</strong><br><br>
+      <strong>Энергия (E)</strong> — физическая величина, характеризующая <strong>способность тела совершать работу</strong>.<br><br>
+      Так как энергия — это способность совершать работу, <strong>единицы измерения у неё такие же, как у работы</strong> — <strong>Джоули (Дж)</strong>.
+    </div>
+
+    <div class="formula-box">
+      [E] = Дж (Джоуль)
+      <div class="label">Единица измерения энергии совпадает с единицей измерения работы</div>
+    </div>
+  </div>
+
+  <!-- ─────────────── РАЗДЕЛ 2: ПОТЕНЦИАЛЬНАЯ ЭНЕРГИЯ ─────────────── -->
+  <div class="card">
+    <h2>§2. Потенциальная энергия</h2>
+
+    <p>Рассмотрим два примера тел, обладающих энергией:</p>
+
+    <!-- SVG: пружина и груз -->
+    <div class="illus">
+      <svg width="680" height="210" viewBox="0 0 680 210" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#1e3a5f;border-radius:12px;">
+        <!-- === ПРУЖИНА === -->
+        <text x="30" y="26" fill="#90caf9" font-size="14" font-weight="bold">Сжатая пружина</text>
+
+        <!-- стена -->
+        <rect x="20" y="40" width="16" height="130" rx="2" fill="#546e7a"/>
+        <!-- штриховка стены -->
+        <line x1="36" y1="50" x2="20" y2="66"  stroke="#78909c" stroke-width="1.5"/>
+        <line x1="36" y1="70" x2="20" y2="86"  stroke="#78909c" stroke-width="1.5"/>
+        <line x1="36" y1="90" x2="20" y2="106" stroke="#78909c" stroke-width="1.5"/>
+        <line x1="36" y1="110" x2="20" y2="126" stroke="#78909c" stroke-width="1.5"/>
+        <line x1="36" y1="130" x2="20" y2="146" stroke="#78909c" stroke-width="1.5"/>
+        <line x1="36" y1="150" x2="20" y2="162" stroke="#78909c" stroke-width="1.5"/>
+
+        <!-- пружина сжатая (зигзаг) -->
+        <polyline points="36,105 50,88 65,122 80,88 95,122 110,88 125,122 140,88 155,105"
+          stroke="#b0bec5" stroke-width="3" fill="none"/>
+
+        <!-- груз на пружине -->
+        <rect x="143" y="78" width="52" height="54" rx="6" fill="#e53935" stroke="#b71c1c" stroke-width="2"/>
+        <text x="150" y="110" fill="#fff" font-size="13" font-weight="bold">груз</text>
+
+        <!-- стрелка: пружина толкает -->
+        <line x1="195" y1="105" x2="230" y2="105" stroke="#66bb6a" stroke-width="2.5" stroke-dasharray="6,4"/>
+        <polygon points="236,105 226,100 226,110" fill="#66bb6a"/>
+        <text x="197" y="98"  fill="#66bb6a" font-size="12">может</text>
+        <text x="197" y="122" fill="#66bb6a" font-size="12">совершить</text>
+        <text x="197" y="137" fill="#66bb6a" font-size="12">работу!</text>
+
+        <!-- стрелки внутри пружины (отталкивание) -->
+        <line x1="80" y1="140" x2="60" y2="140" stroke="#ff8f00" stroke-width="1.5"/>
+        <polygon points="58,140 68,136 68,144" fill="#ff8f00"/>
+        <line x1="80" y1="140" x2="100" y2="140" stroke="#ff8f00" stroke-width="1.5"/>
+        <polygon points="102,140 92,136 92,144" fill="#ff8f00"/>
+        <text x="40" y="158" fill="#ff8f00" font-size="11">силы отталкивания</text>
+        <text x="40" y="172" fill="#ff8f00" font-size="11">между атомами</text>
+
+        <!-- === ПОДНЯТЫЙ ГРУЗ === -->
+        <text x="380" y="26" fill="#90caf9" font-size="14" font-weight="bold">Поднятый груз (копёр)</text>
+
+        <!-- земля -->
+        <rect x="360" y="185" width="300" height="20" rx="2" fill="#3e2723"/>
+        <text x="460" y="200" fill="#795548" font-size="12">земля</text>
+
+        <!-- свая -->
+        <rect x="490" y="150" width="20" height="40" rx="2" fill="#78909c"/>
+        <polygon points="490,195 510,195 500,207" fill="#607d8b"/>
+
+        <!-- груз (молот) -->
+        <rect x="474" y="90" width="52" height="48" rx="6" fill="#37474f" stroke="#546e7a" stroke-width="2"/>
+        <text x="478" y="120" fill="#fff" font-size="12" font-weight="bold">молот</text>
+
+        <!-- высота h -->
+        <line x1="455" y1="90" x2="455" y2="185" stroke="#90caf9" stroke-width="1.5" stroke-dasharray="4,4"/>
+        <line x1="449" y1="90"  x2="461" y2="90"  stroke="#90caf9" stroke-width="2"/>
+        <line x1="449" y1="185" x2="461" y2="185" stroke="#90caf9" stroke-width="2"/>
+        <text x="420" y="142" fill="#90caf9" font-size="14" font-weight="bold">h</text>
+
+        <!-- стрелка вниз -->
+        <line x1="500" y1="140" x2="500" y2="155" stroke="#66bb6a" stroke-width="2.5" stroke-dasharray="5,4"/>
+        <polygon points="500,160 496,150 504,150" fill="#66bb6a"/>
+
+        <!-- пояснение -->
+        <text x="533" y="102" fill="#66bb6a" font-size="12">может упасть</text>
+        <text x="533" y="118" fill="#66bb6a" font-size="12">и забить сваю!</text>
+
+        <!-- сила тяжести -->
+        <line x1="615" y1="115" x2="615" y2="145" stroke="#ff5252" stroke-width="2"/>
+        <polygon points="615,150 611,140 619,140" fill="#ff5252"/>
+        <text x="618" y="136" fill="#ff5252" font-size="12">Fтяж</text>
+      </svg>
+    </div>
+
+    <p>В обоих случаях тела <strong>взаимодействуют</strong>: в пружине — её части отталкиваются друг от друга; на поднятый груз действует сила притяжения Земли. Именно взаимодействие и даёт телу энергию.</p>
+
+    <div class="def-box">
+      <strong>Потенциальная энергия (Ep)</strong> — энергия взаимодействия тел или частей одного тела.<br><br>
+      Примеры:
+      <ul style="margin-top:8px;">
+        <li>Поднятое над землёй тело → взаимодействует с Землёй (гравитация)</li>
+        <li>Сжатая пружина → её части взаимодействуют (силы отталкивания атомов)</li>
+        <li>Лук с натянутой тетивой → части лука взаимодействуют (упругость)</li>
+      </ul>
+    </div>
+
+    <!-- ─── ВЫВОД ФОРМУЛЫ Ep = mgh ─── -->
+    <h3>📐 Вывод формулы потенциальной энергии: Ep = mgh</h3>
+    <p>Рассчитаем потенциальную энергию тела, поднятого над землёй. Рассмотрим ситуацию шаг за шагом.</p>
+
+    <!-- SVG: схема вывода формулы -->
+    <div class="illus">
+      <svg width="680" height="260" viewBox="0 0 680 260" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#1e3a5f;border-radius:12px;">
+
+        <!-- земля -->
+        <rect x="0" y="230" width="680" height="30" fill="#3e2723"/>
+        <text x="300" y="248" fill="#795548" font-size="13">уровень земли (h = 0)</text>
+
+        <!-- === ПОЗИЦИЯ 1: лежит на земле === -->
+        <text x="30" y="30" fill="#aaa" font-size="13" font-weight="bold">1) Начало</text>
+        <rect x="30" y="195" width="60" height="34" rx="5" fill="#546e7a" stroke="#78909c" stroke-width="2"/>
+        <text x="40" y="217" fill="#fff" font-size="13" font-weight="bold">тело</text>
+        <text x="22" y="248" fill="#90caf9" font-size="12">h = 0, Ep = 0</text>
+
+        <!-- === ПОЗИЦИЯ 2: промежуточная === -->
+        <text x="230" y="30" fill="#aaa" font-size="13" font-weight="bold">2) Движется вверх</text>
+        <!-- тело на промежуточной высоте -->
+        <rect x="240" y="130" width="60" height="34" rx="5" fill="#37474f" stroke="#78909c" stroke-width="2"/>
+        <text x="250" y="152" fill="#fff" font-size="13" font-weight="bold">тело</text>
+
+        <!-- высота h* -->
+        <line x1="225" y1="130" x2="225" y2="230" stroke="#90caf9" stroke-width="1.5" stroke-dasharray="4,4"/>
+        <line x1="219" y1="130" x2="231" y2="130" stroke="#90caf9" stroke-width="2"/>
+        <line x1="219" y1="230" x2="231" y2="230" stroke="#90caf9" stroke-width="2"/>
+        <text x="192" y="185" fill="#90caf9" font-size="14" font-weight="bold">h*</text>
+
+        <!-- F вверх -->
+        <line x1="270" y1="128" x2="270" y2="90" stroke="#66bb6a" stroke-width="3"/>
+        <polygon points="270,84 265,96 275,96" fill="#66bb6a"/>
+        <text x="276" y="110" fill="#66bb6a" font-size="14" font-weight="bold">F</text>
+        <text x="276" y="128" fill="#66bb6a" font-size="12">(сила подъёма)</text>
+
+        <!-- Fтяж вниз -->
+        <line x1="270" y1="166" x2="270" y2="204" stroke="#ff5252" stroke-width="3"/>
+        <polygon points="270,210 265,198 275,198" fill="#ff5252"/>
+        <text x="276" y="192" fill="#ff5252" font-size="14" font-weight="bold">Fтяж</text>
+        <text x="276" y="210" fill="#ff5252" font-size="12">(сила тяжести)</text>
+
+        <!-- равномерно → равенство сил -->
+        <text x="230" y="246" fill="#ffcc02" font-size="12">равномерно: F = Fтяж = mg</text>
+
+        <!-- === ПОЗИЦИЯ 3: наверху === -->
+        <text x="490" y="30" fill="#aaa" font-size="13" font-weight="bold">3) Поднято на высоту h</text>
+        <rect x="490" y="60" width="60" height="34" rx="5" fill="#1565c0" stroke="#42a5f5" stroke-width="2"/>
+        <text x="498" y="82" fill="#fff" font-size="13" font-weight="bold">тело</text>
+
+        <!-- высота h полная -->
+        <line x1="475" y1="60" x2="475" y2="230" stroke="#42a5f5" stroke-width="1.5" stroke-dasharray="4,4"/>
+        <line x1="469" y1="60"  x2="481" y2="60"  stroke="#42a5f5" stroke-width="2"/>
+        <line x1="469" y1="230" x2="481" y2="230" stroke="#42a5f5" stroke-width="2"/>
+        <text x="438" y="150" fill="#42a5f5" font-size="18" font-weight="bold">h</text>
+
+        <!-- стрелка A работа -->
+        <text x="490" y="156" fill="#ffcc02" font-size="13">A = F · h</text>
+        <text x="490" y="175" fill="#ffcc02" font-size="13">A = mg · h</text>
+        <text x="490" y="200" fill="#66bb6a" font-size="14" font-weight="bold">∴ Ep = mgh</text>
+
+        <!-- пунктир между позициями -->
+        <line x1="92" y1="212" x2="238" y2="150" stroke="#555" stroke-width="1" stroke-dasharray="6,6"/>
+        <line x1="302" y1="147" x2="488" y2="77"  stroke="#555" stroke-width="1" stroke-dasharray="6,6"/>
+      </svg>
+    </div>
+
+    <div class="derive-steps">
+      <div class="derive-step">
+        <div class="n">1</div>
+        <div class="body">
+          Сначала тело лежало <strong>на земле</strong> (h = 0). Потенциальная энергия равна нулю.
+        </div>
+      </div>
+      <div class="derive-step">
+        <div class="n">2</div>
+        <div class="body">
+          Чтобы <strong>поднять тело равномерно</strong>, нужно приложить силу F направленную вверх. По второму закону Ньютона при равномерном движении суммарная сила равна нулю, значит F = Fтяж.<br><br>
+          <strong>Напоминание — формула силы тяжести:</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- НАПОМИНАНИЕ: сила тяжести -->
+    <div class="warn-box">
+      🔔 <strong>Формула силы тяжести (вспоминаем):</strong><br><br>
+      <div style="text-align:center; font-size:22px; font-weight:800; color:#1a237e; margin:10px 0;">
+        Fтяж = m · g
+      </div>
+      Где:<br>
+      • <strong>m</strong> — масса тела (кг)<br>
+      • <strong>g ≈ 10 Н/кг</strong> — ускорение свободного падения (ускорение силы тяжести)<br>
+      • <strong>Fтяж</strong> — сила тяжести (Н)<br><br>
+      Следовательно, сила подъёма F = Fтяж = <strong>m · g</strong>
+    </div>
+
+    <div class="derive-steps">
+      <div class="derive-step">
+        <div class="n">3</div>
+        <div class="body">
+          К телу приложена сила <strong>F = mg</strong> и оно перемещается на высоту <strong>h</strong>. Значит совершается работа:<br>
+          <strong>A = F · h = mg · h</strong>
+        </div>
+      </div>
+      <div class="derive-step">
+        <div class="n">4</div>
+        <div class="body">
+          Внизу тело было <strong>неподвижным</strong> и наверху тоже <strong>неподвижным</strong>. Вся затраченная работа пошла на <strong>увеличение потенциальной энергии</strong>. Сколько работы совершили — такую энергию и сообщили телу.
+        </div>
+      </div>
+      <div class="derive-step">
+        <div class="n">5</div>
+        <div class="body">
+          Получаем формулу потенциальной энергии тела, поднятого на высоту h:
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      Ep = m · g · h
+      <div class="label">m — масса (кг) · g ≈ 10 Н/кг · h — высота над уровнем отсчёта (м) · Ep — потенциальная энергия (Дж)</div>
+    </div>
+
+    <!-- ─── НУЛЕВОЙ УРОВЕНЬ ─── -->
+    <h3>⚠️ Важный нюанс: нулевой уровень отсчёта</h3>
+    <p>Эта формула содержит один очень важный нюанс. Рассмотрим пример с окном:</p>
+
+    <!-- SVG: пример с подоконником -->
+    <div class="illus">
+      <svg width="680" height="280" viewBox="0 0 680 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#1e3a5f;border-radius:12px;">
+
+        <!-- здание -->
+        <rect x="40" y="20" width="140" height="240" rx="4" fill="#37474f" stroke="#546e7a" stroke-width="2"/>
+        <!-- этажи -->
+        <line x1="40" y1="80"  x2="180" y2="80"  stroke="#546e7a" stroke-width="1.5"/>
+        <line x1="40" y1="140" x2="180" y2="140" stroke="#546e7a" stroke-width="1.5"/>
+        <line x1="40" y1="200" x2="180" y2="200" stroke="#546e7a" stroke-width="1.5"/>
+        <!-- окно -->
+        <rect x="60" y="145" width="60" height="45" rx="3" fill="#90caf9" stroke="#42a5f5" stroke-width="2"/>
+        <line x1="90" y1="145" x2="90" y2="190" stroke="#42a5f5" stroke-width="1.5"/>
+        <line x1="60" y1="167" x2="120" y2="167" stroke="#42a5f5" stroke-width="1.5"/>
+        <!-- подоконник -->
+        <rect x="55" y="188" width="70" height="7" rx="2" fill="#78909c"/>
+        <text x="48" y="208" fill="#90caf9" font-size="12">подоконник</text>
+
+        <!-- земля -->
+        <rect x="0" y="260" width="680" height="20" fill="#3e2723"/>
+        <text x="290" y="274" fill="#795548" font-size="12">земля</text>
+
+        <!-- === СЛУЧАЙ A: поднял с подоконника на 0.5 м === -->
+        <text x="230" y="22" fill="#aaa" font-size="13" font-weight="bold">А) Подъём с подоконника</text>
+
+        <!-- тело на подоконнике -->
+        <rect x="240" y="175" width="40" height="20" rx="4" fill="#546e7a" stroke="#78909c" stroke-width="1.5"/>
+        <text x="244" y="189" fill="#fff" font-size="11">тело</text>
+
+        <!-- тело поднятое на 0.5м от подоконника -->
+        <rect x="240" y="120" width="40" height="20" rx="4" fill="#1565c0" stroke="#42a5f5" stroke-width="2"/>
+        <text x="244" y="134" fill="#fff" font-size="11">тело</text>
+
+        <!-- высота 0.5 м от подоконника -->
+        <line x1="225" y1="120" x2="225" y2="193" stroke="#66bb6a" stroke-width="1.5" stroke-dasharray="4,4"/>
+        <line x1="219" y1="120" x2="231" y2="120" stroke="#66bb6a" stroke-width="2"/>
+        <line x1="219" y1="193" x2="231" y2="193" stroke="#66bb6a" stroke-width="2"/>
+        <text x="192" y="162" fill="#66bb6a" font-size="14" font-weight="bold">0.5 м</text>
+
+        <text x="230" y="230" fill="#66bb6a" font-size="12">A = 0.5 · m · g</text>
+        <text x="230" y="248" fill="#66bb6a" font-size="12">Ep (от подоконника) = 0.5mg</text>
+
+        <!-- === СЛУЧАЙ B: высунули в окно === -->
+        <text x="440" y="22" fill="#aaa" font-size="13" font-weight="bold">Б) Высунули в окно</text>
+
+        <!-- тело за окном -->
+        <rect x="490" y="175" width="40" height="20" rx="4" fill="#c62828" stroke="#ff5252" stroke-width="2"/>
+        <text x="494" y="189" fill="#fff" font-size="11">тело</text>
+
+        <!-- высота до земли большая -->
+        <line x1="475" y1="193" x2="475" y2="258" stroke="#ff5252" stroke-width="1.5" stroke-dasharray="4,4"/>
+        <line x1="469" y1="193" x2="481" y2="193" stroke="#ff5252" stroke-width="2"/>
+        <line x1="469" y1="258" x2="481" y2="258" stroke="#ff5252" stroke-width="2"/>
+        <text x="430" y="230" fill="#ff5252" font-size="14" font-weight="bold">H</text>
+        <text x="420" y="248" fill="#ff5252" font-size="11">до земли!</text>
+
+        <text x="440" y="140" fill="#ff5252" font-size="13">Ep (от земли) = mgH</text>
+        <text x="440" y="160" fill="#ff5252" font-size="13">H >> 0.5 м !</text>
+
+        <!-- стрелки для пояснения -->
+        <text x="430" y="45" fill="#ffcc02" font-size="12">Работа при подъёме</text>
+        <text x="430" y="62" fill="#ffcc02" font-size="12">одинакова, а</text>
+        <text x="430" y="79" fill="#ffcc02" font-size="12">потенциальная энергия</text>
+        <text x="430" y="96" fill="#ffcc02" font-size="12">разная!</text>
+        <text x="430" y="118" fill="#ffcc02" font-size="13" font-weight="bold">A = ΔEp</text>
+      </svg>
+    </div>
+
+    <p>Если поднять тело с подоконника на <strong>0,5 м вверх</strong>, мы проделаем работу A = 0,5·m·g. Потенциальная энергия <em>относительно подоконника</em> = 0,5·m·g.</p>
+    <p>Но если вынести то же тело в окно <strong>по горизонтали</strong> (не поднимая!), расстояние до земли станет намного больше — зависит от этажа. Значит, потенциальная энергия <em>относительно земли</em> будет намного больше, хотя работа не менялась.</p>
+
+    <div class="warn-box">
+      ⚠️ <strong>Вывод:</strong> Работа равна не самой энергии, а её <strong>изменению</strong>:<br>
+      <div style="text-align:center; font-size:20px; font-weight:800; color:#e65100; margin:10px 0;">A = ΔEp</div>
+      Потенциальная энергия <strong>зависит от выбранного нулевого уровня</strong> (земля, стол, пол…). Высота <em>h</em> всегда отсчитывается от него.
+    </div>
+  </div>
+
+  <!-- ─────────────── РАЗДЕЛ 3: КИНЕТИЧЕСКАЯ ЭНЕРГИЯ ─────────────── -->
+  <div class="card">
+    <h2>§3. Кинетическая энергия</h2>
+
+    <p>Перед нами гвоздь, торчащий из стены, и молоток, отведённый для удара:</p>
+
+    <!-- SVG: молоток и гвоздь -->
+    <div class="illus">
+      <svg width="680" height="200" viewBox="0 0 680 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#1e3a5f;border-radius:12px;">
+
+        <!-- стена -->
+        <rect x="20" y="20" width="20" height="165" rx="2" fill="#546e7a"/>
+        <line x1="40" y1="30"  x2="20" y2="50"  stroke="#78909c" stroke-width="1.5"/>
+        <line x1="40" y1="55"  x2="20" y2="75"  stroke="#78909c" stroke-width="1.5"/>
+        <line x1="40" y1="80"  x2="20" y2="100" stroke="#78909c" stroke-width="1.5"/>
+        <line x1="40" y1="105" x2="20" y2="125" stroke="#78909c" stroke-width="1.5"/>
+        <line x1="40" y1="130" x2="20" y2="150" stroke="#78909c" stroke-width="1.5"/>
+        <line x1="40" y1="155" x2="20" y2="175" stroke="#78909c" stroke-width="1.5"/>
+
+        <!-- гвоздь -->
+        <rect x="40" y="88" width="90" height="10" rx="2" fill="#b0bec5" stroke="#78909c" stroke-width="1"/>
+        <polygon points="130,88 130,98 142,93" fill="#90a4ae"/>
+
+        <!-- === МОЛОТОК НЕПОДВИЖНЫЙ === -->
+        <text x="180" y="22" fill="#aaa" font-size="13" font-weight="bold">Неподвижный молоток</text>
+        <!-- рукоять -->
+        <rect x="180" y="78" width="100" height="14" rx="4" fill="#8d6e63" stroke="#6d4c41" stroke-width="1.5"/>
+        <!-- голова молотка -->
+        <rect x="276" y="68" width="38" height="34" rx="5" fill="#37474f" stroke="#546e7a" stroke-width="2"/>
+
+        <text x="180" y="145" fill="#ff5252" font-size="14" font-weight="bold">v = 0 → Ek = 0</text>
+        <text x="180" y="165" fill="#ff5252" font-size="13">❌ Не совершает работу</text>
+
+        <!-- === МОЛОТОК ДВИЖУЩИЙСЯ === -->
+        <text x="420" y="22" fill="#aaa" font-size="13" font-weight="bold">Движущийся молоток</text>
+        <!-- рукоять -->
+        <rect x="420" y="78" width="100" height="14" rx="4" fill="#8d6e63" stroke="#6d4c41" stroke-width="1.5"/>
+        <!-- голова молотка -->
+        <rect x="516" y="68" width="38" height="34" rx="5" fill="#37474f" stroke="#546e7a" stroke-width="2"/>
+
+        <!-- стрелка скорости -->
+        <line x1="610" y1="85" x2="650" y2="85" stroke="#66bb6a" stroke-width="3"/>
+        <polygon points="656,85 644,80 644,90" fill="#66bb6a"/>
+        <text x="618" y="78" fill="#66bb6a" font-size="13" font-weight="bold">v</text>
+
+        <text x="420" y="145" fill="#66bb6a" font-size="14" font-weight="bold">v > 0 → Ek > 0</text>
+        <text x="420" y="165" fill="#66bb6a" font-size="13">✅ Совершает работу!</text>
+      </svg>
+    </div>
+
+    <p>Для того чтобы молоток переместился из начального положения до гвоздя, к нему нужно приложить силу, то есть совершить работу. В новом положении молоток <strong>обладает скоростью</strong> — и это даёт ему возможность забить гвоздь.</p>
+    <p>Неподвижный молоток не совершает работу. <strong>Движущийся молоток обладает энергией!</strong></p>
+
+    <div class="def-box">
+      <strong>Кинетическая энергия (Ek)</strong> — энергия, которой обладает <strong>движущееся тело</strong>.<br><br>
+      Кинетическая энергия зависит от <strong>массы</strong> и <strong>скорости</strong> тела.
+    </div>
+
+    <div class="formula-box orange">
+      Ek = m · v² / 2
+      <div class="label" style="color:#795548;">m — масса (кг) · v — скорость (м/с) · Ek — кинетическая энергия (Дж)</div>
+    </div>
+
+    <div class="tip-box">
+      💡 <strong>Обратите внимание:</strong> скорость стоит в квадрате! Это значит:<br>
+      • если скорость увеличится <strong>в 2 раза</strong> → Ek увеличится <strong>в 4 раза</strong><br>
+      • если скорость увеличится <strong>в 3 раза</strong> → Ek увеличится <strong>в 9 раз</strong><br>
+      Именно поэтому высокая скорость на дороге так опасна!
+    </div>
+  </div>
+
+  <!-- ─────────────── РАЗДЕЛ 4: ПРЕВРАЩЕНИЯ ─────────────── -->
+  <div class="card">
+    <h2>§4. Превращения энергии. Закон сохранения</h2>
+
+    <p>Что происходит с энергиями при движении тела? Рассмотрим два случая.</p>
+
+    <!-- SVG: падение тела -->
+    <div class="illus">
+      <svg width="680" height="290" viewBox="0 0 680 290" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#1e3a5f;border-radius:12px;">
+
+        <!-- земля -->
+        <rect x="0" y="265" width="680" height="25" fill="#3e2723"/>
+        <text x="300" y="280" fill="#795548" font-size="12">земля (h = 0)</text>
+
+        <!-- === ПАДЕНИЕ ТЕЛА === -->
+        <text x="30" y="26" fill="#90caf9" font-size="14" font-weight="bold">Падение тела: Ep → Ek</text>
+
+        <!-- позиция 1: максимальная высота -->
+        <rect x="50" y="45" width="50" height="30" rx="5" fill="#1565c0" stroke="#42a5f5" stroke-width="2"/>
+        <text x="58" y="65" fill="#fff" font-size="12" font-weight="bold">тело</text>
+        <!-- Ep макс -->
+        <rect x="30" y="80" width="12" height="60" rx="3" fill="#1565c0" opacity="0.9"/>
+        <rect x="46" y="120" width="12" height="20" rx="3" fill="#e65100" opacity="0.4"/>
+        <text x="22" y="152" fill="#90caf9" font-size="11">Ep↑</text>
+        <text x="40" y="152" fill="#ffb74d" font-size="11">Ek↓</text>
+        <text x="20" y="168" fill="#aaa" font-size="11">v = 0</text>
+
+        <!-- стрелка вниз -->
+        <line x1="75" y1="77" x2="75" y2="118" stroke="#aaa" stroke-width="2" stroke-dasharray="6,4"/>
+        <polygon points="75,124 71,114 79,114" fill="#aaa"/>
+
+        <!-- позиция 2: промежуточная -->
+        <rect x="50" y="128" width="50" height="30" rx="5" fill="#37474f" stroke="#78909c" stroke-width="2"/>
+        <text x="58" y="148" fill="#fff" font-size="12">тело</text>
+        <rect x="30" y="162" width="12" height="40" rx="3" fill="#1565c0" opacity="0.7"/>
+        <rect x="46" y="162" width="12" height="40" rx="3" fill="#e65100" opacity="0.7"/>
+        <text x="22" y="214" fill="#90caf9" font-size="11">Ep</text>
+        <text x="40" y="214" fill="#ffb74d" font-size="11">Ek</text>
+
+        <!-- стрелка вниз -->
+        <line x1="75" y1="160" x2="75" y2="202" stroke="#aaa" stroke-width="2" stroke-dasharray="6,4"/>
+        <polygon points="75,208 71,198 79,198" fill="#aaa"/>
+
+        <!-- позиция 3: у земли -->
+        <rect x="50" y="210" width="50" height="30" rx="5" fill="#c62828" stroke="#ff5252" stroke-width="2"/>
+        <text x="58" y="230" fill="#fff" font-size="12">тело</text>
+        <rect x="30" y="244" width="12" height="10" rx="3" fill="#1565c0" opacity="0.3"/>
+        <rect x="46" y="244" width="12" height="60" rx="3" fill="#e65100" opacity="0.9"/>
+        <text x="20" y="262" fill="#aaa" font-size="11">v — макс</text>
+
+        <!-- подписи -->
+        <text x="22" y="250" fill="#90caf9" font-size="11">Ep↓</text>
+        <text x="40" y="250" fill="#ffb74d" font-size="11">Ek↑</text>
+
+        <!-- === БРОСОК ВВЕРХ === -->
+        <text x="230" y="26" fill="#90caf9" font-size="14" font-weight="bold">Бросок вверх: Ek → Ep</text>
+
+        <!-- позиция 1: у земли -->
+        <rect x="260" y="210" width="50" height="30" rx="5" fill="#c62828" stroke="#ff5252" stroke-width="2"/>
+        <text x="268" y="230" fill="#fff" font-size="12">тело</text>
+        <text x="248" y="250" fill="#aaa" font-size="11">v — макс</text>
+        <!-- стрелки -->
+        <line x1="285" y1="208" x2="285" y2="166" stroke="#aaa" stroke-width="2" stroke-dasharray="6,4"/>
+        <polygon points="285,160 281,170 289,170" fill="#aaa"/>
+
+        <!-- позиция 2: промежуточная -->
+        <rect x="260" y="128" width="50" height="30" rx="5" fill="#37474f" stroke="#78909c" stroke-width="2"/>
+        <text x="268" y="148" fill="#fff" font-size="12">тело</text>
+        <line x1="285" y1="126" x2="285" y2="84" stroke="#aaa" stroke-width="2" stroke-dasharray="6,4"/>
+        <polygon points="285,78 281,88 289,88" fill="#aaa"/>
+
+        <!-- позиция 3: максимальная высота -->
+        <rect x="260" y="45" width="50" height="30" rx="5" fill="#1565c0" stroke="#42a5f5" stroke-width="2"/>
+        <text x="268" y="65" fill="#fff" font-size="12">тело</text>
+        <text x="248" y="88" fill="#aaa" font-size="11">v = 0</text>
+
+        <!-- === МАЯТНИК: Ep ↔ Ek === -->
+        <text x="430" y="26" fill="#90caf9" font-size="14" font-weight="bold">Маятник</text>
+
+        <!-- опора -->
+        <rect x="490" y="20" width="60" height="12" rx="3" fill="#546e7a"/>
+        <circle cx="520" cy="32" r="5" fill="#78909c"/>
+
+        <!-- маятник левая крайняя -->
+        <line x1="520" y1="32" x2="466" y2="140" stroke="#b0bec5" stroke-width="2"/>
+        <circle cx="466" cy="148" r="18" fill="#1565c0" stroke="#42a5f5" stroke-width="2"/>
+        <text x="456" y="153" fill="#fff" font-size="11">Ep↑</text>
+        <text x="444" y="168" fill="#aaa" font-size="11">Ek=0</text>
+
+        <!-- маятник нижняя точка -->
+        <line x1="520" y1="32" x2="520" y2="192" stroke="#b0bec5" stroke-width="2" stroke-dasharray="6,4"/>
+        <circle cx="520" cy="204" r="18" fill="#e65100" stroke="#ff9800" stroke-width="2"/>
+        <text x="510" y="209" fill="#fff" font-size="11">Ek↑</text>
+        <text x="508" y="224" fill="#aaa" font-size="11">Ep=0</text>
+        <!-- стрелка скорости -->
+        <line x1="538" y1="204" x2="568" y2="204" stroke="#66bb6a" stroke-width="2.5"/>
+        <polygon points="574,204 564,200 564,208" fill="#66bb6a"/>
+        <text x="555" y="198" fill="#66bb6a" font-size="12">v макс</text>
+
+        <!-- маятник правая крайняя -->
+        <line x1="520" y1="32" x2="574" y2="140" stroke="#b0bec5" stroke-width="2"/>
+        <circle cx="574" cy="148" r="18" fill="#1565c0" stroke="#42a5f5" stroke-width="2"/>
+        <text x="564" y="153" fill="#fff" font-size="11">Ep↑</text>
+        <text x="562" y="168" fill="#aaa" font-size="11">Ek=0</text>
+
+        <!-- дуга траектории -->
+        <path d="M466,148 Q520,230 574,148" stroke="#aaa" stroke-width="1.5" fill="none" stroke-dasharray="5,5"/>
+      </svg>
+    </div>
+
+    <p>Если отпустить тело, поднятое над землёй, его <strong>потенциальная энергия будет уменьшаться</strong>, а скорость — увеличиваться. Значит, <strong>кинетическая энергия будет увеличиваться</strong>.</p>
+
+    <p>Если подбросить тело вверх, скорость в начале максимальна → Ek максимальна. По мере подъёма скорость уменьшается → Ek уменьшается, а Ep увеличивается. В высшей точке скорость равна нулю → Ek = 0, Ep = максимум.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Положение тела</th><th>Ep (потенциальная)</th><th>Ek (кинетическая)</th><th>Ep + Ek</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Верхняя точка (h = max)</td>
+          <td class="ep">Максимальная ↑</td>
+          <td class="ek">= 0 (v = 0)</td>
+          <td style="font-weight:700;">= const</td>
+        </tr>
+        <tr>
+          <td>Промежуточное положение</td>
+          <td class="ep">Частично</td>
+          <td class="ek">Частично</td>
+          <td style="font-weight:700;">= const</td>
+        </tr>
+        <tr>
+          <td>Нижняя точка (h = 0)</td>
+          <td class="ep">= 0</td>
+          <td class="ek">Максимальная ↑</td>
+          <td style="font-weight:700;">= const</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box">
+      📐 <strong>Уменьшение потенциальной энергии сопровождается увеличением кинетической, и наоборот.</strong><br>
+      Сумма их остаётся постоянной — это и есть закон сохранения механической энергии.
+    </div>
+
+    <div class="formula-box green-f">
+      Ep + Ek = const (постоянна)
+      <div class="label" style="color:#33691e;">Закон сохранения механической энергии — выполняется при отсутствии сил трения</div>
+    </div>
+
+    <div class="warn-box">
+      ⚠️ <strong>Условие закона:</strong> В системах, где <strong>отсутствуют силы трения</strong>, насколько уменьшится потенциальная энергия — настолько же увеличится кинетическая, и наоборот:<br>
+      <div style="text-align:center; font-size:19px; font-weight:800; color:#e65100; margin:10px 0;">ΔEp = −ΔEk</div>
+      При наличии трения часть энергии уходит в тепло, и полная механическая энергия уменьшается.
+    </div>
+
+    <!-- ИТОГОВАЯ ТАБЛИЦА ФОРМУЛ -->
+    <h3>📋 Итоговая таблица формул</h3>
+    <table class="tbl">
+      <thead><tr><th>Величина</th><th>Обозначение</th><th>Формула</th><th>Единица</th></tr></thead>
+      <tbody>
+        <tr><td>Энергия</td><td>E</td><td>—</td><td>Дж</td></tr>
+        <tr><td>Сила тяжести</td><td>Fтяж</td><td><strong>Fтяж = mg</strong></td><td>Н</td></tr>
+        <tr><td>Потенциальная энергия</td><td class="ep">Ep</td><td class="ep"><strong>Ep = mgh</strong></td><td>Дж</td></tr>
+        <tr><td>Кинетическая энергия</td><td class="ek">Ek</td><td class="ek"><strong>Ek = mv²/2</strong></td><td>Дж</td></tr>
+        <tr><td>Закон сохранения энергии</td><td>—</td><td><strong>Ep + Ek = const</strong></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─────────────── РАЗДЕЛ 5: НЕБЕСНАЯ МЕХАНИКА ─────────────── -->
+  <div class="card" style="border-top: 4px solid #7c4dff;">
+    <h2 style="border-color:#7c4dff; color:#4527a0;">
+      §5. ⚠️ Важный момент небесной механики: предел формулы Ep = mgh
+    </h2>
+
+    <div class="def-box" style="background:#ede7f6; border-color:#7c4dff;">
+      Формула <strong>Ep = mgh</strong> — это <strong>приближённая</strong> формула, которая работает только когда высота тела мала по сравнению с радиусом планеты. Для спутников, космических аппаратов и межпланетных полётов нужна другая формула.
+    </div>
+
+    <!-- ── ЧАСТЬ 1: Почему mgh перестаёт работать ── -->
+    <h3>1. Почему Ep = mgh перестаёт работать?</h3>
+    <p>В формуле <strong>Ep = mgh</strong> предполагается, что ускорение свободного падения <strong>g постоянно</strong>. Но в действительности гравитация Земли <strong>ослабевает с расстоянием</strong> от её центра:</p>
+
+    <div class="formula-box" style="background:linear-gradient(135deg,#ede7f6,#d1c4e9); border-color:#7c4dff; color:#4527a0; font-size:22px;">
+      g(r) = GM / r²
+      <div class="label" style="color:#7e57c2;">
+        G — гравитационная постоянная &nbsp;·&nbsp; M — масса Земли &nbsp;·&nbsp; r — расстояние от центра Земли
+      </div>
+    </div>
+
+    <!-- SVG: Земля и ослабевание g с высотой -->
+    <div class="illus">
+      <svg width="680" height="300" viewBox="0 0 680 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e1a;border-radius:12px;">
+
+        <!-- звёзды -->
+        <circle cx="30"  cy="20"  r="1.2" fill="#fff" opacity=".6"/>
+        <circle cx="80"  cy="50"  r="1"   fill="#fff" opacity=".5"/>
+        <circle cx="150" cy="15"  r="1.5" fill="#fff" opacity=".7"/>
+        <circle cx="220" cy="40"  r="1"   fill="#fff" opacity=".4"/>
+        <circle cx="600" cy="25"  r="1.2" fill="#fff" opacity=".6"/>
+        <circle cx="650" cy="60"  r="1"   fill="#fff" opacity=".5"/>
+        <circle cx="630" cy="10"  r="1.5" fill="#fff" opacity=".7"/>
+        <circle cx="20"  cy="200" r="1"   fill="#fff" opacity=".3"/>
+        <circle cx="660" cy="180" r="1.2" fill="#fff" opacity=".5"/>
+
+        <!-- Земля -->
+        <circle cx="130" cy="230" r="80" fill="#1565c0" stroke="#42a5f5" stroke-width="2"/>
+        <circle cx="130" cy="230" r="80" fill="url(#earthGrad)"/>
+        <defs>
+          <radialGradient id="earthGrad" cx="40%" cy="35%">
+            <stop offset="0%"   stop-color="#42a5f5" stop-opacity=".5"/>
+            <stop offset="100%" stop-color="#0d47a1" stop-opacity=".0"/>
+          </radialGradient>
+        </defs>
+        <!-- континенты (условно) -->
+        <ellipse cx="110" cy="210" rx="22" ry="14" fill="#2e7d32" opacity=".8" transform="rotate(-20,110,210)"/>
+        <ellipse cx="150" cy="240" rx="12" ry="20" fill="#2e7d32" opacity=".7" transform="rotate(10,150,240)"/>
+        <ellipse cx="125" cy="255" rx="18" ry="8"  fill="#2e7d32" opacity=".6"/>
+        <text x="95" y="234" fill="#fff" font-size="13" font-weight="bold">Земля</text>
+
+        <!-- Радиус R -->
+        <line x1="130" y1="230" x2="130" y2="150" stroke="#90caf9" stroke-width="1.5" stroke-dasharray="4,4"/>
+        <text x="135" y="195" fill="#90caf9" font-size="12">R</text>
+
+        <!-- УРОВНИ ВЫСОТЫ с телами и значениями g -->
+
+        <!-- h = 100 м (почти у поверхности) -->
+        <circle cx="215" cy="148" r="8" fill="#66bb6a" stroke="#43a047" stroke-width="1.5"/>
+        <line x1="130" y1="150" x2="207" y2="148" stroke="#66bb6a" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="225" y="143" fill="#66bb6a" font-size="12" font-weight="bold">h = 100 м</text>
+        <text x="225" y="158" fill="#66bb6a" font-size="12">g ≈ 9.80 Н/кг</text>
+        <text x="225" y="173" fill="#aaa" font-size="11">≈ поверхность Земли</text>
+        <!-- стрелка g -->
+        <line x1="215" y1="158" x2="215" y2="175" stroke="#ff5252" stroke-width="2"/>
+        <polygon points="215,180 211,170 219,170" fill="#ff5252"/>
+
+        <!-- h = 400 км (МКС) -->
+        <circle cx="310" cy="100" r="8" fill="#ffb74d" stroke="#ff8f00" stroke-width="1.5"/>
+        <line x1="130" y1="150" x2="302" y2="102" stroke="#ffb74d" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="320" y="95" fill="#ffb74d" font-size="12" font-weight="bold">h = 400 км (МКС)</text>
+        <text x="320" y="110" fill="#ffb74d" font-size="12">g ≈ 8.69 Н/кг</text>
+        <text x="320" y="125" fill="#aaa" font-size="11">на 11% меньше!</text>
+        <!-- стрелка g (меньше) -->
+        <line x1="310" y1="110" x2="310" y2="122" stroke="#ff5252" stroke-width="2"/>
+        <polygon points="310,127 306,117 314,117" fill="#ff5252"/>
+
+        <!-- h = 36 000 км (геостационарная) -->
+        <circle cx="440" cy="55" r="8" fill="#ff5252" stroke="#c62828" stroke-width="1.5"/>
+        <line x1="130" y1="150" x2="432" y2="58" stroke="#ff5252" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="450" y="45" fill="#ff5252" font-size="12" font-weight="bold">h = 36 000 км</text>
+        <text x="450" y="60" fill="#ff5252" font-size="12">(геостационарная)</text>
+        <text x="450" y="75" fill="#ff9800" font-size="12">g ≈ 0.224 Н/кг</text>
+        <text x="450" y="90" fill="#aaa" font-size="11">в 44 раза меньше!</text>
+        <!-- стрелка g (совсем маленькая) -->
+        <line x1="440" y1="65" x2="440" y2="70" stroke="#ff5252" stroke-width="2"/>
+        <polygon points="440,73 437,66 443,66" fill="#ff5252"/>
+
+        <!-- бесконечность -->
+        <text x="570" y="30" fill="#7c4dff" font-size="13" font-weight="bold">r → ∞</text>
+        <text x="570" y="47" fill="#7c4dff" font-size="12">g → 0</text>
+        <text x="570" y="62" fill="#aaa" font-size="11">Ep → 0</text>
+        <line x1="440" y1="55" x2="565" y2="30" stroke="#7c4dff" stroke-width="1" stroke-dasharray="5,5"/>
+
+        <!-- легенда -->
+        <circle cx="30" cy="275" r="6" fill="#66bb6a"/>
+        <text x="40" y="280" fill="#aaa" font-size="11">≈ поверхность</text>
+        <circle cx="130" cy="275" r="6" fill="#ffb74d"/>
+        <text x="140" y="280" fill="#aaa" font-size="11">низкая орбита</text>
+        <circle cx="240" cy="275" r="6" fill="#ff5252"/>
+        <text x="250" y="280" fill="#aaa" font-size="11">геостационарная</text>
+      </svg>
+    </div>
+
+    <p>Посмотри, что происходит при увеличении высоты:</p>
+    <ul>
+      <li>На высоте <strong>100 м</strong> — изменение гравитации практически незаметно: g ≈ 9.80 Н/кг (как у поверхности)</li>
+      <li>На высоте <strong>400 км</strong> (орбита МКС) — ускорение свободного падения уже <strong>на 11% меньше</strong>: g ≈ 8.69 Н/кг</li>
+      <li>На расстоянии <strong>36 000 км</strong> (геостационарная орбита) — g в <strong>44 раза меньше</strong> земного!</li>
+    </ul>
+
+    <div class="warn-box">
+      ⚠️ На космических расстояниях использовать <strong>постоянное g</strong> совершенно неправильно. Формула Ep = mgh здесь даёт огромные ошибки.
+    </div>
+
+    <!-- ── ЧАСТЬ 2: Интерактивное сравнение ── -->
+    <h3>2. Интерактивное сравнение: mgh vs −GMm/r</h3>
+    <p>Измените массу и высоту — посмотрите, как расходятся две формулы при больших высотах:</p>
+
+    <div style="background:#1a1a2e; border-radius:12px; padding:20px; margin:16px 0;">
+      <div class="slider-row" style="margin-bottom:12px;">
+        <label style="color:#ccc; min-width:100px;">Масса тела</label>
+        <input type="range" id="slGravM" min="0.1" max="1000" step="0.1" value="2" oninput="calcGrav()">
+        <span class="slider-val" style="color:#90caf9;"><span id="vGravM">2.0</span> кг</span>
+      </div>
+      <div class="slider-row">
+        <label style="color:#ccc; min-width:100px;">Высота</label>
+        <input type="range" id="slGravH" min="0" max="40000" step="10" value="50" oninput="calcGrav()">
+        <span class="slider-val" style="color:#90caf9;"><span id="vGravH">50</span> м</span>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px;">
+        <div style="background:#1565c0; border-radius:10px; padding:16px; text-align:center;">
+          <div style="color:#90caf9; font-size:12px; margin-bottom:8px; font-weight:600;">ПРИБЛИЖЁННАЯ (для малых h)</div>
+          <div style="color:#fff; font-size:17px; font-weight:700; margin-bottom:6px;">Ep = mgh</div>
+          <div style="color:#ffeb3b; font-size:22px; font-weight:800;" id="epMgh">— Дж</div>
+          <div style="color:#90caf9; font-size:12px; margin-top:6px;">g = 9.81 Н/кг (const)</div>
+        </div>
+        <div style="background:#4a148c; border-radius:10px; padding:16px; text-align:center;">
+          <div style="color:#ce93d8; font-size:12px; margin-bottom:8px; font-weight:600;">ТОЧНАЯ (для любых расстояний)</div>
+          <div style="color:#fff; font-size:17px; font-weight:700; margin-bottom:6px;">Ep = −GMm/r</div>
+          <div style="color:#ffeb3b; font-size:22px; font-weight:800;" id="epGmm">— Дж</div>
+          <div style="color:#ce93d8; font-size:12px; margin-top:6px;">G = 6.674×10⁻¹¹ Н·м²/кг²</div>
+        </div>
+      </div>
+
+      <div style="background:#0d1b2a; border-radius:10px; padding:12px; margin-top:14px; text-align:center;">
+        <span style="color:#aaa; font-size:13px;">Погрешность приближённой формулы: </span>
+        <span style="color:#ff9800; font-size:16px; font-weight:800;" id="epError">—</span>
+      </div>
+
+      <canvas id="canvasGravCompare" width="620" height="160" style="margin:16px auto 0; display:block; border-radius:10px; background:#0d1b2a;"></canvas>
+    </div>
+
+    <!-- ── ЧАСТЬ 3: Формула ── -->
+    <h3>3. Универсальная формула гравитационной потенциальной энергии</h3>
+    <p>Используем <strong>закон всемирного тяготения</strong>:</p>
+
+    <div class="formula-box" style="background:linear-gradient(135deg,#ede7f6,#d1c4e9); border-color:#7c4dff; color:#4527a0;">
+      F = GMm / r²
+      <div class="label" style="color:#7e57c2;">Закон всемирного тяготения (Ньютон, 1687)</div>
+    </div>
+
+    <p>Из него выводится формула гравитационной потенциальной энергии. Если выбрать нулевой уровень на бесконечности (r → ∞), получаем:</p>
+
+    <div class="formula-box" style="background:linear-gradient(135deg,#1a0533,#2d1b69); border: 3px solid #7c4dff; color:#e1bee7; font-size:28px;">
+      Ep = − GMm / r
+      <div class="label" style="color:#b39ddb; font-size:14px;">Универсальная формула гравитационной потенциальной энергии</div>
+    </div>
+
+    <!-- таблица обозначений -->
+    <table class="tbl" style="margin-top:14px;">
+      <thead><tr><th>Обозначение</th><th>Значение</th><th>Единица</th></tr></thead>
+      <tbody>
+        <tr><td><strong>G</strong></td><td>Гравитационная постоянная</td><td>6.674 × 10⁻¹¹ Н·м²/кг²</td></tr>
+        <tr><td><strong>M</strong></td><td>Масса планеты (Земли)</td><td>5.972 × 10²⁴ кг</td></tr>
+        <tr><td><strong>m</strong></td><td>Масса тела</td><td>кг</td></tr>
+        <tr><td><strong>r</strong></td><td>Расстояние от <em>центра</em> планеты</td><td>м</td></tr>
+        <tr><td><strong>Ep</strong></td><td>Гравитационная потенциальная энергия</td><td>Дж</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ── ЧАСТЬ 4: Почему минус ── -->
+    <h3>4. Два принципиальных отличия от Ep = mgh</h3>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0;">
+      <div class="step-box">
+        <span class="num">1</span>
+        <strong>Вместо h — расстояние r от центра планеты</strong><br>
+        Не от поверхности, а от центра! Если тело находится на поверхности Земли: r = R_Земли ≈ 6 371 км
+      </div>
+      <div class="step-box" style="background:#fce4ec; border-color:#f48fb1;">
+        <span class="num" style="background:#c62828;">2</span>
+        <strong>Знак «минус» перед формулой</strong><br>
+        Нулевой уровень выбран на <strong>бесконечности</strong>. Чем ближе к Земле — тем <strong>меньше</strong> (отрицательнее) энергия. Земля притягивает тело → оно «в яме» потенциальной энергии.
+      </div>
+    </div>
+
+    <!-- SVG: "яма потенциальной энергии" -->
+    <div class="illus">
+      <svg width="680" height="260" viewBox="0 0 680 260" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#0a0e1a;border-radius:12px;">
+
+        <!-- оси -->
+        <line x1="80" y1="20" x2="80" y2="220" stroke="#546e7a" stroke-width="2"/>
+        <line x1="80" y1="80" x2="660" y2="80" stroke="#546e7a" stroke-width="2"/>
+
+        <!-- подписи осей -->
+        <text x="85" y="18" fill="#aaa" font-size="13" font-weight="bold">Ep</text>
+        <text x="650" y="96" fill="#aaa" font-size="13" font-weight="bold">r</text>
+
+        <!-- нулевой уровень (r→∞) -->
+        <text x="440" y="74" fill="#7c4dff" font-size="12">Ep = 0 (r → ∞)</text>
+        <line x1="80" y1="80" x2="660" y2="80" stroke="#7c4dff" stroke-width="1" stroke-dasharray="6,4"/>
+
+        <!-- кривая -GMm/r -->
+        <path d="M100,220 Q130,210 160,195 Q200,172 250,152 Q320,124 400,104 Q480,90 580,82 Q620,80 660,80"
+              stroke="#ce93d8" stroke-width="3" fill="none"/>
+
+        <!-- поверхность Земли -->
+        <line x1="160" y1="20" x2="160" y2="230" stroke="#ff5252" stroke-width="1.5" stroke-dasharray="5,5"/>
+        <text x="118" y="240" fill="#ff5252" font-size="11">r = R_Земли</text>
+        <text x="122" y="252" fill="#ff5252" font-size="11">(поверхность)</text>
+
+        <!-- точка на поверхности -->
+        <circle cx="160" cy="195" r="6" fill="#ff5252" stroke="#ff8a80" stroke-width="2"/>
+        <text x="168" y="192" fill="#ff5252" font-size="12" font-weight="bold">Ep = −GMm/R</text>
+        <text x="168" y="207" fill="#ff5252" font-size="11">(минимум у поверхности)</text>
+
+        <!-- МКС -->
+        <circle cx="260" cy="150" r="6" fill="#ffb74d" stroke="#ff8f00" stroke-width="2"/>
+        <text x="268" y="147" fill="#ffb74d" font-size="11">МКС (400 км)</text>
+
+        <!-- геостационарная -->
+        <circle cx="440" cy="102" r="6" fill="#66bb6a" stroke="#43a047" stroke-width="2"/>
+        <text x="448" y="99" fill="#66bb6a" font-size="11">ГСО (36 000 км)</text>
+
+        <!-- Ep оси значения -->
+        <text x="30" y="84" fill="#7c4dff" font-size="11">0</text>
+        <text x="22" y="200" fill="#ff5252" font-size="11">−Emin</text>
+
+        <!-- стрелка: тело нужно "вытащить" из ямы -->
+        <path d="M400,160 Q380,120 370,90" stroke="#ffcc02" stroke-width="1.5" fill="none" stroke-dasharray="4,4"/>
+        <text x="402" y="168" fill="#ffcc02" font-size="12">Нужна энергия,</text>
+        <text x="402" y="183" fill="#ffcc02" font-size="12">чтобы вырваться</text>
+        <text x="402" y="198" fill="#ffcc02" font-size="12">из «ямы»!</text>
+      </svg>
+    </div>
+
+    <div class="warn-box" style="border-color:#7c4dff; background:#ede7f6;">
+      🌌 <strong>Физический смысл знака «−»:</strong><br>
+      Нулевой уровень выбран на бесконечности (r → ∞ → Ep = 0). Земля <em>притягивает</em> тело, поэтому при приближении к ней тело <em>теряет</em> потенциальную энергию — она становится отрицательной. Тело находится в «яме» гравитационного потенциала. Чтобы его «вытащить» на бесконечность, нужно сообщить ему энергию ровно <strong>GMm/r</strong> — это и есть вторая космическая скорость!
+    </div>
+
+    <!-- ── ЧАСТЬ 5: Вывод ── -->
+    <h3>5. Как связаны обе формулы?</h3>
+
+    <div class="tip-box" style="border-color:#7c4dff; background:#ede7f6;">
+      🔗 <strong>Формула mgh — это частный случай −GMm/r.</strong><br><br>
+      Если r = R + h, где h &lt;&lt; R (высота намного меньше радиуса Земли), то:<br><br>
+      <div style="text-align:center; font-size:16px; font-weight:700; color:#4527a0; margin:10px 0;">
+        ΔEp = GMm/R − GMm/(R+h) ≈ mgh
+      </div>
+      Это математически точно доказывается через разложение в ряд Тейлора. Результат: при малых высотах обе формулы дают одинаковый ответ!
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>Формула</th><th>Когда применять</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="ep"><strong>Ep = mgh</strong></td>
+          <td>Малые высоты (h &lt;&lt; R Земли)</td>
+          <td>Мяч, лестница, здание, самолёт</td>
+        </tr>
+        <tr>
+          <td style="color:#7c4dff; font-weight:700;"><strong>Ep = −GMm/r</strong></td>
+          <td>Любые расстояния, включая космические</td>
+          <td>Спутники, ракеты, планеты</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /tab-lesson -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: АНИМАЦИИ
+══════════════════════════════════════════════════════ -->
+<div id="tab-animations" class="tab-panel">
+
+  <div class="card">
+    <h2>🎬 Анимация 1: Падение шара — переход Ep → Ek</h2>
+    <p>Наблюдайте, как потенциальная энергия переходит в кинетическую. Полоски показывают процентное соотношение энергий.</p>
+    <div class="anim-wrap">
+      <canvas id="canvasFall" width="380" height="360"></canvas>
+      <div class="ebar-wrap">
+        <div class="ebar-col">
+          <div class="ebar-val" id="epVal1">100%</div>
+          <div class="ebar-track"><div class="ebar-fill" id="epBar1" style="height:80px;background:#1565c0;"></div></div>
+          <div class="ebar-label" style="color:#90caf9">Ep</div>
+        </div>
+        <div class="ebar-col">
+          <div class="ebar-val" id="ekVal1">0%</div>
+          <div class="ebar-track"><div class="ebar-fill" id="ekBar1" style="height:0px;background:#e65100;"></div></div>
+          <div class="ebar-label" style="color:#ffb74d">Ek</div>
+        </div>
+        <div class="ebar-col">
+          <div class="ebar-val" id="etVal1">100%</div>
+          <div class="ebar-track"><div class="ebar-fill" id="etBar1" style="height:80px;background:#2e7d32;"></div></div>
+          <div class="ebar-label" style="color:#a5d6a7">E=const</div>
+        </div>
+      </div>
+      <div class="anim-controls">
+        <button class="btn" onclick="fallAnim.reset()">🔄 Сброс</button>
+        <button class="btn accent" onclick="fallAnim.toggle()" id="fallBtn">▶ Пуск</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎬 Анимация 2: Маятник — колебание Ep ↔ Ek</h2>
+    <p>В крайних точках — вся энергия потенциальная (v = 0). В нижней точке — вся кинетическая (v = максимальна).</p>
+    <div class="anim-wrap">
+      <canvas id="canvasPend" width="380" height="300"></canvas>
+      <div class="ebar-wrap">
+        <div class="ebar-col">
+          <div class="ebar-val" id="epVal2">0%</div>
+          <div class="ebar-track"><div class="ebar-fill" id="epBar2" style="height:0px;background:#1565c0;"></div></div>
+          <div class="ebar-label" style="color:#90caf9">Ep</div>
+        </div>
+        <div class="ebar-col">
+          <div class="ebar-val" id="ekVal2">100%</div>
+          <div class="ebar-track"><div class="ebar-fill" id="ekBar2" style="height:80px;background:#e65100;"></div></div>
+          <div class="ebar-label" style="color:#ffb74d">Ek</div>
+        </div>
+      </div>
+      <div class="anim-controls">
+        <button class="btn accent" onclick="pendAnim.toggle()" id="pendBtn">⏸ Пауза</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎬 Анимация 3: Сжатая пружина</h2>
+    <p>Сжатая пружина обладает потенциальной энергией. При освобождении она разгоняет шар — Ep переходит в Ek.</p>
+    <div class="anim-wrap">
+      <canvas id="canvasSpring" width="380" height="200"></canvas>
+      <div class="anim-controls">
+        <button class="btn" onclick="springAnim.compress()">🔽 Сжать</button>
+        <button class="btn accent" onclick="springAnim.release()">🚀 Отпустить</button>
+        <button class="btn" onclick="springAnim.reset()">🔄 Сброс</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: КАЛЬКУЛЯТОР
+══════════════════════════════════════════════════════ -->
+<div id="tab-calculator" class="tab-panel">
+  <div class="card">
+    <h2>🔢 Калькулятор потенциальной энергии</h2>
+    <p style="color:var(--muted)">Формула: <strong>Ep = m · g · h</strong>, где g = 10 Н/кг</p>
+    <div class="slider-row">
+      <label>Масса (m)</label>
+      <input type="range" id="slMass" min="0.1" max="100" step="0.1" value="5" oninput="calcEp()">
+      <span class="slider-val"><span id="vMass">5.0</span> кг</span>
+    </div>
+    <div class="slider-row">
+      <label>Высота (h)</label>
+      <input type="range" id="slH" min="0" max="100" step="0.5" value="10" oninput="calcEp()">
+      <span class="slider-val"><span id="vH">10.0</span> м</span>
+    </div>
+    <div class="formula-box" id="epResult" style="font-size:26px;">Ep = 500 Дж</div>
+    <canvas id="canvasEpViz" width="380" height="160" style="margin:0 auto; display:block;"></canvas>
+  </div>
+
+  <div class="card">
+    <h2>🔢 Калькулятор кинетической энергии</h2>
+    <p style="color:var(--muted)">Формула: <strong>Ek = m · v² / 2</strong></p>
+    <div class="slider-row">
+      <label>Масса (m)</label>
+      <input type="range" id="slMass2" min="0.1" max="100" step="0.1" value="5" oninput="calcEk()">
+      <span class="slider-val"><span id="vMass2">5.0</span> кг</span>
+    </div>
+    <div class="slider-row">
+      <label>Скорость (v)</label>
+      <input type="range" id="slV" min="0" max="50" step="0.5" value="10" oninput="calcEk()">
+      <span class="slider-val"><span id="vV">10.0</span> м/с</span>
+    </div>
+    <div class="formula-box orange" id="ekResult" style="font-size:26px;">Ek = 250 Дж</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: КВИЗ
+══════════════════════════════════════════════════════ -->
+<div id="tab-quiz" class="tab-panel">
+  <div class="card">
+    <h2>✅ Проверь себя</h2>
+    <p style="color:var(--muted); margin-bottom:16px;">Выбери правильный ответ — результат появится сразу.</p>
+
+    <div class="quiz-card" id="q1">
+      <div class="q">1. Единица измерения энергии — это…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q1',false)">Ньютон (Н)</div>
+        <div class="quiz-opt" onclick="answer(this,'q1',true)">Джоуль (Дж)</div>
+        <div class="quiz-opt" onclick="answer(this,'q1',false)">Ватт (Вт)</div>
+        <div class="quiz-opt" onclick="answer(this,'q1',false)">Килограмм (кг)</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q2">
+      <div class="q">2. По какой формуле вычисляется потенциальная энергия поднятого тела?</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q2',false)">Ep = mv</div>
+        <div class="quiz-opt" onclick="answer(this,'q2',false)">Ep = mv²</div>
+        <div class="quiz-opt" onclick="answer(this,'q2',true)">Ep = mgh</div>
+        <div class="quiz-opt" onclick="answer(this,'q2',false)">Ep = mg/h</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q3">
+      <div class="q">3. Что происходит с кинетической энергией при падении тела?</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q3',false)">Уменьшается</div>
+        <div class="quiz-opt" onclick="answer(this,'q3',true)">Увеличивается</div>
+        <div class="quiz-opt" onclick="answer(this,'q3',false)">Остаётся постоянной</div>
+        <div class="quiz-opt" onclick="answer(this,'q3',false)">Равна нулю</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q4">
+      <div class="q">4. Тело массой 2 кг поднято на высоту 5 м. Чему равна его Ep? (g = 10 Н/кг)</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q4',false)">10 Дж</div>
+        <div class="quiz-opt" onclick="answer(this,'q4',false)">50 Дж</div>
+        <div class="quiz-opt" onclick="answer(this,'q4',true)">100 Дж</div>
+        <div class="quiz-opt" onclick="answer(this,'q4',false)">200 Дж</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q5">
+      <div class="q">5. В нижней точке маятника его кинетическая энергия…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q5',false)">Равна нулю</div>
+        <div class="quiz-opt" onclick="answer(this,'q5',true)">Максимальная</div>
+        <div class="quiz-opt" onclick="answer(this,'q5',false)">Равна потенциальной</div>
+        <div class="quiz-opt" onclick="answer(this,'q5',false)">Не определена</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q6">
+      <div class="q">6. Формула кинетической энергии:</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q6',false)">Ek = mv</div>
+        <div class="quiz-opt" onclick="answer(this,'q6',true)">Ek = mv²/2</div>
+        <div class="quiz-opt" onclick="answer(this,'q6',false)">Ek = mgh</div>
+        <div class="quiz-opt" onclick="answer(this,'q6',false)">Ek = Fh</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q7">
+      <div class="q">7. Чему равна сила тяжести тела массой 3 кг? (g = 10 Н/кг)</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q7',false)">3 Н</div>
+        <div class="quiz-opt" onclick="answer(this,'q7',true)">30 Н</div>
+        <div class="quiz-opt" onclick="answer(this,'q7',false)">300 Н</div>
+        <div class="quiz-opt" onclick="answer(this,'q7',false)">0,3 Н</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q8">
+      <div class="q">8. Если скорость тела увеличится в 2 раза, кинетическая энергия…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q8',false)">Увеличится в 2 раза</div>
+        <div class="quiz-opt" onclick="answer(this,'q8',true)">Увеличится в 4 раза</div>
+        <div class="quiz-opt" onclick="answer(this,'q8',false)">Увеличится в 3 раза</div>
+        <div class="quiz-opt" onclick="answer(this,'q8',false)">Не изменится</div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px; text-align:center;">
+      <button class="btn" onclick="resetQuiz()">🔄 Пройти снова</button>
+      <div id="quizScore" style="font-size:17px; font-weight:700; margin-top:12px; color:var(--green);"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: КОНСПЕКТ УЧИТЕЛЯ
+══════════════════════════════════════════════════════ -->
+<div id="tab-teacher" class="tab-panel">
+
+  <div class="card"><div class="teacher-section">
+    <h2>👨‍🏫 Конспект учителя</h2>
+    <p style="color:var(--muted);">Урок 53 · 7 класс · Тема: Работа, мощность, энергия</p>
+  </div></div>
+
+  <div class="card"><div class="teacher-section">
+    <h2>📋 Паспорт урока</h2>
+    <table class="tbl">
+      <tr><td><strong>Тема</strong></td><td>Энергия. Потенциальная и кинетическая энергия. Превращения энергии</td></tr>
+      <tr><td><strong>Класс</strong></td><td>7</td></tr>
+      <tr><td><strong>Время</strong></td><td>45 минут</td></tr>
+      <tr><td><strong>Тип урока</strong></td><td>Комбинированный (изучение нового + закрепление)</td></tr>
+      <tr><td><strong>Оборудование</strong></td><td>Проектор / экран, мяч, пружина, груз, нитка (маятник), интерактивная доска</td></tr>
+    </table>
+  </div></div>
+
+  <div class="card"><div class="teacher-section">
+    <h2>🎯 Цели урока</h2>
+    <h3>Образовательные:</h3>
+    <ul>
+      <li>Ввести понятие <strong>энергии</strong> как физической величины</li>
+      <li>Сформировать понятия <strong>потенциальной</strong> и <strong>кинетической</strong> энергии</li>
+      <li>Вывести формулы <strong>Ep = mgh</strong> и <strong>Ek = mv²/2</strong>, связав с формулой <strong>Fтяж = mg</strong></li>
+      <li>Сформулировать <strong>закон сохранения механической энергии</strong></li>
+    </ul>
+    <h3>Развивающие:</h3>
+    <ul>
+      <li>Развивать умение наблюдать, анализировать, делать выводы</li>
+      <li>Формировать навык применения физических формул при решении задач</li>
+    </ul>
+    <h3>Воспитательные:</h3>
+    <ul>
+      <li>Формировать научное мышление и интерес к физике через наглядные примеры из жизни</li>
+    </ul>
+  </div></div>
+
+  <div class="card"><div class="teacher-section">
+    <h2>🗓 Поурочный план (45 мин)</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot">1</div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <strong><span class="badge blue">0–5 мин</span> Организационный момент и актуализация</strong>
+          <span>Вопросы: «Что такое работа? Что нужно, чтобы совершить работу?»<br>
+          Демо: мяч на высоте и у земли. «Какой из них может совершить больше работы?»</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot">2</div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <strong><span class="badge blue">5–17 мин</span> Понятие энергии. Потенциальная энергия</strong>
+          <span>Определение энергии. Единица измерения — Джоуль.<br>
+          Примеры: пружина, поднятый груз → потенциальная энергия взаимодействия.<br>
+          Напомнить: <strong>Fтяж = mg</strong>.<br>
+          <strong>Вывод формулы Ep = mgh</strong>: равномерный подъём → F = mg → A = mgh → Ep = mgh.<br>
+          Обсудить нулевой уровень. Пример с подоконником: A = ΔEp.</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot">3</div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <strong><span class="badge blue">17–27 мин</span> Кинетическая энергия</strong>
+          <span>Демо: молоток и гвоздь (или мяч на скорости).<br>
+          Определение Ek. Зависимость от m и v².<br>
+          <strong>Формула Ek = mv²/2.</strong> Акцент: скорость в квадрате!</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot">4</div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <strong><span class="badge blue">27–37 мин</span> Превращения энергии. Закон сохранения</strong>
+          <span>Анализ падения тела: Ep → Ek.<br>
+          Анализ броска вверх: Ek → Ep. Маятник — демонстрация.<br>
+          <strong>Закон: Ep + Ek = const</strong> (без трения). ΔEp = −ΔEk.</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot">5</div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <strong><span class="badge blue">37–45 мин</span> Закрепление и итог</strong>
+          <span>Решение 2–3 задач. Вопросы на понимание. Запись конспекта. Д/З.</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="card"><div class="teacher-section">
+    <h2>📌 Ключевые понятия и формулы (для доски)</h2>
+    <table class="tbl">
+      <thead><tr><th>Понятие</th><th>Определение</th><th>Формула</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Энергия E</strong></td><td>Способность тела совершать работу</td><td>[E] = Дж</td></tr>
+        <tr><td><strong>Сила тяжести</strong></td><td>Сила притяжения к Земле</td><td><strong>Fтяж = mg</strong></td></tr>
+        <tr><td><strong>Потенциальная Ep</strong></td><td>Энергия взаимодействия тел / частей</td><td class="ep"><strong>Ep = mgh</strong></td></tr>
+        <tr><td><strong>Кинетическая Ek</strong></td><td>Энергия движущегося тела</td><td class="ek"><strong>Ek = mv²/2</strong></td></tr>
+        <tr><td><strong>Закон сохранения</strong></td><td>Без трения полная энергия постоянна</td><td><strong>Ep + Ek = const</strong></td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <div class="card"><div class="teacher-section">
+    <h2>💡 Методические советы</h2>
+    <div class="tip-box">💡 <strong>Пример с молотком</strong> — один из лучших для объяснения кинетической энергии. Неподвижный молоток ничего не делает; движущийся совершает работу. Дополнительно: чем быстрее (v²!), тем больше энергии.</div>
+    <div class="tip-box">💡 <strong>Нулевой уровень.</strong> Обязательно подчеркните: Ep зависит от выбранного уровня отсчёта. Пример: энергия тела на столе = mgh_стол относительно земли, но = 0 относительно стола.</div>
+    <div class="tip-box">💡 <strong>Напоминание Fтяж = mg</strong> при выводе Ep = mgh обязательно! Ученики часто забывают, почему F = mg при равномерном подъёме. Объяснить: 2-й закон Ньютона → равновесие сил.</div>
+    <div class="warn-box">⚠️ <strong>Частая ошибка:</strong> путают A = Ep (неверно!) с A = ΔEp (верно!). Акцентируйте: работа = изменение энергии.</div>
+    <div class="warn-box">⚠️ <strong>В Ek = mv²/2</strong> скорость в квадрате. Увеличение v в 2 раза → Ek в 4 раза. Это важно проработать на примере (задача).</div>
+  </div></div>
+
+  <div class="card"><div class="teacher-section">
+    <h2>📝 Задачи для работы на уроке</h2>
+    <h3>Уровень 1 (базовый)</h3>
+    <ol>
+      <li>Тело массой 3 кг поднято на высоту 4 м. Найдите Ep. <em>(Ответ: 120 Дж)</em></li>
+      <li>Мяч 0,5 кг летит со скоростью 10 м/с. Найдите Ek. <em>(Ответ: 25 Дж)</em></li>
+      <li>Чему равна сила тяжести тела массой 5 кг? <em>(Ответ: 50 Н)</em></li>
+    </ol>
+    <h3>Уровень 2 (средний)</h3>
+    <ol>
+      <li>Тело массой 2 кг упало с высоты 5 м. Какова скорость у земли (без трения)? <em>(Ответ: 10 м/с)</em></li>
+      <li>Тело брошено вертикально вверх со скоростью 20 м/с. На какую высоту поднимется? <em>(Ответ: 20 м)</em></li>
+    </ol>
+    <div class="tip-box">💡 <strong>Решение задачи 2.1</strong> через закон сохранения:<br>
+    Ep(нач) = Ek(кон) → mgh = mv²/2 → v² = 2gh → v = √(2·10·5) = √100 = 10 м/с</div>
+    <h3>Уровень 3 (повышенный)</h3>
+    <ol>
+      <li>Тело скользит по наклонной плоскости без трения. Высота 3 м. Найдите скорость внизу. <em>(Ответ: ≈7,75 м/с)</em></li>
+    </ol>
+  </div></div>
+
+  <div class="card"><div class="teacher-section">
+    <h2>🏠 Домашнее задание</h2>
+    <ul>
+      <li>§28–29 учебника (прочитать, выучить определения и формулы)</li>
+      <li>Задачи: 2–3 задачи по Ep = mgh и Ek = mv²/2 из сборника задач</li>
+      <li><span class="badge green">★ Доп.</span> Найти пример превращения энергий в природе или технике и подготовить короткий рассказ</li>
+    </ul>
+  </div></div>
+
+</div><!-- /tab-teacher -->
+
+<!-- ══════════════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════════════ -->
+<script>
+// ── TABS ──
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── FALL ANIMATION ──
+const fallAnim = (() => {
+  const cv = document.getElementById('canvasFall');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const FLOOR = H - 30, TOP = 40, BR = 18;
+  let y = TOP + BR, vy = 0, running = false, raf;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const sky = ctx.createLinearGradient(0,0,0,H);
+    sky.addColorStop(0,'#0d1b2a'); sky.addColorStop(1,'#1a3a5c');
+    ctx.fillStyle = sky; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#3e2723'; ctx.fillRect(0,FLOOR,W,H-FLOOR);
+    ctx.fillStyle='#5d4037'; ctx.fillRect(0,FLOOR,W,4);
+
+    // Height line
+    ctx.strokeStyle='rgba(100,180,255,0.4)'; ctx.setLineDash([5,5]);
+    ctx.beginPath(); ctx.moveTo(W*.75,TOP+BR); ctx.lineTo(W*.75,FLOOR); ctx.stroke();
+    ctx.setLineDash([]);
+    const hFrac = Math.max(0, (FLOOR - y) / (FLOOR - TOP - BR));
+    ctx.fillStyle='#90caf9'; ctx.font='bold 13px sans-serif';
+    ctx.fillText('h = '+(hFrac*100).toFixed(0)+'%', W*.77, (TOP+BR+FLOOR)/2);
+
+    // Ball
+    const gr = ctx.createRadialGradient(W/2-5,y-5,2,W/2,y,BR);
+    gr.addColorStop(0,'#fff'); gr.addColorStop(.3,'#ff9800'); gr.addColorStop(1,'#e65100');
+    ctx.beginPath(); ctx.arc(W/2,y,BR,0,Math.PI*2);
+    ctx.fillStyle = gr; ctx.fill();
+
+    if(vy>0.5){
+      ctx.strokeStyle='#ff5722'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(W/2,y+BR); ctx.lineTo(W/2,y+BR+Math.min(vy*3,40)); ctx.stroke();
+      ctx.fillStyle='#ff5722';
+      ctx.beginPath();
+      const ay = y+BR+Math.min(vy*3,40);
+      ctx.moveTo(W/2,ay+8); ctx.lineTo(W/2-6,ay); ctx.lineTo(W/2+6,ay); ctx.fill();
+      ctx.lineWidth=1;
+    }
+
+    // Bars
+    const ep = hFrac, ek = 1-ep;
+    document.getElementById('epBar1').style.height=(ep*80)+'px';
+    document.getElementById('ekBar1').style.height=(ek*80)+'px';
+    document.getElementById('epVal1').textContent=(ep*100).toFixed(0)+'%';
+    document.getElementById('ekVal1').textContent=(ek*100).toFixed(0)+'%';
+  }
+
+  function step(){
+    if(!running) return;
+    vy += 0.4; y += vy;
+    if(y >= FLOOR-BR){ y=FLOOR-BR; running=false; document.getElementById('fallBtn').textContent='▶ Пуск'; }
+    draw();
+    if(running) raf=requestAnimationFrame(step);
+  }
+
+  function reset(){ running=false; cancelAnimationFrame(raf); y=TOP+BR; vy=0; document.getElementById('fallBtn').textContent='▶ Пуск'; draw(); }
+  function toggle(){
+    if(y>=FLOOR-BR-1) reset();
+    running=!running;
+    if(running){ document.getElementById('fallBtn').textContent='⏸ Пауза'; step(); }
+    else document.getElementById('fallBtn').textContent='▶ Продолжить';
+  }
+  draw();
+  return {reset,toggle};
+})();
+
+// ── PENDULUM ──
+const pendAnim = (() => {
+  const cv = document.getElementById('canvasPend');
+  const ctx = cv.getContext('2d');
+  const W=cv.width, H=cv.height;
+  let angle=Math.PI/4, omega=0, paused=false, raf;
+  const L=160, px=W/2, py=30;
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const bg=ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#0d1b2a'); bg.addColorStop(1,'#1a3a5c');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+    const bx=px+L*Math.sin(angle), by=py+L*Math.cos(angle);
+    ctx.strokeStyle='#ccc'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(bx,by); ctx.stroke();
+    ctx.fillStyle='#78909c'; ctx.beginPath(); ctx.arc(px,py,6,0,Math.PI*2); ctx.fill();
+
+    const ep=Math.abs(Math.sin(angle)), ek=Math.cos(Math.abs(angle));
+    const gr=ctx.createRadialGradient(bx-5,by-5,2,bx,by,20);
+    gr.addColorStop(0,'#fff'); gr.addColorStop(.3,'#7c4dff'); gr.addColorStop(1,'#311b92');
+    ctx.beginPath(); ctx.arc(bx,by,20,0,Math.PI*2); ctx.fillStyle=gr; ctx.fill();
+
+    ctx.font='bold 12px sans-serif';
+    ctx.fillStyle='#90caf9'; ctx.fillText('Ep: '+(ep*100).toFixed(0)+'%', bx+26, by-8);
+    ctx.fillStyle='#ffb74d'; ctx.fillText('Ek: '+(ek*100).toFixed(0)+'%', bx+26, by+12);
+
+    document.getElementById('epBar2').style.height=(ep*80)+'px';
+    document.getElementById('ekBar2').style.height=(ek*80)+'px';
+    document.getElementById('epVal2').textContent=(ep*100).toFixed(0)+'%';
+    document.getElementById('ekVal2').textContent=(ek*100).toFixed(0)+'%';
+  }
+
+  function step(){
+    if(!paused){ const g=10,dt=0.025; omega+=-(g/L*10)*Math.sin(angle)*dt; angle+=omega*dt; }
+    draw(); raf=requestAnimationFrame(step);
+  }
+  function toggle(){ paused=!paused; document.getElementById('pendBtn').textContent=paused?'▶ Продолжить':'⏸ Пауза'; }
+  step();
+  return {toggle};
+})();
+
+// ── SPRING ──
+const springAnim = (() => {
+  const cv=document.getElementById('canvasSpring');
+  const ctx=cv.getContext('2d');
+  const W=cv.width, H=cv.height;
+  let compression=0, ballX=0, ballV=0, state='idle', raf;
+  const wallX=20, sNat=120, ballR=20, floorY=H-30, ballY=floorY-ballR;
+
+  function drawSpring(x1,x2){
+    const n=10, seg=(x2-x1)/n, amp=10;
+    ctx.strokeStyle='#aaa'; ctx.lineWidth=2.5; ctx.beginPath(); ctx.moveTo(x1,ballY);
+    for(let i=0;i<=n;i++){
+      const xp=x1+seg*i;
+      if(i===0||i===n) ctx.lineTo(xp,ballY);
+      else ctx.lineTo(xp, ballY+(i%2===0?-amp:amp));
+    }
+    ctx.stroke();
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#3e2723'; ctx.fillRect(0,floorY,W,H-floorY);
+    ctx.fillStyle='#5d4037'; ctx.fillRect(0,floorY,W,3);
+    ctx.fillStyle='#546e7a'; ctx.fillRect(wallX,20,14,floorY-20);
+    const sLen=sNat*(1-compression*.6);
+    const sEnd=wallX+14+sLen;
+    drawSpring(wallX+14,sEnd);
+    const bx=state==='releasing'?ballX:sEnd+ballR;
+    const gr=ctx.createRadialGradient(bx-6,ballY-6,2,bx,ballY,ballR);
+    gr.addColorStop(0,'#fff'); gr.addColorStop(.3,'#ff9800'); gr.addColorStop(1,'#e65100');
+    ctx.beginPath(); ctx.arc(bx,ballY,ballR,0,Math.PI*2); ctx.fillStyle=gr; ctx.fill();
+    if(state==='compressed'){ ctx.fillStyle='#90caf9'; ctx.font='bold 14px sans-serif'; ctx.fillText('Ep = max!', sEnd+55, ballY); }
+    if(state==='releasing'&&ballX>W*.6){ ctx.fillStyle='#ffb74d'; ctx.font='bold 14px sans-serif'; ctx.fillText('Ek = max!', ballX+10, ballY-10); }
+  }
+
+  function compress(){ if(state==='releasing') return; state='compressed'; compression=.75; cancelAnimationFrame(raf); draw(); }
+  function release(){
+    if(state!=='compressed') return;
+    state='releasing'; ballX=wallX+14+sNat*(1-.75*.6)+ballR; ballV=6; compression=0;
+    function step(){ if(ballX>W+ballR){state='idle';draw();return;} ballX+=ballV; draw(); raf=requestAnimationFrame(step); }
+    step();
+  }
+  function reset(){ state='idle'; compression=0; ballX=0; ballV=0; cancelAnimationFrame(raf); draw(); }
+  draw();
+  return {compress,release,reset};
+})();
+
+// ── CALCULATORS ──
+function calcEp(){
+  const m=parseFloat(document.getElementById('slMass').value);
+  const h=parseFloat(document.getElementById('slH').value);
+  document.getElementById('vMass').textContent=m.toFixed(1);
+  document.getElementById('vH').textContent=h.toFixed(1);
+  const ep=m*10*h;
+  document.getElementById('epResult').innerHTML='Ep = '+m.toFixed(1)+' × 10 × '+h.toFixed(1)+' = <strong>'+ep.toFixed(1)+' Дж</strong>';
+  drawEpViz(m,h,ep);
+}
+function drawEpViz(m,h,ep){
+  const cv=document.getElementById('canvasEpViz');
+  const ctx=cv.getContext('2d');
+  const W=cv.width, H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,W,H);
+  const floorY=H-20, ballR=14;
+  const hNorm=Math.min(h/100,1);
+  const ballY=floorY-ballR-(hNorm*(H-60));
+  ctx.fillStyle='#3e2723'; ctx.fillRect(0,floorY,W,20);
+  ctx.strokeStyle='rgba(100,180,255,0.5)'; ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(W*.65,ballY); ctx.lineTo(W*.65,floorY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#90caf9'; ctx.font='bold 13px sans-serif';
+  ctx.fillText('h='+h.toFixed(1)+'м',W*.68,(ballY+floorY)/2+5);
+  const gr=ctx.createRadialGradient(W/2-4,ballY-4,2,W/2,ballY,ballR);
+  gr.addColorStop(0,'#fff'); gr.addColorStop(.3,'#42a5f5'); gr.addColorStop(1,'#0d47a1');
+  ctx.beginPath(); ctx.arc(W/2,ballY,ballR,0,Math.PI*2); ctx.fillStyle=gr; ctx.fill();
+  ctx.fillStyle='#fff'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+  ctx.fillText(m.toFixed(0)+' кг',W/2,floorY-5); ctx.textAlign='left';
+}
+function calcEk(){
+  const m=parseFloat(document.getElementById('slMass2').value);
+  const v=parseFloat(document.getElementById('slV').value);
+  document.getElementById('vMass2').textContent=m.toFixed(1);
+  document.getElementById('vV').textContent=v.toFixed(1);
+  const ek=.5*m*v*v;
+  document.getElementById('ekResult').innerHTML='Ek = ½ × '+m.toFixed(1)+' × '+v.toFixed(1)+'² = <strong>'+ek.toFixed(1)+' Дж</strong>';
+}
+calcEp(); calcEk();
+
+// ── GRAVITY COMPARISON CALCULATOR ──
+const G  = 6.674e-11;
+const ME = 5.972e24;
+const RE = 6.371e6;
+
+function calcGrav() {
+  const m = parseFloat(document.getElementById('slGravM').value);
+  const h = parseFloat(document.getElementById('slGravH').value);
+  document.getElementById('vGravM').textContent = m.toFixed(1);
+  document.getElementById('vGravH').textContent = h >= 1000
+    ? (h/1000).toFixed(1) + ' тыс. м (' + (h/1000).toFixed(1) + ' км)'
+    : h.toFixed(0);
+
+  // mgh
+  const Emgh = m * 9.81 * h;
+
+  // exact: ΔEp = -GMm/(R+h) - (-GMm/R) = GMm*(1/R - 1/(R+h))
+  const r = RE + h;
+  const Eexact = G * ME * m * (1/RE - 1/r);  // change from surface to height h
+
+  // absolute values on surface
+  const EpSurface = -G * ME * m / RE;
+  const EpAtH     = -G * ME * m / r;
+
+  // error
+  const err = Math.abs((Emgh - Eexact) / (Eexact || 1) * 100);
+
+  // format
+  function fmt(v) {
+    if (Math.abs(v) >= 1e9) return (v/1e9).toFixed(2) + ' ГДж';
+    if (Math.abs(v) >= 1e6) return (v/1e6).toFixed(2) + ' МДж';
+    if (Math.abs(v) >= 1e3) return (v/1e3).toFixed(2) + ' кДж';
+    return v.toFixed(1) + ' Дж';
+  }
+
+  document.getElementById('epMgh').textContent = '+' + fmt(Emgh);
+  document.getElementById('epGmm').textContent = fmt(EpAtH);
+  document.getElementById('epError').textContent = err.toFixed(3) + '% погрешности';
+
+  drawGravCompare(m, h, Emgh, Eexact);
+}
+
+function drawGravCompare(m, h, Emgh, Eexact) {
+  const cv  = document.getElementById('canvasGravCompare');
+  const ctx = cv.getContext('2d');
+  const W   = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0d1b2a'; ctx.fillRect(0,0,W,H);
+
+  // draw g(r) curve: show how g varies 0..40000km
+  const maxH = 40000e3;
+  const steps = 500;
+  ctx.beginPath(); ctx.strokeStyle = '#ce93d8'; ctx.lineWidth = 2.5;
+  for (let i = 0; i <= steps; i++) {
+    const hi = (i/steps) * maxH;
+    const ri = RE + hi;
+    const gi = G * ME / (ri * ri);
+    const gNorm = gi / 9.81; // normalised
+    const px = 60 + (i/steps) * (W - 80);
+    const py = H - 20 - gNorm * (H - 40);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // current h dot
+  const hNorm  = Math.min(h, 40000e3) / maxH;
+  const ri     = RE + h;
+  const gi     = G * ME / (ri * ri);
+  const gNorm  = gi / 9.81;
+  const dotX   = 60 + hNorm * (W - 80);
+  const dotY   = H - 20 - gNorm * (H - 40);
+  ctx.beginPath(); ctx.arc(dotX, dotY, 7, 0, Math.PI*2);
+  ctx.fillStyle = '#ffcc02'; ctx.fill();
+
+  // labels
+  ctx.fillStyle = '#aaa'; ctx.font = '12px sans-serif';
+  ctx.fillText('g(r) — ускорение свободного падения', 65, 18);
+  ctx.fillText('0 км', 55, H-5);
+  ctx.fillText('40 000 км', W-80, H-5);
+  ctx.fillStyle = '#90caf9';
+  ctx.fillText('g ≈ ' + gi.toFixed(2) + ' Н/кг  (h=' + (h>=1000?(h/1000).toFixed(0)+'км':(h+'м')) + ')', dotX+10, dotY-5);
+
+  // y-axis labels
+  ctx.fillStyle = '#aaa';
+  ctx.fillText('9.81', 10, H-18);
+  ctx.fillText('0', 10, 30);
+}
+
+calcGrav();
+
+// ── QUIZ ──
+const answered={};
+let correctCount=0;
+const totalQ=8;
+function answer(el,qId,isCorrect){
+  if(answered[qId]) return;
+  answered[qId]=true;
+  el.classList.add(isCorrect?'correct':'wrong');
+  if(!isCorrect) document.querySelectorAll('#'+qId+' .quiz-opt').forEach(o=>{ if(!o.classList.contains('wrong')) o.classList.add('correct'); });
+  else correctCount++;
+  if(Object.keys(answered).length===totalQ){
+    const score=document.getElementById('quizScore');
+    const pct=Math.round(correctCount/totalQ*100);
+    let emoji = pct===100?'🏆':pct>=75?'🎉':pct>=50?'👍':'📚';
+    score.textContent=emoji+' Результат: '+correctCount+' / '+totalQ+' ('+pct+'%)';
+  }
+}
+function resetQuiz(){
+  document.querySelectorAll('.quiz-opt').forEach(o=>o.classList.remove('correct','wrong'));
+  Object.keys(answered).forEach(k=>delete answered[k]);
+  correctCount=0;
+  document.getElementById('quizScore').textContent='';
+}
+</script>
+</body>
+</html>
