@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 53. Энергия. Потенциальная и кинетическая энергия</title>
+<style>
+  :root {
+    --primary: #1a237e;
+    --accent: #f57c00;
+    --green: #2e7d32;
+    --red: #c62828;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --text: #212121;
+    --muted: #546e7a;
+    --Ep-color: #1565c0;
+    --Ek-color: #e65100;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── TABS ── */
+  .tab-bar {
+    background: var(--primary);
+    display: flex;
+    gap: 4px;
+    padding: 10px 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  }
+  .tab-btn {
+    background: rgba(255,255,255,.15);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background .2s;
+    letter-spacing: .3px;
+  }
+  .tab-btn.active { background: var(--bg); color: var(--primary); }
+  .tab-btn:hover:not(.active) { background: rgba(255,255,255,.25); }
+
+  .tab-panel { display: none; padding: 24px 20px; max-width: 1000px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  }
+  .card h2 {
+    font-size: 20px;
+    color: var(--primary);
+    margin-bottom: 14px;
+    border-left: 4px solid var(--accent);
+    padding-left: 12px;
+  }
+  .card h3 {
+    font-size: 17px;
+    color: var(--primary);
+    margin: 16px 0 8px;
+  }
+  .card p { line-height: 1.75; margin-bottom: 10px; color: #37474f; }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: linear-gradient(135deg, #e8eaf6, #c5cae9);
+    border: 2px solid #5c6bc0;
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: .5px;
+  }
+  .formula-box .label {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .def-box {
+    background: #e3f2fd;
+    border-left: 5px solid #1976d2;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .def-box strong { color: var(--primary); }
+
+  /* ── CANVAS ANIMATIONS ── */
+  .anim-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  canvas {
+    border-radius: 10px;
+    background: #0d1b2a;
+    display: block;
+  }
+  .anim-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background .15s, transform .1s;
+  }
+  .btn:hover { background: #283593; transform: translateY(-1px); }
+  .btn.accent { background: var(--accent); }
+  .btn.accent:hover { background: #ef6c00; }
+
+  /* ── ENERGY BARS ── */
+  .energy-bars {
+    display: flex;
+    gap: 18px;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100px;
+    padding: 10px;
+    background: #1a1a2e;
+    border-radius: 10px;
+    width: 280px;
+  }
+  .bar-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .bar-track { width: 50px; height: 80px; background: #2d2d44; border-radius: 6px; display: flex; align-items: flex-end; overflow: hidden; }
+  .bar-fill { width: 100%; border-radius: 6px; transition: height .05s; }
+  .bar-label { color: #ccc; font-size: 12px; font-weight: 600; }
+  .bar-val { color: #fff; font-size: 11px; font-family: monospace; }
+
+  /* ── SLIDER SECTION ── */
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+  }
+  .slider-row label { font-size: 14px; color: var(--muted); min-width: 60px; }
+  input[type=range] { flex: 1; min-width: 120px; accent-color: var(--primary); }
+  .slider-val {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 70px;
+    text-align: right;
+  }
+
+  /* ── CONVERSION TABLE ── */
+  .conv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 14px 0;
+  }
+  .conv-table th {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  .conv-table td { padding: 9px 14px; border-bottom: 1px solid #e0e0e0; }
+  .conv-table tr:nth-child(even) td { background: #f5f5f5; }
+  .conv-table .ep { color: var(--Ep-color); font-weight: 700; }
+  .conv-table .ek { color: var(--Ek-color); font-weight: 700; }
+
+  /* ── TEACHER PANEL ── */
+  .teacher-section { margin-bottom: 24px; }
+  .teacher-section h2 {
+    font-size: 19px;
+    color: var(--green);
+    border-left: 4px solid var(--green);
+    padding-left: 12px;
+    margin-bottom: 12px;
+  }
+  .teacher-section h3 { font-size: 16px; color: #37474f; margin: 12px 0 6px; }
+  .teacher-section p, .teacher-section li { line-height: 1.75; color: #37474f; font-size: 15px; }
+  .teacher-section ul, .teacher-section ol { padding-left: 20px; margin: 8px 0; }
+  .teacher-section li { margin-bottom: 6px; }
+
+  .tip-box {
+    background: #e8f5e9;
+    border-left: 5px solid var(--green);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  .warn-box {
+    background: #fff3e0;
+    border-left: 5px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 12px 0;
+  }
+  .tl-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .tl-dot-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 32px;
+  }
+  .tl-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .tl-line {
+    width: 2px;
+    flex: 1;
+    min-height: 24px;
+    background: #c5cae9;
+    margin: 2px auto;
+  }
+  .tl-content { padding: 4px 0 20px; }
+  .tl-content strong { font-size: 15px; color: var(--primary); display: block; margin-bottom: 4px; }
+  .tl-content span { font-size: 14px; color: #546e7a; }
+
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .badge.green { background: var(--green); }
+  .badge.blue { background: var(--primary); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #1565c0 100%);
+    color: #fff;
+    padding: 36px 28px;
+    border-radius: 14px;
+    margin-bottom: 22px;
+  }
+  .hero .klass { font-size: 13px; opacity: .75; margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
+  .hero h1 { font-size: 26px; font-weight: 800; line-height: 1.3; margin-bottom: 10px; }
+  .hero .meta { font-size: 14px; opacity: .8; display: flex; gap: 20px; flex-wrap: wrap; }
+  .hero .meta span { display: flex; align-items: center; gap: 5px; }
+
+  /* ── QUIZ ── */
+  .quiz-card { background: #f3e5f5; border-radius: 12px; padding: 18px 22px; margin: 14px 0; }
+  .quiz-card .q { font-weight: 700; font-size: 15px; margin-bottom: 10px; color: #4a148c; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    background: #fff;
+    border: 2px solid #ce93d8;
+    border-radius: 8px;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all .15s;
+  }
+  .quiz-opt:hover { background: #f3e5f5; border-color: #9c27b0; }
+  .quiz-opt.correct { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; }
+  .quiz-opt.wrong { background: #ffebee; border-color: #c62828; color: #b71c1c; }
+
+  @media (max-width:600px) {
+    .tab-btn { padding: 8px 12px; font-size: 13px; }
+    .card { padding: 16px; }
+    .hero h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ TAB BAR ══════════════ -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('lesson')">📚 Урок</button>
+  <button class="tab-btn" onclick="showTab('animations')">🎬 Анимации</button>
+  <button class="tab-btn" onclick="showTab('calculator')">🔢 Калькулятор</button>
+  <button class="tab-btn" onclick="showTab('quiz')">✅ Проверь себя</button>
+  <button class="tab-btn" onclick="showTab('teacher')">👨‍🏫 Конспект учителя</button>
+</div>
+
+<!-- ══════════════ TAB: УРОК ══════════════ -->
+<div id="tab-lesson" class="tab-panel active">
+  <div class="hero">
+    <div class="klass">7 класс · Физика · Тема 5: Работа, мощность, энергия</div>
+    <h1>Урок 53. Энергия.<br>Потенциальная и кинетическая.</h1>
+    <div class="meta">
+      <span>⏱ 45 минут</span>
+      <span>📖 Формулы: Ep = mgh, Ek = mv²/2</span>
+      <span>🔬 Закон сохранения энергии</span>
+    </div>
+  </div>
+
+  <!-- ЭНЕРГИЯ -->
+  <div class="card">
+    <h2>1. Что такое энергия?</h2>
+    <p>Различные механизмы, тела и люди совершают механическую работу. Чтобы работа совершалась, нужна <strong>способность её совершить</strong>.</p>
+    <div class="def-box">
+      <strong>Энергия</strong> — физическая величина, характеризующая <strong>способность тела совершать работу</strong>.<br>
+      Обозначение: <strong>E</strong> &nbsp;&nbsp; Единица измерения: <strong>Джоуль (Дж)</strong>
+    </div>
+    <p>Сжатая пружина может поднять груз → она <strong>обладает энергией</strong>.<br>
+       Поднятый груз может забить сваю → он тоже <strong>обладает энергией</strong>.</p>
+    <div class="formula-box">
+      [E] = Дж (Джоуль)
+      <div class="label">Единица измерения энергии совпадает с единицей работы</div>
+    </div>
+  </div>
+
+  <!-- ПОТЕНЦИАЛЬНАЯ -->
+  <div class="card">
+    <h2>2. Потенциальная энергия</h2>
+    <div class="def-box">
+      <strong>Потенциальная энергия (Ep)</strong> — энергия взаимодействия тел или частей одного тела.<br>
+      Примеры: поднятое тело (взаимодействует с Землёй), сжатая пружина (части отталкиваются).
+    </div>
+
+    <h3>Вывод формулы Ep = mgh</h3>
+    <p>Чтобы поднять тело на высоту <strong>h</strong> равномерно, нужна сила <strong>F = mg</strong>.</p>
+    <p>Работа при подъёме: <strong>A = F·h = mg·h</strong></p>
+    <p>Вся эта работа переходит в потенциальную энергию тела:</p>
+    <div class="formula-box">
+      Ep = m · g · h
+      <div class="label">m — масса (кг) · g ≈ 10 Н/кг · h — высота (м)</div>
+    </div>
+
+    <div class="warn-box">
+      ⚠️ <strong>Важно:</strong> Работа равна не самой энергии, а её <strong>изменению</strong>: A = ΔEp.<br>
+      Нулевой уровень выбирается произвольно (земля, стол, пол…). Высота отсчитывается от него.
+    </div>
+  </div>
+
+  <!-- КИНЕТИЧЕСКАЯ -->
+  <div class="card">
+    <h2>3. Кинетическая энергия</h2>
+    <p>Неподвижный молоток не забьёт гвоздь. Движущийся — забьёт. Значит, <strong>движущееся тело обладает энергией</strong>.</p>
+    <div class="def-box">
+      <strong>Кинетическая энергия (Ek)</strong> — энергия, которой обладает <strong>движущееся тело</strong>.<br>
+      Зависит от массы и скорости тела.
+    </div>
+    <div class="formula-box">
+      Ek = m · v² / 2
+      <div class="label">m — масса (кг) · v — скорость (м/с)</div>
+    </div>
+  </div>
+
+  <!-- ЗАКОН СОХРАНЕНИЯ -->
+  <div class="card">
+    <h2>4. Превращение энергий. Закон сохранения</h2>
+    <p>При <strong>падении тела</strong>: высота ↓ → Ep уменьшается, скорость ↑ → Ek увеличивается.</p>
+    <p>При <strong>броске вверх</strong>: скорость ↓ → Ek уменьшается, высота ↑ → Ep увеличивается.</p>
+
+    <table class="conv-table">
+      <thead><tr><th>Положение тела</th><th>Ep</th><th>Ek</th><th>E = Ep + Ek</th></tr></thead>
+      <tbody>
+        <tr><td>Максимальная высота</td><td class="ep">Максимальная</td><td class="ek">= 0</td><td>E = const</td></tr>
+        <tr><td>Промежуточное</td><td class="ep">Частично</td><td class="ek">Частично</td><td>E = const</td></tr>
+        <tr><td>Земля (нулевой уровень)</td><td class="ep">= 0</td><td class="ek">Максимальная</td><td>E = const</td></tr>
+      </tbody>
+    </table>
+
+    <div class="formula-box" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-color: #ef6c00; color: #bf360c;">
+      Ep + Ek = const
+      <div class="label" style="color:#795548">Закон сохранения механической энергии (при отсутствии трения)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ TAB: АНИМАЦИИ ══════════════ -->
+<div id="tab-animations" class="tab-panel">
+
+  <!-- АНИМАЦИЯ 1: Падение шара -->
+  <div class="card">
+    <h2>🎬 Анимация 1: Падение шара — переход Ep → Ek</h2>
+    <p>Наблюдайте, как потенциальная энергия превращается в кинетическую при падении.</p>
+    <div class="anim-wrap">
+      <canvas id="canvasFall" width="380" height="360"></canvas>
+      <div style="display:flex; gap:18px; align-items:flex-end;">
+        <div class="bar-col">
+          <div class="bar-val" id="epVal1">100%</div>
+          <div class="bar-track"><div class="bar-fill" id="epBar1" style="height:80px;background:#1565c0;"></div></div>
+          <div class="bar-label" style="color:#90caf9">Ep</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val" id="ekVal1">0%</div>
+          <div class="bar-track"><div class="bar-fill" id="ekBar1" style="height:0px;background:#e65100;"></div></div>
+          <div class="bar-label" style="color:#ffb74d">Ek</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val" id="etVal1">100%</div>
+          <div class="bar-track"><div class="bar-fill" id="etBar1" style="height:80px;background:#2e7d32;"></div></div>
+          <div class="bar-label" style="color:#a5d6a7">E=const</div>
+        </div>
+      </div>
+      <div class="anim-controls">
+        <button class="btn" onclick="fallAnim.reset()">🔄 Сброс</button>
+        <button class="btn accent" onclick="fallAnim.toggle()" id="fallBtn">▶ Пуск</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- АНИМАЦИЯ 2: Маятник -->
+  <div class="card">
+    <h2>🎬 Анимация 2: Маятник — колебание энергий</h2>
+    <p>В крайних точках — вся энергия потенциальная. В нижней точке — вся кинетическая.</p>
+    <div class="anim-wrap">
+      <canvas id="canvasPend" width="380" height="300"></canvas>
+      <div style="display:flex; gap:18px; align-items:flex-end;">
+        <div class="bar-col">
+          <div class="bar-val" id="epVal2">0%</div>
+          <div class="bar-track"><div class="bar-fill" id="epBar2" style="height:0px;background:#1565c0;"></div></div>
+          <div class="bar-label" style="color:#90caf9">Ep</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-val" id="ekVal2">100%</div>
+          <div class="bar-track"><div class="bar-fill" id="ekBar2" style="height:80px;background:#e65100;"></div></div>
+          <div class="bar-label" style="color:#ffb74d">Ek</div>
+        </div>
+      </div>
+      <div class="anim-controls">
+        <button class="btn accent" onclick="pendAnim.toggle()" id="pendBtn">⏸ Пауза</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- АНИМАЦИЯ 3: Пружина -->
+  <div class="card">
+    <h2>🎬 Анимация 3: Сжатая пружина</h2>
+    <p>Сжатая пружина обладает потенциальной энергией. При освобождении она разгоняет шар — Ep переходит в Ek.</p>
+    <div class="anim-wrap">
+      <canvas id="canvasSpring" width="380" height="200"></canvas>
+      <div class="anim-controls">
+        <button class="btn" onclick="springAnim.compress()">🔽 Сжать</button>
+        <button class="btn accent" onclick="springAnim.release()">🚀 Отпустить</button>
+        <button class="btn" onclick="springAnim.reset()">🔄 Сброс</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════ TAB: КАЛЬКУЛЯТОР ══════════════ -->
+<div id="tab-calculator" class="tab-panel">
+  <div class="card">
+    <h2>🔢 Калькулятор потенциальной энергии</h2>
+    <p style="color:var(--muted)">Формула: <strong>Ep = m · g · h</strong>, где g = 10 Н/кг</p>
+
+    <div class="slider-row">
+      <label>Масса</label>
+      <input type="range" id="slMass" min="0.1" max="100" step="0.1" value="5" oninput="calcEp()">
+      <span class="slider-val"><span id="vMass">5.0</span> кг</span>
+    </div>
+    <div class="slider-row">
+      <label>Высота</label>
+      <input type="range" id="slH" min="0" max="100" step="0.5" value="10" oninput="calcEp()">
+      <span class="slider-val"><span id="vH">10.0</span> м</span>
+    </div>
+
+    <div class="formula-box" id="epResult" style="font-size:28px;">
+      Ep = 500 Дж
+    </div>
+    <canvas id="canvasEpViz" width="380" height="160" style="margin:0 auto; display:block;"></canvas>
+  </div>
+
+  <div class="card">
+    <h2>🔢 Калькулятор кинетической энергии</h2>
+    <p style="color:var(--muted)">Формула: <strong>Ek = m · v² / 2</strong></p>
+
+    <div class="slider-row">
+      <label>Масса</label>
+      <input type="range" id="slMass2" min="0.1" max="100" step="0.1" value="5" oninput="calcEk()">
+      <span class="slider-val"><span id="vMass2">5.0</span> кг</span>
+    </div>
+    <div class="slider-row">
+      <label>Скорость</label>
+      <input type="range" id="slV" min="0" max="50" step="0.5" value="10" oninput="calcEk()">
+      <span class="slider-val"><span id="vV">10.0</span> м/с</span>
+    </div>
+
+    <div class="formula-box" id="ekResult" style="font-size:28px; background: linear-gradient(135deg,#fff3e0,#ffe0b2); border-color:#ef6c00; color:#bf360c;">
+      Ek = 250 Дж
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ TAB: КВИЗ ══════════════ -->
+<div id="tab-quiz" class="tab-panel">
+  <div class="card">
+    <h2>✅ Проверь себя</h2>
+    <p style="color:var(--muted); margin-bottom:16px;">Выбери правильный ответ. Результат покажется сразу.</p>
+
+    <div class="quiz-card" id="q1">
+      <div class="q">1. Единица измерения энергии — это…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q1',false)">Ньютон (Н)</div>
+        <div class="quiz-opt" onclick="answer(this,'q1',true)">Джоуль (Дж)</div>
+        <div class="quiz-opt" onclick="answer(this,'q1',false)">Ватт (Вт)</div>
+        <div class="quiz-opt" onclick="answer(this,'q1',false)">Килограмм (кг)</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q2">
+      <div class="q">2. По какой формуле вычисляется потенциальная энергия поднятого тела?</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q2',false)">Ep = mv</div>
+        <div class="quiz-opt" onclick="answer(this,'q2',false)">Ep = mv²</div>
+        <div class="quiz-opt" onclick="answer(this,'q2',true)">Ep = mgh</div>
+        <div class="quiz-opt" onclick="answer(this,'q2',false)">Ep = mg/h</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q3">
+      <div class="q">3. Что происходит с кинетической энергией при падении тела?</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q3',false)">Уменьшается</div>
+        <div class="quiz-opt" onclick="answer(this,'q3',true)">Увеличивается</div>
+        <div class="quiz-opt" onclick="answer(this,'q3',false)">Остаётся постоянной</div>
+        <div class="quiz-opt" onclick="answer(this,'q3',false)">Равна нулю</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q4">
+      <div class="q">4. Тело массой 2 кг поднято на высоту 5 м. Чему равна его Ep?</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q4',false)">10 Дж</div>
+        <div class="quiz-opt" onclick="answer(this,'q4',false)">50 Дж</div>
+        <div class="quiz-opt" onclick="answer(this,'q4',true)">100 Дж</div>
+        <div class="quiz-opt" onclick="answer(this,'q4',false)">200 Дж</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q5">
+      <div class="q">5. В нижней точке маятника его кинетическая энергия…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q5',false)">Равна нулю</div>
+        <div class="quiz-opt" onclick="answer(this,'q5',true)">Максимальная</div>
+        <div class="quiz-opt" onclick="answer(this,'q5',false)">Равна потенциальной</div>
+        <div class="quiz-opt" onclick="answer(this,'q5',false)">Не определена</div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="q6">
+      <div class="q">6. Формула кинетической энергии:</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="answer(this,'q6',false)">Ek = mv</div>
+        <div class="quiz-opt" onclick="answer(this,'q6',true)">Ek = mv²/2</div>
+        <div class="quiz-opt" onclick="answer(this,'q6',false)">Ek = mgh</div>
+        <div class="quiz-opt" onclick="answer(this,'q6',false)">Ek = Fh</div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px; text-align:center;">
+      <button class="btn" onclick="resetQuiz()">🔄 Пройти снова</button>
+      <div id="quizScore" style="font-size:17px; font-weight:700; margin-top:12px; color: var(--green);"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ TAB: КОНСПЕКТ УЧИТЕЛЯ ══════════════ -->
+<div id="tab-teacher" class="tab-panel">
+
+  <div class="card">
+    <h2 style="color:var(--green); border-color:var(--green);">👨‍🏫 Конспект учителя</h2>
+    <p style="color:var(--muted);">Урок 53 · 7 класс · Тема: Работа, мощность, энергия</p>
+  </div>
+
+  <!-- ПАСПОРТ УРОКА -->
+  <div class="card">
+    <div class="teacher-section">
+      <h2>📋 Паспорт урока</h2>
+      <table class="conv-table">
+        <tr><td><strong>Тема</strong></td><td>Энергия. Потенциальная и кинетическая энергия. Превращения энергии</td></tr>
+        <tr><td><strong>Класс</strong></td><td>7</td></tr>
+        <tr><td><strong>Время</strong></td><td>45 минут</td></tr>
+        <tr><td><strong>Тип урока</strong></td><td>Комбинированный (изучение нового материала + закрепление)</td></tr>
+        <tr><td><strong>Оборудование</strong></td><td>Проектор / экран, мяч, пружина, груз, нитка (маятник), интерактивная доска</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ЦЕЛИ -->
+  <div class="card">
+    <div class="teacher-section">
+      <h2>🎯 Цели урока</h2>
+      <h3>Образовательные:</h3>
+      <ul>
+        <li>Ввести понятие <strong>энергии</strong> как физической величины</li>
+        <li>Сформировать понятия <strong>потенциальной</strong> и <strong>кинетической</strong> энергии</li>
+        <li>Вывести формулы <strong>Ep = mgh</strong> и <strong>Ek = mv²/2</strong></li>
+        <li>Сформулировать <strong>закон сохранения механической энергии</strong></li>
+      </ul>
+      <h3>Развивающие:</h3>
+      <ul>
+        <li>Развивать умение наблюдать, анализировать, делать выводы</li>
+        <li>Формировать навык применения физических формул при решении задач</li>
+      </ul>
+      <h3>Воспитательные:</h3>
+      <ul>
+        <li>Формировать научное мышление и интерес к физике через наглядные примеры из жизни</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ПЛАН УРОКА -->
+  <div class="card">
+    <div class="teacher-section">
+      <h2>🗓 Поурочный план (45 мин)</h2>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-dot-col">
+            <div class="tl-dot">1</div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-content">
+            <strong><span class="badge blue">0–5 мин</span> Организационный момент и актуализация</strong>
+            <span>Вопросы: «Что такое работа? Что нужно, чтобы совершить работу?»<br>
+            Демо: показать мяч на высоте и у земли. «Какой из них может совершить больше работы?»</span>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot-col">
+            <div class="tl-dot">2</div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-content">
+            <strong><span class="badge blue">5–15 мин</span> Понятие энергии. Потенциальная энергия</strong>
+            <span>Определение энергии. Единица измерения.<br>
+            Примеры: пружина, груз. Взаимодействие тел → потенциальная энергия.<br>
+            <strong>Вывод формулы Ep = mgh</strong> через работу при подъёме.<br>
+            Объяснить нулевой уровень отсчёта: A = ΔEp.</span>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot-col">
+            <div class="tl-dot">3</div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-content">
+            <strong><span class="badge blue">15–25 мин</span> Кинетическая энергия</strong>
+            <span>Демо: молоток и гвоздь (или мяч на скорости).<br>
+            Определение Ek. Зависимость от m и v.<br>
+            <strong>Формула Ek = mv²/2</strong> (вывод опционально, принять как данность).</span>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot-col">
+            <div class="tl-dot">4</div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-content">
+            <strong><span class="badge blue">25–35 мин</span> Превращения энергии. Закон сохранения</strong>
+            <span>Анализ падения тела: Ep → Ek.<br>
+            Анализ броска вверх: Ek → Ep.<br>
+            Маятник, пружина — наглядная демонстрация.<br>
+            <strong>Закон: Ep + Ek = const</strong> (при отсутствии трения).</span>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot-col">
+            <div class="tl-dot">5</div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-content">
+            <strong><span class="badge blue">35–45 мин</span> Закрепление и итог</strong>
+            <span>Решение 2–3 задач. Вопросы на понимание. Запись в тетрадь.<br>
+            Домашнее задание: §28–29, задачи по формулам Ep и Ek.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- КЛЮЧЕВЫЕ ПОНЯТИЯ -->
+  <div class="card">
+    <div class="teacher-section">
+      <h2>📌 Ключевые понятия и формулы (для доски)</h2>
+
+      <table class="conv-table">
+        <thead><tr><th>Понятие</th><th>Определение</th><th>Формула</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Энергия E</strong></td>
+            <td>Физическая величина, характеризующая способность тела совершать работу</td>
+            <td>[E] = Дж</td>
+          </tr>
+          <tr>
+            <td><strong>Потенциальная энергия Ep</strong></td>
+            <td>Энергия взаимодействия тел или частей одного тела</td>
+            <td class="ep">Ep = mgh</td>
+          </tr>
+          <tr>
+            <td><strong>Кинетическая энергия Ek</strong></td>
+            <td>Энергия движущегося тела</td>
+            <td class="ek">Ek = mv²/2</td>
+          </tr>
+          <tr>
+            <td><strong>Закон сохранения</strong></td>
+            <td>В системе без трения полная механическая энергия постоянна</td>
+            <td>Ep + Ek = const</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- МЕТОДИЧЕСКИЕ СОВЕТЫ -->
+  <div class="card">
+    <div class="teacher-section">
+      <h2>💡 Методические советы</h2>
+
+      <div class="tip-box">
+        💡 <strong>Пример с молотком</strong> — один из лучших для объяснения кинетической энергии. Неподвижный молоток ничего не делает; движущийся совершает работу. Дополнительно можно показать: чем быстрее (v²!), тем больше энергии.
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>Нулевой уровень.</strong> Обязательно подчеркните, что Ep зависит от выбранного уровня отсчёта. Пример: энергия тела на столе = mgh_стол относительно земли, но = 0 относительно стола.
+      </div>
+
+      <div class="warn-box">
+        ⚠️ <strong>Частая ошибка учеников:</strong> путают A = Ep (неверно!) с A = ΔEp (верно!). Акцентируйте: работа = изменение энергии.
+      </div>
+
+      <div class="warn-box">
+        ⚠️ <strong>В формуле Ek = mv²/2</strong> скорость стоит в квадрате. Увеличение скорости в 2 раза даёт увеличение Ek в <strong>4 раза</strong>. Это важно проработать на примере (задача).
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>Закон сохранения</strong> лучше всего иллюстрировать маятником или мячом-прыгунком. Показать: в верхней точке — вся энергия Ep, в нижней — вся Ek, сумма не меняется.
+      </div>
+    </div>
+  </div>
+
+  <!-- ЗАДАЧИ -->
+  <div class="card">
+    <div class="teacher-section">
+      <h2>📝 Задачи для работы на уроке</h2>
+
+      <h3>Уровень 1 (базовый)</h3>
+      <ol>
+        <li>Тело массой 3 кг поднято на высоту 4 м. Найдите потенциальную энергию. (Ответ: 120 Дж)</li>
+        <li>Мяч массой 0,5 кг летит со скоростью 10 м/с. Найдите кинетическую энергию. (Ответ: 25 Дж)</li>
+      </ol>
+
+      <h3>Уровень 2 (средний)</h3>
+      <ol>
+        <li>Тело массой 2 кг упало с высоты 5 м. Какова его скорость у земли, если трения нет? (Ответ: 10 м/с)</li>
+        <li>Тело брошено вертикально вверх со скоростью 20 м/с. На какую высоту оно поднимется? (Ответ: 20 м)</li>
+      </ol>
+
+      <h3>Уровень 3 (повышенный)</h3>
+      <ol>
+        <li>Тело скользит по наклонной плоскости без трения. Высота 3 м. Найдите скорость внизу. (Ответ: ≈7,75 м/с)</li>
+      </ol>
+
+      <div class="tip-box">
+        💡 <strong>Решение задачи уровня 2.1</strong> через закон сохранения:<br>
+        Ep(нач) = Ek(кон) → mgh = mv²/2 → v² = 2gh → v = √(2·10·5) = √100 = 10 м/с
+      </div>
+    </div>
+  </div>
+
+  <!-- ДОМАШНЕЕ ЗАДАНИЕ -->
+  <div class="card">
+    <div class="teacher-section">
+      <h2>🏠 Домашнее задание</h2>
+      <ul>
+        <li>§28–29 учебника (прочитать, выучить определения и формулы)</li>
+        <li>Задачи: 2–3 задачи по Ep = mgh и Ek = mv²/2 из сборника задач</li>
+        <li><span class="badge green">★ Доп.</span> Найти пример превращения энергий в природе или технике и подготовить короткий рассказ</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /tab-teacher -->
+
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script>
+// ── TAB SWITCHING ──
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+// ANIMATION 1: Falling Ball
+// ══════════════════════════════════════════════
+const fallAnim = (() => {
+  const cv = document.getElementById('canvasFall');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const FLOOR = H - 30;
+  const TOP = 40;
+  const BALL_R = 18;
+  let y = TOP + BALL_R;
+  let vy = 0;
+  let running = false;
+  let raf;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Sky gradient
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#0d1b2a');
+    sky.addColorStop(1, '#1a3a5c');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    // Ground
+    ctx.fillStyle = '#3e2723';
+    ctx.fillRect(0, FLOOR, W, H - FLOOR);
+    ctx.fillStyle = '#5d4037';
+    ctx.fillRect(0, FLOOR, W, 4);
+
+    // Height marker
+    const hFrac = (FLOOR - y) / (FLOOR - TOP - BALL_R);
+    const hPercent = Math.max(0, hFrac);
+    ctx.strokeStyle = 'rgba(100,180,255,0.4)';
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.moveTo(W * 0.75, TOP + BALL_R);
+    ctx.lineTo(W * 0.75, FLOOR);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // h label
+    ctx.fillStyle = '#90caf9';
+    ctx.font = 'bold 14px sans-serif';
+    ctx.fillText('h = ' + (hFrac * 100).toFixed(0) + '%', W * 0.77, (TOP + BALL_R + FLOOR) / 2);
+
+    // Ball
+    const grad = ctx.createRadialGradient(y < FLOOR ? W/2-6 : W/2-6, y - 6, 2, W/2, y, BALL_R);
+    grad.addColorStop(0, '#fff');
+    grad.addColorStop(0.3, '#ff9800');
+    grad.addColorStop(1, '#e65100');
+    ctx.beginPath();
+    ctx.arc(W / 2, y, BALL_R, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Speed arrow
+    if (vy > 0.5) {
+      ctx.strokeStyle = '#ff5722';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(W / 2, y + BALL_R);
+      ctx.lineTo(W / 2, y + BALL_R + Math.min(vy * 3, 40));
+      ctx.stroke();
+      ctx.fillStyle = '#ff5722';
+      ctx.beginPath();
+      ctx.moveTo(W/2, y + BALL_R + Math.min(vy * 3, 40) + 8);
+      ctx.lineTo(W/2 - 6, y + BALL_R + Math.min(vy * 3, 40));
+      ctx.lineTo(W/2 + 6, y + BALL_R + Math.min(vy * 3, 40));
+      ctx.fill();
+      ctx.lineWidth = 1;
+    }
+
+    // Energy bars
+    const ep = Math.max(0, hPercent);
+    const ek = 1 - ep;
+    document.getElementById('epBar1').style.height = (ep * 80) + 'px';
+    document.getElementById('ekBar1').style.height = (ek * 80) + 'px';
+    document.getElementById('epVal1').textContent = (ep * 100).toFixed(0) + '%';
+    document.getElementById('ekVal1').textContent = (ek * 100).toFixed(0) + '%';
+  }
+
+  function step() {
+    if (!running) return;
+    vy += 0.4;
+    y += vy;
+    if (y >= FLOOR - BALL_R) {
+      y = FLOOR - BALL_R;
+      running = false;
+      document.getElementById('fallBtn').textContent = '▶ Пуск';
+    }
+    draw();
+    if (running) raf = requestAnimationFrame(step);
+  }
+
+  function reset() {
+    running = false;
+    cancelAnimationFrame(raf);
+    y = TOP + BALL_R;
+    vy = 0;
+    document.getElementById('fallBtn').textContent = '▶ Пуск';
+    draw();
+  }
+
+  function toggle() {
+    if (y >= FLOOR - BALL_R - 1) reset();
+    running = !running;
+    if (running) {
+      document.getElementById('fallBtn').textContent = '⏸ Пауза';
+      step();
+    } else {
+      document.getElementById('fallBtn').textContent = '▶ Продолжить';
+    }
+  }
+
+  draw();
+  return { reset, toggle };
+})();
+
+// ══════════════════════════════════════════════
+// ANIMATION 2: Pendulum
+// ══════════════════════════════════════════════
+const pendAnim = (() => {
+  const cv = document.getElementById('canvasPend');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  let angle = Math.PI / 4;
+  let omega = 0;
+  let paused = false;
+  const L = 160;
+  const pivotX = W / 2, pivotY = 30;
+  let raf;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#0d1b2a');
+    bg.addColorStop(1, '#1a3a5c');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    const bx = pivotX + L * Math.sin(angle);
+    const by = pivotY + L * Math.cos(angle);
+
+    // Rope
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(pivotX, pivotY);
+    ctx.lineTo(bx, by);
+    ctx.stroke();
+
+    // Pivot dot
+    ctx.fillStyle = '#78909c';
+    ctx.beginPath();
+    ctx.arc(pivotX, pivotY, 6, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ball
+    const minY = pivotY + L;
+    const curY = by;
+    const hFrac = 1 - (curY - pivotY) / L;  // height above lowest point
+    const ep = Math.abs(Math.sin(angle));
+    const ek = Math.cos(Math.abs(angle));
+
+    const gr = ctx.createRadialGradient(bx - 5, by - 5, 2, bx, by, 20);
+    gr.addColorStop(0, '#fff');
+    gr.addColorStop(0.3, '#7c4dff');
+    gr.addColorStop(1, '#311b92');
+    ctx.beginPath();
+    ctx.arc(bx, by, 20, 0, Math.PI * 2);
+    ctx.fillStyle = gr;
+    ctx.fill();
+
+    // Energy labels near ball
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillStyle = '#90caf9';
+    ctx.fillText('Ep: ' + (ep * 100).toFixed(0) + '%', bx + 24, by - 10);
+    ctx.fillStyle = '#ffb74d';
+    ctx.fillText('Ek: ' + (ek * 100).toFixed(0) + '%', bx + 24, by + 10);
+
+    // Bars
+    document.getElementById('epBar2').style.height = (ep * 80) + 'px';
+    document.getElementById('ekBar2').style.height = (ek * 80) + 'px';
+    document.getElementById('epVal2').textContent = (ep * 100).toFixed(0) + '%';
+    document.getElementById('ekVal2').textContent = (ek * 100).toFixed(0) + '%';
+  }
+
+  function step() {
+    if (!paused) {
+      const g = 10, dt = 0.025;
+      omega += -(g / L * 10) * Math.sin(angle) * dt;
+      angle += omega * dt;
+    }
+    draw();
+    raf = requestAnimationFrame(step);
+  }
+
+  function toggle() {
+    paused = !paused;
+    document.getElementById('pendBtn').textContent = paused ? '▶ Продолжить' : '⏸ Пауза';
+  }
+
+  step();
+  return { toggle };
+})();
+
+// ══════════════════════════════════════════════
+// ANIMATION 3: Spring
+// ══════════════════════════════════════════════
+const springAnim = (() => {
+  const cv = document.getElementById('canvasSpring');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  let compression = 0; // 0=natural, 1=fully compressed
+  let ballX = 0;
+  let ballV = 0;
+  let state = 'idle'; // idle, compressed, releasing
+  let raf;
+
+  const wallX = 20;
+  const springNatLen = 120;
+  const ballR = 20;
+  const floorY = H - 30;
+  const ballY = floorY - ballR;
+
+  function drawSpring(x1, x2) {
+    const n = 10;
+    const seg = (x2 - x1) / n;
+    const amp = 10;
+    ctx.strokeStyle = '#aaa';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(x1, ballY);
+    for (let i = 0; i <= n; i++) {
+      const xp = x1 + seg * i;
+      const yp = ballY + (i % 2 === 0 ? -amp : amp);
+      if (i === 0 || i === n) ctx.lineTo(xp, ballY);
+      else ctx.lineTo(xp, yp);
+    }
+    ctx.stroke();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#0d1b2a';
+    ctx.fillRect(0, 0, W, H);
+
+    // Floor
+    ctx.fillStyle = '#3e2723';
+    ctx.fillRect(0, floorY, W, H - floorY);
+    ctx.fillStyle = '#5d4037';
+    ctx.fillRect(0, floorY, W, 3);
+
+    // Wall
+    ctx.fillStyle = '#546e7a';
+    ctx.fillRect(wallX, 20, 14, floorY - 20);
+
+    const springLen = springNatLen * (1 - compression * 0.6);
+    const springEndX = wallX + 14 + springLen;
+    drawSpring(wallX + 14, springEndX);
+
+    // Ball
+    const bx = state === 'releasing' ? ballX : springEndX + ballR;
+    const gr = ctx.createRadialGradient(bx - 6, ballY - 6, 2, bx, ballY, ballR);
+    gr.addColorStop(0, '#fff');
+    gr.addColorStop(0.3, '#ff9800');
+    gr.addColorStop(1, '#e65100');
+    ctx.beginPath();
+    ctx.arc(bx, ballY, ballR, 0, Math.PI * 2);
+    ctx.fillStyle = gr;
+    ctx.fill();
+
+    // Label
+    if (state === 'compressed') {
+      ctx.fillStyle = '#90caf9';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.fillText('Ep = max!', springEndX + 50, ballY);
+    }
+    if (state === 'releasing' && ballX > W * 0.6) {
+      ctx.fillStyle = '#ffb74d';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.fillText('Ek = max!', ballX + 10, ballY - 10);
+    }
+  }
+
+  function compress() {
+    if (state === 'releasing') return;
+    state = 'compressed';
+    compression = 0.75;
+    cancelAnimationFrame(raf);
+    draw();
+  }
+
+  function release() {
+    if (state !== 'compressed') return;
+    state = 'releasing';
+    ballX = wallX + 14 + springNatLen * (1 - 0.75 * 0.6) + ballR;
+    ballV = 6;
+    compression = 0;
+
+    function step() {
+      if (ballX > W + ballR) { state = 'idle'; draw(); return; }
+      ballX += ballV;
+      draw();
+      raf = requestAnimationFrame(step);
+    }
+    step();
+  }
+
+  function reset() {
+    state = 'idle';
+    compression = 0;
+    ballX = 0;
+    ballV = 0;
+    cancelAnimationFrame(raf);
+    draw();
+  }
+
+  draw();
+  return { compress, release, reset };
+})();
+
+// ══════════════════════════════════════════════
+// CALCULATORS
+// ══════════════════════════════════════════════
+function calcEp() {
+  const m = parseFloat(document.getElementById('slMass').value);
+  const h = parseFloat(document.getElementById('slH').value);
+  document.getElementById('vMass').textContent = m.toFixed(1);
+  document.getElementById('vH').textContent = h.toFixed(1);
+  const ep = m * 10 * h;
+  document.getElementById('epResult').innerHTML =
+    'Ep = ' + m.toFixed(1) + ' × 10 × ' + h.toFixed(1) + ' = <strong>' + ep.toFixed(1) + ' Дж</strong>';
+  drawEpViz(m, h, ep);
+}
+
+function drawEpViz(m, h, ep) {
+  const cv = document.getElementById('canvasEpViz');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0d1b2a';
+  ctx.fillRect(0, 0, W, H);
+
+  const maxH = 100;
+  const ballR = 14;
+  const floorY = H - 20;
+  const hNorm = Math.min(h / 100, 1);
+  const ballY = floorY - ballR - (hNorm * (H - 60));
+
+  // Floor
+  ctx.fillStyle = '#3e2723';
+  ctx.fillRect(0, floorY, W, 20);
+
+  // Height marker
+  ctx.strokeStyle = 'rgba(100,180,255,0.5)';
+  ctx.setLineDash([4,4]);
+  ctx.beginPath();
+  ctx.moveTo(W * 0.65, ballY);
+  ctx.lineTo(W * 0.65, floorY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#90caf9';
+  ctx.font = 'bold 13px sans-serif';
+  ctx.fillText('h = ' + h.toFixed(1) + ' м', W * 0.68, (ballY + floorY) / 2 + 5);
+
+  const gr = ctx.createRadialGradient(W/2 - 4, ballY - 4, 2, W/2, ballY, ballR);
+  gr.addColorStop(0, '#fff');
+  gr.addColorStop(0.3, '#42a5f5');
+  gr.addColorStop(1, '#0d47a1');
+  ctx.beginPath();
+  ctx.arc(W/2, ballY, ballR, 0, Math.PI * 2);
+  ctx.fillStyle = gr;
+  ctx.fill();
+
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 12px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(m.toFixed(0) + ' кг', W/2, floorY - 5);
+  ctx.textAlign = 'left';
+}
+
+function calcEk() {
+  const m = parseFloat(document.getElementById('slMass2').value);
+  const v = parseFloat(document.getElementById('slV').value);
+  document.getElementById('vMass2').textContent = m.toFixed(1);
+  document.getElementById('vV').textContent = v.toFixed(1);
+  const ek = 0.5 * m * v * v;
+  document.getElementById('ekResult').innerHTML =
+    'Ek = ½ × ' + m.toFixed(1) + ' × ' + v.toFixed(1) + '² = <strong>' + ek.toFixed(1) + ' Дж</strong>';
+}
+
+calcEp(); calcEk();
+
+// ══════════════════════════════════════════════
+// QUIZ
+// ══════════════════════════════════════════════
+const answered = {};
+let correctCount = 0;
+const totalQ = 6;
+
+function answer(el, qId, isCorrect) {
+  if (answered[qId]) return;
+  answered[qId] = true;
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    document.querySelectorAll(`#${qId} .quiz-opt`).forEach(o => {
+      if (!o.classList.contains('wrong')) o.classList.add('correct');
+    });
+  } else {
+    correctCount++;
+  }
+  if (Object.keys(answered).length === totalQ) {
+    document.getElementById('quizScore').textContent =
+      '🎉 Результат: ' + correctCount + ' / ' + totalQ + ' правильных';
+  }
+}
+
+function resetQuiz() {
+  document.querySelectorAll('.quiz-opt').forEach(o => {
+    o.classList.remove('correct', 'wrong');
+  });
+  Object.keys(answered).forEach(k => delete answered[k]);
+  correctCount = 0;
+  document.getElementById('quizScore').textContent = '';
+}
+</script>
+</body>
+</html>
