@@ -67,4 +67,4 @@ python -m http.server 8072 --directory "d:\Education\Астрономия"
 
 ---
 
-*Источник материала: [физя.рф — Урок 53](https://физя.рф/blog/urok-53-jenergija-potencialnaja-i-kineti/)*
+
