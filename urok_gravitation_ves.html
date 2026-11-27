@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Физика, 10 класс: Энергия, Тяготение, Вес тела и Невесомость</title>
+<style>
+  :root {
+    --primary: #1a237e;
+    --accent:  #f57c00;
+    --green:   #2e7d32;
+    --red:     #c62828;
+    --bg:      #f0f4f8;
+    --card:    #ffffff;
+    --text:    #212121;
+    --muted:   #546e7a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+
+  /* ── TABS ── */
+  .tab-bar {
+    background: var(--primary);
+    display: flex; gap: 4px; padding: 10px 20px 0;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.35);
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: rgba(255,255,255,.15); color: #fff; border: none;
+    padding: 10px 18px; border-radius: 8px 8px 0 0;
+    cursor: pointer; font-size: 14px; font-weight: 600; transition: .2s;
+  }
+  .tab-btn.active { background: var(--bg); color: var(--primary); }
+  .tab-btn:hover:not(.active) { background: rgba(255,255,255,.28); }
+  .tab-panel { display: none; padding: 24px 16px; max-width: 940px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card); border-radius: 14px;
+    padding: 26px 28px; margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .card h2 {
+    font-size: 21px; color: var(--primary); margin-bottom: 16px;
+    border-left: 5px solid var(--accent); padding-left: 14px; line-height: 1.3;
+  }
+  .card h3 { font-size: 17px; color: #37474f; margin: 20px 0 10px; }
+  .card p  { line-height: 1.8; margin-bottom: 12px; color: #37474f; font-size: 15.5px; }
+  .card ul, .card ol { padding-left: 22px; margin-bottom: 12px; }
+  .card li { line-height: 1.75; margin-bottom: 6px; color: #37474f; font-size: 15.5px; }
+
+  /* ── BOXES ── */
+  .hero {
+    background: linear-gradient(135deg,#1a237e,#0d47a1 50%,#1565c0);
+    color: #fff; padding: 32px 28px; border-radius: 14px; margin-bottom: 24px;
+  }
+  .hero h1 { font-size: 26px; margin-bottom: 8px; }
+  .hero p { color: #e3f2fd; font-size: 15.5px; line-height: 1.6; }
+
+  .def-box {
+    background: #e3f2fd; border-left: 5px solid #1976d2;
+    border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 16px 0; font-size: 15.5px; line-height: 1.75;
+  }
+  .def-box strong { color: var(--primary); }
+
+  .formula-box {
+    background: linear-gradient(135deg,#e8eaf6,#c5cae9);
+    border: 2px solid #5c6bc0; border-radius: 12px;
+    padding: 16px 24px; margin: 16px 0; text-align: center;
+    font-size: 21px; font-weight: 800; color: var(--primary); letter-spacing: .5px;
+  }
+  .formula-box .label { font-size: 13px; font-weight: 400; color: var(--muted); margin-top: 6px; }
+
+  .warn-box {
+    background: #fff3e0; border-left: 5px solid var(--accent);
+    border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 14px 0; font-size: 15px; line-height: 1.72;
+  }
+  .tip-box {
+    background: #e8f5e9; border-left: 5px solid var(--green);
+    border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 14px 0; font-size: 15px; line-height: 1.72;
+  }
+  .note-box {
+    background: #f3e5f5; border-left: 5px solid #8e24aa;
+    border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 16px 0; font-size: 15px; line-height: 1.72;
+  }
+  .note-box .note-title {
+    font-weight: 700; color: #6a1b9a; margin-bottom: 8px; font-size: 15.5px;
+  }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14.5px; }
+  th { background: var(--primary); color: #fff; padding: 10px 12px; text-align: left; }
+  td { border: 1px solid #cfd8dc; padding: 9px 12px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  /* ── QUIZ ── */
+  .quiz-score-bar {
+    background: var(--primary); color: #fff; border-radius: 12px;
+    padding: 16px 22px; margin-bottom: 22px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .quiz-item {
+    background: var(--card); border-radius: 14px; padding: 22px 24px;
+    margin-bottom: 18px; box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    border: 2px solid transparent; transition: .2s;
+  }
+  .quiz-item.is-correct { border-color: var(--green); background: #f1f8e9; }
+  .quiz-item.is-wrong   { border-color: var(--red); background: #ffebee; }
+
+  .quiz-q { font-weight: 700; font-size: 16px; color: var(--primary); margin-bottom: 12px; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+  .quiz-opt {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border: 1.5px solid #cfd8dc; border-radius: 8px;
+    cursor: pointer; background: #fff; transition: .15s; font-size: 15px;
+  }
+  .quiz-opt:hover { border-color: var(--primary); background: #f5f7ff; }
+  .quiz-opt input { cursor: pointer; transform: scale(1.15); }
+
+  .num-row { display: flex; align-items: center; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
+  .num-input {
+    padding: 8px 12px; border: 2px solid #b0bec5; border-radius: 8px;
+    font-size: 15px; width: 130px; outline: none;
+  }
+  .num-input:focus { border-color: var(--primary); }
+
+  .btn-check {
+    background: var(--primary); color: #fff; border: none;
+    padding: 9px 18px; border-radius: 8px; cursor: pointer;
+    font-size: 14px; font-weight: 600; margin-top: 8px; transition: .15s;
+  }
+  .btn-check:hover { background: #283593; }
+
+  .feedback {
+    margin-top: 10px; font-weight: 800; font-size: 15px; min-height: 22px;
+  }
+  .feedback.ok  { color: var(--green); }
+  .feedback.err { color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="openTab('tab1', this)">1. Закон сохранения энергии</button>
+  <button class="tab-btn" onclick="openTab('tab2', this)">2. Тяготение и g</button>
+  <button class="tab-btn" onclick="openTab('tab3', this)">3. Вес и невесомость</button>
+  <button class="tab-btn" onclick="openTab('tab4', this)">4. Интерактивные тесты (13)</button>
+</div>
+
+<!-- ==================== TAB 1 ==================== -->
+<div id="tab1" class="tab-panel active">
+  <div class="hero">
+    <h1>Раздел 1. Полная механическая энергия. Закон сохранения механической энергии</h1>
+    <p>Физика, 10 класс • Теория, таблицы и пояснения для урока</p>
+  </div>
+
+  <div class="card">
+    <h2>3. Полная механическая энергия. Закон сохранения механической энергии</h2>
+    <p>Полная механическая энергия тела равна сумме его кинетической и потенциальной энергии.</p>
+    <p>Полную механическую энергию рассматривают в тех случаях, когда действует закон сохранения энергии и она остаётся постоянной.</p>
+    <p>Если на движение тела не оказывают влияния внешние силы, например, нет взаимодействия с другими телами, нет силы трения или силы сопротивления движению, тогда полная механическая энергия тела остаётся неизменной во времени:</p>
+    <div class="formula-box">
+      E<sub>пот</sub> + E<sub>кин</sub> = const
+      <div class="label">Закон сохранения полной механической энергии</div>
+    </div>
+    <p>Разумеется, что в повседневной жизни не существует идеальной ситуации, в которой тело полностью сохраняло бы свою энергию, так как любое тело вокруг нас взаимодействует хотя бы с молекулами воздуха и сталкивается с сопротивлением воздуха. Но, если сила сопротивления очень мала и движение рассматривается в относительно коротком промежутке времени, тогда такую ситуацию можно приближённо считать теоретически идеальной.</p>
+    <p>Закон сохранения полной механической энергии обычно применяют при рассмотрении свободного падения тела, при его вертикальном подбрасывании или в случае колебаний тела.</p>
+
+    <h3>Пример</h3>
+    <p>При вертикальном подбрасывании тела его полная механическая энергия не меняется, а кинетическая энергия тела переходит в потенциальную и наоборот. Преобразование энергии отображено в таблице:</p>
+    <table>
+      <tr>
+        <th>Точка нахождения тела</th>
+        <th>Потенциальная энергия</th>
+        <th>Кинетическая энергия</th>
+        <th>Полная механическая энергия</th>
+      </tr>
+      <tr>
+        <td>3) Самая верхняя (h = max)</td>
+        <td>E<sub>пот</sub> = m · g · h (max)</td>
+        <td>E<sub>кин</sub> = 0</td>
+        <td>E<sub>полная</sub> = m · g · h</td>
+      </tr>
+      <tr>
+        <td>2) Средняя (h = средняя)</td>
+        <td>E<sub>пот</sub> = m · g · h</td>
+        <td>E<sub>кин</sub> = (m · v²) / 2</td>
+        <td>E<sub>полная</sub> = (m · v²) / 2 + m · g · h</td>
+      </tr>
+      <tr>
+        <td>1) Самая нижняя (h = 0)</td>
+        <td>E<sub>пот</sub> = 0</td>
+        <td>E<sub>кин</sub> = (m · v²) / 2 (max)</td>
+        <td>E<sub>полная</sub> = (m · v²) / 2</td>
+      </tr>
+    </table>
+
+    <div class="note-box">
+      <div class="note-title">Пояснение для урока: Когда использовать обычную формулу потенциальной энергии, а когда — космическую</div>
+      <p>Выбор формулы зависит от того, насколько сильно меняется ускорение свободного падения <b>g</b> на рассматриваемой высоте <b>h</b>:</p>
+      <ul>
+        <li><b>Обычная формула: E<sub>п</sub> = m · g · h.</b> Используется в задачах у поверхности Земли (или другой планеты), когда высота подъёма <i>h</i> пренебрежимо мала по сравнению с радиусом планеты (<i>h ≪ R</i>, например, мяч, лифт, самолёт, гора). В этом случае гравитационное поле можно считать однородным, а <i>g</i> — постоянным.</li>
+        <li><b>Космическая (гравитационная) формула: E<sub>п</sub> = −G · (M · m) / r</b>, где <i>r = R + h</i> — расстояние от центра планеты. Используется, когда тело удаляется на значительные расстояния, сравнимые с радиусом планеты или превышающие его (запуск спутников, межпланетные перелёты, расчёт космических скоростей). На таких расстояниях сила тяжести заметно ослабевает обратно пропорционально квадрату расстояния, и считать <i>g</i> постоянным уже нельзя. Знак «минус» означает, что за нулевой уровень потенциальной энергии принята бесконечность (<i>r → ∞</i>), где гравитационное притяжение исчезает.</li>
+      </ul>
+    </div>
+
+    <p>Исходя из того, что в начале движения величина кинетической энергии тела одинакова с величиной его потенциальной энергии в верхней точке траектории движения E<sub>п</sub> = E<sub>к</sub>, то есть m · g · h = (m · v²) / 2, для расчётов могут быть использованы ещё две формулы:</p>
+    <ul>
+      <li>Если известна максимальная высота, на которую поднимается тело, можно определить максимальную скорость движения: <b>v<sub>max</sub> = √(2 · g · h<sub>max</sub>)</b></li>
+      <li>Если известна максимальная скорость движения тела, можно определить максимальную высоту подъёма: <b>h<sub>max</sub> = v<sub>max</sub>² / (2 · g)</b></li>
+    </ul>
+
+    <p>Чтобы отобразить преобразование энергии графически, можно использовать имитацию «Энергия в скейт-парке», в которой скейтер перемещается по рампе без потерь энергии на трение.</p>
+    <p>На графике синей пунктирной линией показано изменение потенциальной энергии (в средней точке рампы равна нулю). Зелёной пунктирной линией показано изменение кинетической энергии (в верхних точках рампы равна нулю). Жёлто-зелёная линия изображает полную механическую энергию — сумму потенциальной и кинетической — она остаётся неизменной во всё время движения. Частота точек характеризует скорость движения — чем дальше точки расположены друг от друга, тем больше скорость.</p>
+    <p>В реальной ситуации всегда происходят потери энергии, так как часть энергии выделяется в виде тепла под влиянием сил трения и сопротивления. Поэтому для того, чтобы автомобиль двигался с равномерной и неизменной скоростью, необходимо постоянно подводить дополнительную энергию, которая компенсировала бы энергетические потери.</p>
+  </div>
+</div>
+
+<!-- ==================== TAB 2 ==================== -->
+<div id="tab2" class="tab-panel">
+  <div class="hero">
+    <h1>Раздел 2. Сила тяжести. Сила всемирного тяготения</h1>
+    <p>Закон всемирного тяготения, инертная и гравитационная массы, ускорение свободного падения и закон Галилея</p>
+  </div>
+
+  <div class="card">
+    <h2>1. Закон всемирного тяготения</h2>
+    <p>В современной науке встречающиеся в природе взаимодействия разделяются на три типа:</p>
+    <ul>
+      <li>гравитационное,</li>
+      <li>сильное (ядерное),</li>
+      <li>электрослабое (объединяет электромагнитное и слабое).</li>
+    </ul>
+    <p>Слабое и сильное взаимодействия характерны для описания физических процессов с элементарными частицами и проявляются на расстояниях, где законы Ньютона не применимы (микромир), что и обуславливает их короткодействующий характер. При описании макроскопических физических явлений электромагнитное взаимодействие описывается законами классической электродинамики и проявляется независимо от слабого.</p>
+    <p>Гравитационное и электромагнитное взаимодействия являются дальнодействующими: они обнаруживаются на расстояниях, которые «характеризуют» физические явления от молекулярного уровня до движения космических объектов. Одна из важнейших в природе сил — сила гравитации, или сила тяготения. Она действует на все тела во Вселенной.</p>
+    <p>Сила взаимодействия двух тел прямо пропорциональна массе каждого из этих тел и обратно пропорциональна квадрату расстояния между центрами этих тел:</p>
+    <div class="formula-box">
+      F = G · (m₁ · m₂) / R²
+      <div class="label">G = 6,67 · 10⁻¹¹ Н·м²/кг² — гравитационная постоянная, R — расстояние между центрами тел</div>
+    </div>
+    <p><b>Физический смысл гравитационной постоянной:</b> гравитационная постоянная G показывает, с какой силой притягиваются между собой два тела массой 1 кг каждое, расположенные на расстоянии 1 м друг от друга в гравитационном поле.</p>
+    <p>Для решения задач закон всемирного тяготения применяют, если:</p>
+    <ul>
+      <li>1) тела являются точечными (т. е. размеры тел значительно меньше расстояния между ними);</li>
+      <li>2) тела представляют собой два однородных шара;</li>
+      <li>3) тело неопределённой формы находится на поверхности шарообразного и однородного тела большого размера и массы.</li>
+    </ul>
+    <p>Третий закон Ньютона мы используем для расчёта силы тяжести на поверхности Земли или вблизи неё. Поэтому за расстояние между телами берём радиус Земли: R = 6370 км.</p>
+    <p>Сила притяжения яблока к Земле равна силе притяжения Земли к яблоку по модулю: |F⃗<sub>я</sub>| = |F⃗<sub>З</sub>|. Силы притяжения между телами равны по модулю, но противоположны по направлению: F⃗<sub>я</sub> = −F⃗<sub>З</sub>.</p>
+
+    <h3>Инертная и гравитационная массы</h3>
+    <p>Следствие из II закона Ньютона: <b>F = m<sub>и</sub> · a</b>, где m<sub>и</sub> — инертная масса тела.</p>
+    <p>Закон всемирного тяготения для тела на поверхности Земли: <b>F = G · (m<sub>г</sub> · M<sub>з</sub>) / R² = m<sub>г</sub> · g</b>, где <b>g = G · M<sub>з</sub> / R²</b>.</p>
+    <p>Приравнивая формулы при свободном падении (a = g), получаем <b>m<sub>г</sub> = m<sub>и</sub></b> (доказанный экспериментально факт).</p>
+
+    <div class="note-box">
+      <div class="note-title">Пояснение для урока: Что такое инертная масса тела</div>
+      <p><b>Инертная масса (m<sub>и</sub>)</b> — это физическая величина, характеризующая инертность тела, то есть его способность сопротивляться изменению скорости под действием приложенной силы.</p>
+      <p>Она определяется из второго закона Ньютона: <b>m<sub>и</sub> = F / a</b>. Чем больше инертная масса тела, тем меньшее ускорение оно получит при действии одной и той же силы. В отличие от гравитационной массы (которая определяет силу притяжения тела к другим телам), инертная масса проявляется при любом ускоренном движении, даже вдали от гравитационных полей (например, в открытом космосе).</p>
+    </div>
+
+    <div class="note-box">
+      <div class="note-title">Пояснение для урока: Что такое доказанный экспериментально факт</div>
+      <p><b>Доказанный экспериментально факт</b> — это утверждение или закономерность, справедливость которых не просто выведена теоретически на бумаге, а многократно подтверждена точными опытами и измерениями в реальных физических условиях.</p>
+      <p>В контексте равенства инертной и гравитационной масс (<i>m<sub>и</sub> = m<sub>г</sub></i>): теоретически эти две величины описывают разные свойства материи (инертность и способность притягивать). Однако ещё опыты Галилея, Ньютона, а позже сверхточные эксперименты Этвёша и современных физиков показали, что отношение гравитационной массы к инертной одинаково для всех веществ с точностью до 10⁻¹³–10⁻¹⁵. Именно поэтому в физике их считают равными и обозначают одной буквой <b>m</b>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2. Ускорение свободного падения</h2>
+    <p><b>Свободным падением</b> называется ускоренное движение тела в безвоздушном пространстве, при котором на тело действует только сила тяжести. Ускорение свободного падения на Земле составляет 9,8 м/с².</p>
+    <p>Ускорение свободного падения в упрощённом виде: g = F / m (из F = m · g). Объединяя с законом всемирного тяготения, получаем формулу ускорения свободного падения на любом космическом объекте:</p>
+    <div class="formula-box">
+      g = G · M / R²
+      <div class="label">У поверхности Земли: g = (6,6720 · 10⁻¹¹ · 5,976 · 10²⁴) / (6,371 · 10⁶)² = 9,8 м/с² (полюсы: 9,832 м/с², экватор: 9,78 м/с²)</div>
+    </div>
+
+    <table>
+      <tr>
+        <th>Небесное тело</th><th>g, м/с²</th><th>Диаметр, км</th><th>Расст. до Солнца, млн км</th><th>Масса, кг</th><th>Отношение к массе Земли</th>
+      </tr>
+      <tr><td>Меркурий</td><td>3,7</td><td>4878</td><td>58</td><td>3,3 · 10²³</td><td>0,055</td></tr>
+      <tr><td>Венера</td><td>8,87</td><td>12103</td><td>108</td><td>4,9 · 10²⁴</td><td>0,82</td></tr>
+      <tr><td>Земля</td><td>9,8</td><td>12756,28</td><td>150</td><td>6,0 · 10²⁴</td><td>1</td></tr>
+      <tr><td>Марс</td><td>3,7</td><td>6794</td><td>228</td><td>6,4 · 10²³</td><td>0,11</td></tr>
+      <tr><td>Юпитер</td><td>24,8</td><td>142984</td><td>778</td><td>1,9 · 10²⁷</td><td>317,8</td></tr>
+      <tr><td>Сатурн</td><td>10,4</td><td>120536</td><td>1427</td><td>5,7 · 10²⁶</td><td>95,0</td></tr>
+      <tr><td>Уран</td><td>8,87</td><td>51118</td><td>2871</td><td>8,7 · 10²⁵</td><td>14,4</td></tr>
+      <tr><td>Нептун</td><td>10,15</td><td>49532</td><td>4498</td><td>1,02 · 10²⁶</td><td>17,1</td></tr>
+      <tr><td>Плутон</td><td>0,66</td><td>2390</td><td>5906</td><td>1,3 · 10²²</td><td>0,0022</td></tr>
+      <tr><td>Луна</td><td>1,62</td><td>3473,8</td><td>0,3844 (до Земли)</td><td>7,35 · 10²²</td><td>0,0123</td></tr>
+      <tr><td>Солнце</td><td>274,0</td><td>1391000</td><td>—</td><td>2,0 · 10³⁰</td><td>332900</td></tr>
+    </table>
+
+    <div class="def-box">
+      <strong>Обобщённый закон Галилея:</strong> падение тел в одинаковых полях тяготения происходит с одинаковым ускорением. На высоте h от поверхности Земли: <b>g = G · M / (R + h)²</b>.
+    </div>
+
+    <div class="note-box">
+      <div class="note-title">Пояснение для урока: Глубокое разъяснение Обобщённого закона Галилея</div>
+      <p>Классический опыт Галилея показал, что в безвоздушном пространстве (в вакууме) все тела у поверхности Земли падают с одинаковым ускорением, независимо от их массы, формы и материала (например, перо и свинцовый шарик падают одновременно).</p>
+      <p><b>Почему так происходит с точки зрения современной физики?</b> Сила тяжести, действующая на тело, прямо пропорциональна его гравитационной массе: <i>F = m<sub>г</sub> · g</i>. Но ускорение, которое тело получает под действием этой силы, обратно пропорционально его инертной массе: <i>a = F / m<sub>и</sub> = (m<sub>г</sub> / m<sub>и</sub>) · g</i>. Поскольку экспериментально доказано, что <i>m<sub>г</sub> = m<sub>и</sub></i>, масса в числителе и знаменателе сокращается, и остаётся <i>a = g</i>.</p>
+      <p><b>Обобщённый закон Галилея утверждает:</b> в любой заданной точке любого гравитационного поля (на Земле, на Луне, на орбите) все тела движутся с одинаковым ускорением свободного падения, которое зависит только от массы притягивающего небесного тела <i>M</i> и расстояния до его центра <i>r</i> (<i>g = G · M / r²</i>), но не зависит от массы и состава самого падающего тела.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 3 ==================== -->
+<div id="tab3" class="tab-panel">
+  <div class="hero">
+    <h1>Раздел 3. Вес тела. Невесомость</h1>
+    <p>Космические скорости, вес на различных планетах, изменение веса при движении и невесомость</p>
+  </div>
+
+  <div class="card">
+    <h2>1. Космические скорости</h2>
+    <p>Движение искусственных спутников — это движение тел, выведенных человеком на орбиту вокруг небесного тела (планеты, Солнца) и движущихся под действием сил всемирного тяготения. Чтобы вывести аппарат на околоземную орбиту, ему необходимо сообщить <b>первую космическую скорость</b> (≈ 7,9 км/с). Для полётов к другим планетам требуется достичь <b>второй космической скорости</b> (≈ 11,2 км/с).</p>
+
+    <div class="note-box">
+      <div class="note-title">Пояснение для урока: Что такое орбита и вывод на орбиту</div>
+      <p><b>Орбита</b> — это замкнутая или незамкнутая траектория, по которой одно тело (например, спутник или планета) движется в гравитационном поле другого, более массивного тела.</p>
+      <p><b>Физическая суть орбитального движения:</b> спутник непрерывно «падает» на Землю под действием силы тяжести, но благодаря большой горизонтальной скорости поверхность Земли «уходит» (закругляется) из-под него ровно с той же скоростью. В результате спутник не падает на Землю, а постоянно обращается вокруг неё.</p>
+      <p><b>Вывод на орбиту</b> — это процесс доставки космического аппарата (обычно с помощью многоступенчатой ракеты-носителя) на заданную высоту над поверхностью Земли и разгона его до первой космической скорости (около 7,9 км/с у поверхности, и немного меньше на высоте орбиты). При этом аппарат выводится за пределы плотных слоёв атмосферы, чтобы сопротивление воздуха не тормозило его и не заставляло сойти с орбиты.</p>
+    </div>
+
+    <table>
+      <tr><th>Вид скорости</th><th>Определение и формулы</th></tr>
+      <tr>
+        <td><b>Первая космическая (круговая) скорость</b></td>
+        <td>Наименьшая скорость тела, которое вращается в гравитационном поле планеты.<br>Второй закон Ньютона: G · m · M / R² = m · v₁² / R<br><b>v₁ = √(G · M / R) = √(g · R)</b></td>
+      </tr>
+      <tr>
+        <td><b>Вторая космическая (параболическая) скорость</b></td>
+        <td>Наименьшая скорость тела, преодолевающего гравитационное поле планеты и движущегося по параболической траектории.<br><b>v₂ = √(2 · G · M / R) = √(2 · g · R) = √2 · v₁</b></td>
+      </tr>
+      <tr>
+        <td><b>Примечание</b></td>
+        <td>Если движение тела происходит на расстоянии h от поверхности планеты, то R в формулах заменяется на (R + h).</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>2. Вес на различных планетах</h2>
+    <p>Масса тела зависит от количества молекул и атомов в теле, её обозначают <i>m</i> и измеряют в килограммах. <b>Вес тела</b> — это сила, с которой тело давит на поверхность или растягивает подвес, на котором оно висит (обозначают <i>P</i>, измеряют в ньютонах, Н).</p>
+    <p>Вес тела в покое или при равномерном прямолинейном движении: <b>P = m · g</b>.</p>
+    <p>На каждой планете ускорение свободного падения разное, поэтому одно и то же тело имеет различный вес (на Луне в 6 раз меньше, чем на Земле; на Солнце почти в 28 раз больше).</p>
+  </div>
+
+  <div class="card">
+    <h2>3. Изменение веса при движении</h2>
+    <p>Если тело движется ускоренно в вертикальном направлении, возникает изменение веса тела:</p>
+    <ul>
+      <li>Лифт неподвижен или движется равномерно (a = 0): <b>P = m · g</b> (нормальный вес).</li>
+      <li>Ускорение направлено вверх (разгон вверх или торможение при движении вниз): <b>P = m · (g + a)</b> (перегрузка).</li>
+      <li>Ускорение направлено вниз (разгон вниз или торможение при движении вверх): <b>P = m · (g − a)</b> (вес уменьшается).</li>
+      <li>Свободное падение (a = g вниз): <b>P = 0</b> (невесомость).</li>
+    </ul>
+    <div class="tip-box">
+      <b>Пример:</b> человек массой 80 кг в лифте с ускорением 7 м/с². В покое/равномерно: 784 Н. При разгоне вверх: 80 · (9,8 + 7) = 1344 Н (в источнике ЯКласс опечатка: 1334 Н). При торможении вверх: 80 · (9,8 − 7) = 224 Н.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>4. Невесомость</h2>
+    <div class="def-box">
+      <strong>Невесомость</strong> — состояние, при котором сила взаимодействия тела с опорой или подвесом (вес тела), возникающая в связи с гравитационным притяжением, пренебрежимо мала.
+    </div>
+    <p>Тело может находиться в невесомости при любой начальной скорости (например, подброшенный пакет с водой в полёте, орбитальная станция, самолёт в свободном падении).</p>
+  </div>
+</div>
+
+<!-- ==================== TAB 4: QUIZ ==================== -->
+<div id="tab4" class="tab-panel">
+  <div class="quiz-score-bar">
+    <div>
+      <h2 style="font-size:20px;margin-bottom:4px;">Интерактивные тесты и задания (13 задач)</h2>
+      <p style="font-size:13.5px;color:#e3f2fd;">Выберите вариант ответа или введите число и нажмите «Проверить»</p>
+    </div>
+    <div id="score-display" style="font-size:18px;font-weight:800;background:rgba(255,255,255,.15);padding:8px 16px;border-radius:8px;">
+      Верно: 0 / 13
+    </div>
+  </div>
+
+  <!-- 2.1 -->
+  <div class="quiz-item" id="q1">
+    <div class="quiz-q">1. Сила притяжения Земли (1 балл)</div>
+    <p>Падающее яблоко притягивается к Земле с силой 2,81 Н. Определи значение силы (в Н), с которой Земля притягивается к яблоку.</p>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q1" value="2.81" onchange="checkRadio('q1','2.81')"> 2,81</label>
+      <label class="quiz-opt"><input type="radio" name="q1" value="28.1" onchange="checkRadio('q1','2.81')"> 28,1</label>
+      <label class="quiz-opt"><input type="radio" name="q1" value="0" onchange="checkRadio('q1','2.81')"> 0</label>
+      <label class="quiz-opt"><input type="radio" name="q1" value="none" onchange="checkRadio('q1','2.81')"> Среди предложенных вариантов ответа нет правильного</label>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- 2.2 -->
+  <div class="quiz-item" id="q2">
+    <div class="quiz-q">2. Расчёт силы притяжения (1 балл)</div>
+    <p>Рассчитай, с какой силой притягиваются друг к другу два вагона, массы которых равны 14 т и 7 т, если расстояние между ними составляет 1 км. (G = 6,67 · 10⁻¹¹ Н·м²/кг², округли до целого.)</p>
+    <div class="num-row">
+      <input type="text" class="num-input" id="in-q2" placeholder="Ответ"> <span>· 10⁻¹¹ Н</span>
+      <button class="btn-check" onclick="checkNum('q2', 654, 1)">Проверить</button>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- 2.3 -->
+  <div class="quiz-item" id="q3">
+    <div class="quiz-q">3. Во сколько раз изменяется сила? (2 балла)</div>
+    <p>Вычисли расстояние от поверхности Земли, на котором гравитационная сила, действующая на тело, будет в 7,2 раз меньше, чем на поверхности Земли. Радиус Земли принять равным 6400 км. (Округли до целого.)</p>
+    <div class="num-row">
+      <input type="text" class="num-input" id="in-q3" placeholder="Ответ"> <span>км</span>
+      <button class="btn-check" onclick="checkNum('q3', 10773, 15)">Проверить</button>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- 2.4 -->
+  <div class="quiz-item" id="q4">
+    <div class="quiz-q">4. Определение ускорения свободного падения (2 балла)</div>
+    <p>Найди, чему равно ускорение свободного падения на Марсе, если масса небесного тела равна 6,42 · 10²³ кг, а радиус — 3397 км. (G = 6,67 · 10⁻¹¹ Н·м²/кг², округли до сотых.)</p>
+    <div class="num-row">
+      <input type="text" class="num-input" id="in-q4" placeholder="Ответ"> <span>м/с²</span>
+      <button class="btn-check" onclick="checkNum('q4', 3.71, 0.02)">Проверить</button>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- 2.5 -->
+  <div class="quiz-item" id="q5">
+    <div class="quiz-q">5. Расчёт силы тяжести на другой планете (2 балла)</div>
+    <p>Отношение массы Плутона к массе Земли равно 0,003, а отношение среднего радиуса Плутона к среднему радиусу Земли — 0,018. Чему равен вес спускаемого на Плутон аппарата массой 295 кг? (g<sub>З</sub> = 10 м/с², округли до целого.)</p>
+    <div class="num-row">
+      <input type="text" class="num-input" id="in-q5" placeholder="Ответ"> <span>Н</span>
+      <button class="btn-check" onclick="checkNum('q5', 27315, 20)">Проверить</button>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- 3.1 -->
+  <div class="quiz-item" id="q6">
+    <div class="quiz-q">6. Когда движущееся тело находится в состоянии невесомости? (1 балл)</div>
+    <p>Мяч подбросили вверх (этап 1). Некоторое время мяч летит в воздухе (этап 2) и затем ударяется о землю (этап 3). Определи, в какое время мяч находился в состоянии, близком к невесомости.</p>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q6" value="2" onchange="checkRadio('q6','2')"> на этапе 2</label>
+      <label class="quiz-opt"><input type="radio" name="q6" value="23" onchange="checkRadio('q6','2')"> на этапе 2 и на этапе 3</label>
+      <label class="quiz-opt"><input type="radio" name="q6" value="1" onchange="checkRadio('q6','2')"> на этапе 1</label>
+      <label class="quiz-opt"><input type="radio" name="q6" value="3" onchange="checkRadio('q6','2')"> на этапе 3</label>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- 3.2 -->
+  <div class="quiz-item" id="q7">
+    <div class="quiz-q">7. Изменение веса (2 балла)</div>
+    <p><b>Вопрос 1:</b> Представь, что ты находишься в лифте. Лифт равномерно едет вниз. Как изменится твой вес?</p>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q7a" value="dec"> Уменьшается</label>
+      <label class="quiz-opt"><input type="radio" name="q7a" value="inc"> Увеличивается</label>
+      <label class="quiz-opt"><input type="radio" name="q7a" value="0"> Равен 0, т. к. наступит состояние невесомости</label>
+      <label class="quiz-opt"><input type="radio" name="q7a" value="same"> Не меняется</label>
+    </div>
+    <p style="margin-top:12px;"><b>Вопрос 2:</b> Что не меняется, если тело находится в ускоренном движении вверх или вниз? (Ответов может быть несколько.)</p>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="checkbox" name="q7b" value="weight"> вес тела</label>
+      <label class="quiz-opt"><input type="checkbox" name="q7b" value="grav"> сила притяжения Земли</label>
+      <label class="quiz-opt"><input type="checkbox" name="q7b" value="mass"> масса тела</label>
+      <label class="quiz-opt"><input type="checkbox" name="q7b" value="vol"> объём тела</label>
+    </div>
+    <button class="btn-check" onclick="checkQ7()">Проверить</button>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- 3.3 -->
+  <div class="quiz-item" id="q8">
+    <div class="quiz-q">8. Определение веса и направления ускорения (3 балла)</div>
+    <p>Начав при помощи крана подъём груза вверх, скорость движения груза увеличивают от состояния покоя до 20,7 м/с в течение 9 секунд.</p>
+    <div class="num-row">
+      <span>1. Модуль ускорения груза: a =</span>
+      <input type="text" class="num-input" id="in-q8a" placeholder="Ответ"> <span>м/с²</span>
+    </div>
+    <p>2. Куда направлено ускорение груза?</p>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q8b" value="down"> Вертикально вниз</label>
+      <label class="quiz-opt"><input type="radio" name="q8b" value="out"> Горизонтально в сторону от крана</label>
+      <label class="quiz-opt"><input type="radio" name="q8b" value="in"> Горизонтально в сторону крана</label>
+      <label class="quiz-opt"><input type="radio" name="q8b" value="up"> Вертикально вверх</label>
+    </div>
+    <p>3. Каким весом обладает груз в этом случае?</p>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q8c" value="gt"> Значение веса груза больше значения силы тяжести, действующей на него</label>
+      <label class="quiz-opt"><input type="radio" name="q8c" value="0"> Груз находится в состоянии невесомости</label>
+      <label class="quiz-opt"><input type="radio" name="q8c" value="eq"> Груз обладает таким же весом, как в состоянии покоя</label>
+      <label class="quiz-opt"><input type="radio" name="q8c" value="lt"> Значение веса груза меньше значения силы тяжести, действующей на него</label>
+    </div>
+    <button class="btn-check" onclick="checkQ8()">Проверить</button>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- 3.4 -->
+  <div class="quiz-item" id="q9">
+    <div class="quiz-q">9. Вычисление веса космонавта на Земле и на другой планете (3 балла)</div>
+    <p>Масса космонавта вместе с экипировкой составляет 162 кг. (Округли до одного знака после запятой; g<sub>З</sub> = 9,8 м/с², g<sub>Мерк</sub> = 3,7 м/с².)</p>
+    <div class="num-row"><span>1. Вес на Земле: P<sub>Зем</sub> =</span><input type="text" class="num-input" id="in-q9a" placeholder="Ответ"><span>Н</span></div>
+    <div class="num-row"><span>2. Вес на Меркурии: P<sub>Мерк</sub> =</span><input type="text" class="num-input" id="in-q9b" placeholder="Ответ"><span>Н</span></div>
+    <div class="num-row"><span>3. Показание весов на Меркурии:</span><input type="text" class="num-input" id="in-q9c" placeholder="Ответ"><span>кг</span></div>
+    <button class="btn-check" onclick="checkMultiNum('q9', ['in-q9a','in-q9b','in-q9c'], [1587.6, 599.4, 61.2], [0.2, 0.2, 0.2])">Проверить</button>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- 3.5 -->
+  <div class="quiz-item" id="q10">
+    <div class="quiz-q">10. Задание на расчёт веса тела на поверхности Земли (1 балл)</div>
+    <p>Определи вес находящегося на земной поверхности объекта, если модуль силы реакции опоры для этого объекта равен 632 Н.</p>
+    <div class="num-row">
+      <input type="text" class="num-input" id="in-q10" placeholder="Ответ"> <span>кН</span>
+      <button class="btn-check" onclick="checkNum('q10', 0.632, 0.005)">Проверить</button>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- 3.6 -->
+  <div class="quiz-item" id="q11">
+    <div class="quiz-q">11. Определение веса тела человека, движущегося в лифте (3 балла)</div>
+    <p>В высокоскоростной лифт входит человек, масса которого 80 кг, и едет вверх. Лифт начинает движение с ускорением 1,6 м/с² и в конце движения тормозит с ускорением 1,3 м/с² (g = 9,8 м/с²).</p>
+    <div class="num-row"><span>1. Равномерно: P₀ =</span><input type="text" class="num-input" id="in-q11a" placeholder="Ответ"><span>Н</span></div>
+    <div class="num-row"><span>2. Начало движения: P₁ =</span><input type="text" class="num-input" id="in-q11b" placeholder="Ответ"><span>Н</span></div>
+    <div class="num-row"><span>3. Торможение: P₂ =</span><input type="text" class="num-input" id="in-q11c" placeholder="Ответ"><span>Н</span></div>
+    <button class="btn-check" onclick="checkMultiNum('q11', ['in-q11a','in-q11b','in-q11c'], [784, 912, 680], [0.5, 0.5, 0.5])">Проверить</button>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- 3.7 -->
+  <div class="quiz-item" id="q12">
+    <div class="quiz-q">12. Расчёт ускорения свободного падения на расстоянии от Земли (2 балла)</div>
+    <p>Рассчитай значение ускорения свободного падения g<sub>r</sub> на расстоянии r = R / 10 от поверхности Земли, где R — радиус Земли. На Земле g<sub>R</sub> = 10 м/с². (Округли до десятых.)</p>
+    <div class="num-row">
+      <input type="text" class="num-input" id="in-q12" placeholder="Ответ"> <span>м/с²</span>
+      <button class="btn-check" onclick="checkNum('q12', 8.3, 0.1)">Проверить</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- 3.8 -->
+  <div class="quiz-item" id="q13">
+    <div class="quiz-q">13. В такси и в невесомости (3 балла)</div>
+    <p>Пассажир автомобиля такси, проезжавшего середину выпуклого моста радиусом 48 м с постоянной скоростью, на мгновение оказался в состоянии невесомости. С точностью до тысячных определи скорость движения автомобиля (g = 9,8 м/с²).</p>
+    <div class="num-row">
+      <input type="text" class="num-input" id="in-q13" placeholder="Ответ"> <span>м/с</span>
+      <button class="btn-check" onclick="checkNum('q13', 21.689, 0.01)">Проверить</button>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+</div>
+
+<script>
+const solved = {};
+
+function openTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setResult(qid, isOk) {
+  const card = document.getElementById(qid);
+  const fb = document.getElementById('fb-' + qid);
+  card.classList.remove('is-correct', 'is-wrong');
+  fb.classList.remove('ok', 'err');
+  if (isOk) {
+    card.classList.add('is-correct');
+    fb.classList.add('ok');
+    fb.textContent = 'ВЕРНО';
+    solved[qid] = true;
+  } else {
+    card.classList.add('is-wrong');
+    fb.classList.add('err');
+    fb.textContent = 'НЕВЕРНО';
+    solved[qid] = false;
+  }
+  const count = Object.values(solved).filter(Boolean).length;
+  document.getElementById('score-display').textContent = `Верно: ${count} / 13`;
+}
+
+function parseVal(id) {
+  return parseFloat(document.getElementById(id).value.trim().replace(',', '.'));
+}
+
+function checkRadio(qid, correct) {
+  const sel = document.querySelector(`input[name="${qid}"]:checked`);
+  if (!sel) return;
+  setResult(qid, sel.value === correct);
+}
+
+function checkNum(qid, target, tol) {
+  const v = parseVal('in-' + qid);
+  setResult(qid, !isNaN(v) && Math.abs(v - target) <= tol);
+}
+
+function checkMultiNum(qid, ids, targets, tols) {
+  let ok = true;
+  for (let i = 0; i < ids.length; i++) {
+    const v = parseVal(ids[i]);
+    if (isNaN(v) || Math.abs(v - targets[i]) > tols[i]) { ok = false; break; }
+  }
+  setResult(qid, ok);
+}
+
+function checkQ7() {
+  const a = document.querySelector('input[name="q7a"]:checked');
+  const b = Array.from(document.querySelectorAll('input[name="q7b"]:checked')).map(x => x.value).sort().join(',');
+  const ok = a && a.value === 'same' && (b === 'grav,mass,vol' || b === 'grav,mass');
+  setResult('q7', ok);
+}
+
+function checkQ8() {
+  const a = parseVal('in-q8a');
+  const b = document.querySelector('input[name="q8b"]:checked');
+  const c = document.querySelector('input[name="q8c"]:checked');
+  const ok = !isNaN(a) && Math.abs(a - 2.3) <= 0.05 && b && b.value === 'up' && c && c.value === 'gt';
+  setResult('q8', ok);
+}
+</script>
+</body>
+</html>
