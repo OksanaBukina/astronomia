@@ -213,6 +213,35 @@
     </ul>
 
     <p>Чтобы отобразить преобразование энергии графически, можно использовать имитацию «Энергия в скейт-парке», в которой скейтер перемещается по рампе без потерь энергии на трение.</p>
+
+    <div class="note-box" style="background:#e8f5e9;border-left-color:#2e7d32;">
+      <div class="note-title" style="color:#1b5e20;">Интерактивная модель: Преобразование энергии на рампе</div>
+      <p>Двигайте ползунок, чтобы перемещать скейтера по рампе и наблюдать за изменением потенциальной (E<sub>пот</sub>), кинетической (E<sub>кин</sub>) и полной (E<sub>полн</sub>) энергии:</p>
+      <div style="display:flex;align-items:center;gap:12px;margin:10px 0;flex-wrap:wrap;">
+        <label for="skate-pos"><b>Положение:</b></label>
+        <input type="range" id="skate-pos" min="-100" max="100" value="0" style="flex:1;min-width:180px;" oninput="updateSkate()">
+        <span id="skate-label" style="font-weight:700;color:#1b5e20;">Нижняя точка (h = 0)</span>
+      </div>
+      <svg id="skate-svg" viewBox="0 0 500 180" style="width:100%;max-width:560px;display:block;margin:10px auto;background:#fff;border-radius:10px;border:1px solid #c8e6c9;">
+        <!-- Рампа -->
+        <path d="M 50 30 Q 250 170 450 30" fill="none" stroke="#1a237e" stroke-width="4"/>
+        <line x1="30" y1="150" x2="470" y2="150" stroke="#cfd8dc" stroke-width="1" stroke-dasharray="4"/>
+        <!-- Скейтер -->
+        <circle id="skater-dot" cx="250" cy="100" r="10" fill="#f57c00" stroke="#bf360c" stroke-width="2"/>
+        <!-- Столбцы энергии -->
+        <rect x="30" y="10" width="20" height="80" fill="#e3f2fd" stroke="#1976d2"/>
+        <rect id="bar-ep" x="30" y="90" width="20" height="0" fill="#1976d2"/>
+        <text x="40" y="105" font-size="11" text-anchor="middle" fill="#1976d2" font-weight="bold">Eп</text>
+
+        <rect x="60" y="10" width="20" height="80" fill="#fff3e0" stroke="#f57c00"/>
+        <rect id="bar-ek" x="60" y="10" width="20" height="80" fill="#f57c00"/>
+        <text x="70" y="105" font-size="11" text-anchor="middle" fill="#e65100" font-weight="bold">Eк</text>
+
+        <rect x="90" y="10" width="20" height="80" fill="#e8f5e9" stroke="#2e7d32"/>
+        <rect x="90" y="10" width="20" height="80" fill="#2e7d32"/>
+        <text x="100" y="105" font-size="11" text-anchor="middle" fill="#1b5e20" font-weight="bold">Eполн</text>
+      </svg>
+    </div>
     <p>На графике синей пунктирной линией показано изменение потенциальной энергии (в средней точке рампы равна нулю). Зелёной пунктирной линией показано изменение кинетической энергии (в верхних точках рампы равна нулю). Жёлто-зелёная линия изображает полную механическую энергию — сумму потенциальной и кинетической — она остаётся неизменной во всё время движения. Частота точек характеризует скорость движения — чем дальше точки расположены друг от друга, тем больше скорость.</p>
     <p>В реальной ситуации всегда происходят потери энергии, так как часть энергии выделяется в виде тепла под влиянием сил трения и сопротивления. Поэтому для того, чтобы автомобиль двигался с равномерной и неизменной скоростью, необходимо постоянно подводить дополнительную энергию, которая компенсировала бы энергетические потери.</p>
   </div>
@@ -249,6 +278,24 @@
     </ul>
     <p>Третий закон Ньютона мы используем для расчёта силы тяжести на поверхности Земли или вблизи неё. Поэтому за расстояние между телами берём радиус Земли: R = 6370 км.</p>
     <p>Сила притяжения яблока к Земле равна силе притяжения Земли к яблоку по модулю: |F⃗<sub>я</sub>| = |F⃗<sub>З</sub>|. Силы притяжения между телами равны по модулю, но противоположны по направлению: F⃗<sub>я</sub> = −F⃗<sub>З</sub>.</p>
+
+    <div class="note-box" style="background:#e3f2fd;border-left-color:#1565c0;">
+      <div class="note-title" style="color:#0d47a1;">Интерактивная схема: Зависимость силы тяготения от расстояния (F ∝ 1/R²)</div>
+      <div style="display:flex;align-items:center;gap:12px;margin:10px 0;flex-wrap:wrap;">
+        <label for="grav-dist"><b>Расстояние от центра Земли:</b></label>
+        <input type="range" id="grav-dist" min="1" max="5" step="0.5" value="1" style="flex:1;min-width:160px;" oninput="updateGrav()">
+        <span id="grav-label" style="font-weight:700;color:#0d47a1;">1 R<sub>З</sub> (поверхность) → Сила = 100% (1,00 · F₀)</span>
+      </div>
+      <svg viewBox="0 0 500 100" style="width:100%;max-width:560px;display:block;margin:8px auto;background:#fff;border-radius:10px;border:1px solid #bbdefb;">
+        <circle cx="60" cy="50" r="32" fill="#1976d2"/>
+        <text x="60" y="54" font-size="11" fill="#fff" text-anchor="middle" font-weight="bold">Земля</text>
+        <circle id="grav-obj" cx="120" cy="50" r="9" fill="#c62828"/>
+        <line id="grav-vec1" x1="110" y1="50" x2="92" y2="50" stroke="#c62828" stroke-width="3"/>
+        <line id="grav-vec2" x1="70" y1="50" x2="88" y2="50" stroke="#2e7d32" stroke-width="3"/>
+        <text x="290" y="35" font-size="12" fill="#37474f">Силы равны по модулю: |F⃗₁| = |F⃗₂|</text>
+        <text id="grav-pct" x="290" y="60" font-size="13" fill="#0d47a1" font-weight="bold">F = F₀ / 1² = 1,00 · F₀</text>
+      </svg>
+    </div>
 
     <h3>Инертная и гравитационная массы</h3>
     <p>Следствие из II закона Ньютона: <b>F = m<sub>и</sub> · a</b>, где m<sub>и</sub> — инертная масса тела.</p>
@@ -360,6 +407,19 @@
     </ul>
     <div class="tip-box">
       <b>Пример:</b> человек массой 80 кг в лифте с ускорением 7 м/с². В покое/равномерно: 784 Н. При разгоне вверх: 80 · (9,8 + 7) = 1344 Н (в источнике ЯКласс опечатка: 1334 Н). При торможении вверх: 80 · (9,8 − 7) = 224 Н.
+    </div>
+
+    <div class="note-box" style="background:#fff3e0;border-left-color:#f57c00;">
+      <div class="note-title" style="color:#e65100;">Интерактивный симулятор: Вес тела в лифте (m = 80 кг, g = 9,8 м/с²)</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;">
+        <button class="btn-check" style="margin:0;" onclick="setLift(0,'Покой / равномерно (a = 0)','Нормальный вес: P = m · g')">Покой (a = 0)</button>
+        <button class="btn-check" style="margin:0;background:#c62828;" onclick="setLift(3,'Ускорение вверх (a = 3 м/с²)','Перегрузка: P = m · (g + a)')">Разгон вверх (a = 3)</button>
+        <button class="btn-check" style="margin:0;background:#1565c0;" onclick="setLift(-3,'Ускорение вниз (a = 3 м/с²)','Уменьшение веса: P = m · (g − a)')">Разгон вниз (a = 3)</button>
+        <button class="btn-check" style="margin:0;background:#6a1b9a;" onclick="setLift(-9.8,'Свободное падение (a = g)','Невесомость: P = 0 Н')">Свободное падение</button>
+      </div>
+      <div id="lift-res" style="padding:12px 16px;background:#fff;border-radius:8px;border:1px solid #ffe0b2;font-size:15px;font-weight:700;color:#212121;">
+        Режим: Покой / равномерно (a = 0) — Нормальный вес: P = 784,0 Н
+      </div>
     </div>
   </div>
 
@@ -625,6 +685,50 @@ function checkQ8() {
   const c = document.querySelector('input[name="q8c"]:checked');
   const ok = !isNaN(a) && Math.abs(a - 2.3) <= 0.05 && b && b.value === 'up' && c && c.value === 'gt';
   setResult('q8', ok);
+}
+
+function updateSkate() {
+  const val = parseInt(document.getElementById('skate-pos').value, 10);
+  const t = val / 100; // -1 .. 1
+  const x = 250 + t * 200;
+  // Парабола от y=100 (при t=0) до y=30 (при t=±1)
+  const y = 100 - 70 * (t * t);
+  document.getElementById('skater-dot').setAttribute('cx', x);
+  document.getElementById('skater-dot').setAttribute('cy', y);
+
+  const epFrac = t * t;
+  const ekFrac = 1 - epFrac;
+  const epH = Math.round(epFrac * 80);
+  const ekH = Math.round(ekFrac * 80);
+
+  document.getElementById('bar-ep').setAttribute('y', 90 - epH);
+  document.getElementById('bar-ep').setAttribute('height', epH);
+  document.getElementById('bar-ek').setAttribute('y', 90 - ekH);
+  document.getElementById('bar-ek').setAttribute('height', ekH);
+
+  const lbl = document.getElementById('skate-label');
+  if (Math.abs(val) < 10) lbl.textContent = 'Нижняя точка (h = 0, Eк = max, Eп = 0)';
+  else if (Math.abs(val) > 90) lbl.textContent = 'Верхняя точка (h = max, Eп = max, Eк = 0)';
+  else lbl.textContent = `Промежуточная точка (Eп = ${Math.round(epFrac*100)}%, Eк = ${Math.round(ekFrac*100)}%)`;
+}
+
+function updateGrav() {
+  const r = parseFloat(document.getElementById('grav-dist').value);
+  const frac = 1 / (r * r);
+  const pct = (frac * 100).toFixed(1).replace('.', ',');
+  const mult = frac.toFixed(2).replace('.', ',');
+  document.getElementById('grav-label').innerHTML = `${r} R<sub>З</sub> → Сила = ${pct}% (${mult} · F₀)`;
+  document.getElementById('grav-pct').textContent = `F = F₀ / ${r}² = ${mult} · F₀`;
+  const objX = 60 + r * 40;
+  document.getElementById('grav-obj').setAttribute('cx', objX);
+  const vecLen = Math.max(4, Math.round(24 * frac));
+  document.getElementById('grav-vec1').setAttribute('x1', objX - 10);
+  document.getElementById('grav-vec1').setAttribute('x2', objX - 10 - vecLen);
+}
+
+function setLift(a, title, desc) {
+  const P = Math.max(0, 80 * (9.8 + a)).toFixed(1).replace('.', ',');
+  document.getElementById('lift-res').textContent = `Режим: ${title} — ${desc} → P = ${P} Н`;
 }
 </script>
 </body>
