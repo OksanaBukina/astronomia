@@ -169,7 +169,30 @@
     <p>Закон сохранения полной механической энергии обычно применяют при рассмотрении свободного падения тела, при его вертикальном подбрасывании или в случае колебаний тела.</p>
 
     <h3>Пример</h3>
-    <p>При вертикальном подбрасывании тела его полная механическая энергия не меняется, а кинетическая энергия тела переходит в потенциальную и наоборот. Преобразование энергии отображено в таблице:</p>
+    <p>При вертикальном подбрасывании тела его полная механическая энергия не меняется, а кинетическая энергия тела переходит в потенциальную и наоборот. Преобразование энергии отображено на схеме и в таблице:</p>
+
+    <div class="note-box" style="background:#e8eaf6;border-left-color:#3f51b5;">
+      <div class="note-title" style="color:#1a237e;">Рисунок: Вертикальное подбрасывание шара (нажмите на точку)</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;">
+        <button class="btn-check" style="margin:0;" onclick="setBall(1)">1) Нижняя точка (h = 0)</button>
+        <button class="btn-check" style="margin:0;background:#1976d2;" onclick="setBall(2)">2) Средняя точка</button>
+        <button class="btn-check" style="margin:0;background:#f57c00;" onclick="setBall(3)">3) Верхняя точка (h = max)</button>
+      </div>
+      <svg viewBox="0 0 460 150" style="width:100%;max-width:500px;display:block;margin:8px auto;background:#fff;border-radius:10px;border:1px solid #c5cae9;">
+        <line x1="40" y1="130" x2="200" y2="130" stroke="#37474f" stroke-width="3"/>
+        <line x1="120" y1="25" x2="120" y2="130" stroke="#90a4ae" stroke-width="2" stroke-dasharray="4"/>
+        <circle cx="120" cy="120" r="10" fill="#e0e0e0" stroke="#9e9e9e"/>
+        <circle cx="120" cy="75" r="10" fill="#e0e0e0" stroke="#9e9e9e"/>
+        <circle cx="120" cy="30" r="10" fill="#e0e0e0" stroke="#9e9e9e"/>
+        <circle id="ball-active" cx="120" cy="120" r="12" fill="#f57c00" stroke="#bf360c" stroke-width="2"/>
+        <text x="142" y="124" font-size="12" fill="#37474f">1) h = 0</text>
+        <text x="142" y="79" font-size="12" fill="#37474f">2) h = средн.</text>
+        <text x="142" y="34" font-size="12" fill="#37474f">3) h = max</text>
+        <text id="ball-info1" x="230" y="55" font-size="13" font-weight="bold" fill="#1a237e">Eпот = 0</text>
+        <text id="ball-info2" x="230" y="80" font-size="13" font-weight="bold" fill="#e65100">Eкин = (m·v²)/2 (max)</text>
+        <text id="ball-info3" x="230" y="105" font-size="13" font-weight="bold" fill="#2e7d32">Eполн = (m·v²)/2</text>
+      </svg>
+    </div>
     <table>
       <tr>
         <th>Точка нахождения тела</th>
@@ -276,7 +299,51 @@
       <li>2) тела представляют собой два однородных шара;</li>
       <li>3) тело неопределённой формы находится на поверхности шарообразного и однородного тела большого размера и массы.</li>
     </ul>
+
+    <div class="note-box" style="background:#f5f5f5;border-left-color:#546e7a;">
+      <div class="note-title" style="color:#37474f;">Рис. 1. Случаи применения закона всемирного тяготения</div>
+      <svg viewBox="0 0 540 120" style="width:100%;max-width:560px;display:block;margin:6px auto;background:#fff;border-radius:10px;border:1px solid #cfd8dc;">
+        <!-- 1. Точечные тела -->
+        <circle cx="35" cy="50" r="4" fill="#1a237e"/>
+        <circle cx="145" cy="50" r="4" fill="#1a237e"/>
+        <line x1="39" y1="50" x2="141" y2="50" stroke="#90a4ae" stroke-dasharray="3"/>
+        <text x="90" y="42" font-size="11" text-anchor="middle" fill="#37474f">R ≫ d</text>
+        <text x="90" y="100" font-size="11" text-anchor="middle" fill="#1a237e" font-weight="bold">1) Точечные тела</text>
+        <!-- 2. Два однородных шара -->
+        <circle cx="225" cy="50" r="22" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+        <circle cx="225" cy="50" r="2" fill="#0d47a1"/>
+        <circle cx="305" cy="50" r="16" fill="#ffe0b2" stroke="#f57c00" stroke-width="2"/>
+        <circle cx="305" cy="50" r="2" fill="#e65100"/>
+        <line x1="225" y1="50" x2="305" y2="50" stroke="#546e7a" stroke-dasharray="3"/>
+        <text x="265" y="100" font-size="11" text-anchor="middle" fill="#1a237e" font-weight="bold">2) Однородные шары</text>
+        <!-- 3. Тело на поверхности шара -->
+        <circle cx="445" cy="55" r="32" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+        <circle cx="445" cy="55" r="2" fill="#1b5e20"/>
+        <polygon points="440,23 450,23 448,14 442,14" fill="#c62828"/>
+        <line x1="445" y1="55" x2="445" y2="23" stroke="#37474f" stroke-dasharray="3"/>
+        <text x="445" y="105" font-size="11" text-anchor="middle" fill="#1a237e" font-weight="bold">3) Тело на поверхности</text>
+      </svg>
+    </div>
     <p>Третий закон Ньютона мы используем для расчёта силы тяжести на поверхности Земли или вблизи неё. Поэтому за расстояние между телами берём радиус Земли: R = 6370 км.</p>
+
+    <div class="note-box" style="background:#fff8e1;border-left-color:#fbc02d;">
+      <div class="note-title" style="color:#f57f17;">Рис. 2. Взаимодействие Земли и яблока (|F⃗я| = |F⃗З|)</div>
+      <svg viewBox="0 0 460 120" style="width:100%;max-width:500px;display:block;margin:6px auto;background:#fff;border-radius:10px;border:1px solid #ffe082;">
+        <circle cx="95" cy="60" r="42" fill="#1976d2"/>
+        <text x="95" y="64" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">Земля</text>
+        <circle cx="330" cy="60" r="10" fill="#c62828"/>
+        <path d="M 330 50 Q 333 44 337 46" stroke="#2e7d32" stroke-width="2" fill="none"/>
+        <text x="330" y="84" font-size="12" fill="#c62828" text-anchor="middle" font-weight="bold">Яблоко</text>
+        <!-- Векторы сил -->
+        <line x1="137" y1="60" x2="195" y2="60" stroke="#2e7d32" stroke-width="3"/>
+        <polygon points="195,55 205,60 195,65" fill="#2e7d32"/>
+        <text x="170" y="50" font-size="12" fill="#2e7d32" font-weight="bold">F⃗З</text>
+
+        <line x1="320" y1="60" x2="262" y2="60" stroke="#c62828" stroke-width="3"/>
+        <polygon points="262,55 252,60 262,65" fill="#c62828"/>
+        <text x="285" y="50" font-size="12" fill="#c62828" font-weight="bold">F⃗я</text>
+      </svg>
+    </div>
     <p>Сила притяжения яблока к Земле равна силе притяжения Земли к яблоку по модулю: |F⃗<sub>я</sub>| = |F⃗<sub>З</sub>|. Силы притяжения между телами равны по модулю, но противоположны по направлению: F⃗<sub>я</sub> = −F⃗<sub>З</sub>.</p>
 
     <div class="note-box" style="background:#e3f2fd;border-left-color:#1565c0;">
@@ -324,6 +391,24 @@
       <div class="label">У поверхности Земли: g = (6,6720 · 10⁻¹¹ · 5,976 · 10²⁴) / (6,371 · 10⁶)² = 9,8 м/с² (полюсы: 9,832 м/с², экватор: 9,78 м/с²)</div>
     </div>
 
+    <div class="note-box" style="background:#e8eaf6;border-left-color:#3f51b5;">
+      <div class="note-title" style="color:#1a237e;">Рис. 1. Планеты Солнечной системы и ускорение свободного падения (нажмите на планету)</div>
+      <svg viewBox="0 0 540 110" style="width:100%;max-width:560px;display:block;margin:6px auto;background:#0d1b2a;border-radius:10px;">
+        <circle cx="15" cy="55" r="28" fill="#ffb300" style="cursor:pointer" onclick="showPlanet('Солнце','274,0','1 391 000')"/>
+        <circle cx="65" cy="55" r="5" fill="#9e9e9e" style="cursor:pointer" onclick="showPlanet('Меркурий','3,7','4 878')"/>
+        <circle cx="95" cy="55" r="8" fill="#ffcc80" style="cursor:pointer" onclick="showPlanet('Венера','8,87','12 103')"/>
+        <circle cx="130" cy="55" r="8.5" fill="#1976d2" style="cursor:pointer" onclick="showPlanet('Земля','9,8','12 756')"/>
+        <circle cx="165" cy="55" r="6" fill="#e53935" style="cursor:pointer" onclick="showPlanet('Марс','3,7','6 794')"/>
+        <circle cx="230" cy="55" r="24" fill="#d7ccc8" style="cursor:pointer" onclick="showPlanet('Юпитер','24,8','142 984')"/>
+        <ellipse cx="305" cy="55" rx="28" ry="8" fill="none" stroke="#ffe082" stroke-width="2"/>
+        <circle cx="305" cy="55" r="18" fill="#ffe082" style="cursor:pointer" onclick="showPlanet('Сатурн','10,4','120 536')"/>
+        <circle cx="375" cy="55" r="12" fill="#80deea" style="cursor:pointer" onclick="showPlanet('Уран','8,87','51 118')"/>
+        <circle cx="430" cy="55" r="11.5" fill="#3949ab" style="cursor:pointer" onclick="showPlanet('Нептун','10,15','49 532')"/>
+        <circle cx="480" cy="55" r="3.5" fill="#bcaaa4" style="cursor:pointer" onclick="showPlanet('Плутон','0,66','2 390')"/>
+        <text id="planet-info" x="270" y="98" font-size="12" fill="#fff" text-anchor="middle">Нажмите на любую планету, чтобы увидеть её g и диаметр</text>
+      </svg>
+    </div>
+
     <table>
       <tr>
         <th>Небесное тело</th><th>g, м/с²</th><th>Диаметр, км</th><th>Расст. до Солнца, млн км</th><th>Масса, кг</th><th>Отношение к массе Земли</th>
@@ -343,6 +428,26 @@
 
     <div class="def-box">
       <strong>Обобщённый закон Галилея:</strong> падение тел в одинаковых полях тяготения происходит с одинаковым ускорением. На высоте h от поверхности Земли: <b>g = G · M / (R + h)²</b>.
+    </div>
+
+    <div class="note-box" style="background:#e8f5e9;border-left-color:#2e7d32;">
+      <div class="note-title" style="color:#1b5e20;">Рисунок: Обобщённый закон Галилея (падение в вакууме)</div>
+      <svg viewBox="0 0 460 120" style="width:100%;max-width:500px;display:block;margin:6px auto;background:#fff;border-radius:10px;border:1px solid #c8e6c9;">
+        <!-- Трубка Ньютона (вакуум) -->
+        <rect x="30" y="15" width="160" height="90" rx="12" fill="#f1f8e9" stroke="#2e7d32" stroke-width="2"/>
+        <text x="110" y="32" font-size="11" fill="#1b5e20" text-anchor="middle" font-weight="bold">Вакуум (без воздуха)</text>
+        <circle cx="75" cy="60" r="10" fill="#546e7a"/>
+        <path d="M 135 50 Q 145 60 135 72 Q 128 60 135 50" fill="#ffb300" stroke="#f57c00"/>
+        <line x1="75" y1="73" x2="75" y2="95" stroke="#c62828" stroke-width="2"/>
+        <polygon points="71,92 75,100 79,92" fill="#c62828"/>
+        <line x1="135" y1="73" x2="135" y2="95" stroke="#c62828" stroke-width="2"/>
+        <polygon points="131,92 135,100 139,92" fill="#c62828"/>
+        <text x="105" y="92" font-size="11" fill="#c62828" font-weight="bold">g₁ = g₂</text>
+        <!-- Пояснение справа -->
+        <text x="210" y="45" font-size="12" fill="#37474f" font-weight="bold">a = F / m_и = (m_г / m_и) · g = g</text>
+        <text x="210" y="68" font-size="11.5" fill="#37474f">Все тела падают с одинаковым</text>
+        <text x="210" y="84" font-size="11.5" fill="#37474f">ускорением независимо от массы!</text>
+      </svg>
     </div>
 
     <div class="note-box">
@@ -729,6 +834,33 @@ function updateGrav() {
 function setLift(a, title, desc) {
   const P = Math.max(0, 80 * (9.8 + a)).toFixed(1).replace('.', ',');
   document.getElementById('lift-res').textContent = `Режим: ${title} — ${desc} → P = ${P} Н`;
+}
+
+function setBall(pt) {
+  const dot = document.getElementById('ball-active');
+  const i1 = document.getElementById('ball-info1');
+  const i2 = document.getElementById('ball-info2');
+  const i3 = document.getElementById('ball-info3');
+  if (pt === 1) {
+    dot.setAttribute('cy', 120);
+    i1.textContent = 'Eпот = 0';
+    i2.textContent = 'Eкин = (m·v²)/2 (max)';
+    i3.textContent = 'Eполн = (m·v²)/2';
+  } else if (pt === 2) {
+    dot.setAttribute('cy', 75);
+    i1.textContent = 'Eпот = m·g·h';
+    i2.textContent = 'Eкин = (m·v²)/2';
+    i3.textContent = 'Eполн = (m·v²)/2 + m·g·h';
+  } else {
+    dot.setAttribute('cy', 30);
+    i1.textContent = 'Eпот = m·g·h (max)';
+    i2.textContent = 'Eкин = 0';
+    i3.textContent = 'Eполн = m·g·h';
+  }
+}
+
+function showPlanet(name, g, diam) {
+  document.getElementById('planet-info').textContent = `${name}: g = ${g} м/с², диаметр = ${diam} км`;
 }
 </script>
 </body>
